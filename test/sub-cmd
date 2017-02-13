@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+
+source_dir=$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )
+
+# include the lib
+source ${source_dir}/../dox
+
+
+printf "\
+$(t_code_definition \
+"team create <name> [-h]" \
+"start a new team; create a local branch and push it to the remote.
+the branch name will be composed of the pre-configured team prefix and the passed $(t_code "name").
+aliases: $(t_code "assemble"), $(t_code "gather"), $(t_code "huddle")." \
+)"
