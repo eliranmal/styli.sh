@@ -5,7 +5,7 @@
 source_dir=$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )
 
 # include the lib
-source ${source_dir}/../dox
+source ${source_dir}/../sh-dox
 
 
 printf "\
