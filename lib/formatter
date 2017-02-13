@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 
 # 
@@ -187,7 +187,8 @@ t_init_api_terminal() {
 	_t_code=$_t_bold
 	_t_code_off=$_t_bold_off
 	_t_list_item=' * '
-	_t_new_line="\n"
+	_t_new_line='
+'
 	_t_line_break="$_t_new_line "
 
 	t_heading() {
@@ -238,7 +239,8 @@ t_init_api_markdown() {
 	_t_def_desc_off='</dd>
 </dl>
 '
-	_t_new_line="\n"
+	_t_new_line='
+'
 	_t_line_break="  $_t_new_line"
 
 	t_heading() {
