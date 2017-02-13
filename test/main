@@ -54,4 +54,5 @@ $(t_code_definition \
 )
 
 refer to each subcommand's help menu for an in-depth description of its actions (e.g. $(t_code "git flux init -h")).
- "
+
+"
