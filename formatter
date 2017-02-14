@@ -306,7 +306,7 @@ t_init_api_composeable() {
 
 }
 
-t_init_formatter() {
+cmd_init_formatter() {
 	if type "t_init_api_${FORMAT}" >/dev/null 2>&1; then
 		t_init_api_${FORMAT}
 	else
