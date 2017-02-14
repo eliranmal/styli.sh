@@ -73,7 +73,7 @@ resolve_output_path() {
 				output_file_ext="txt"
 				;;
 		esac
-		output_path="$output_dir/$output_file_name.$output_file_ext"
+		output_path="$output_dir"'/'"$output_file_name"'.'"$output_file_ext"
 	fi
 
 	printf "%s" "$output_path"
