@@ -28,10 +28,10 @@ add_message() {
 	case $FORMAT in
 		markdown)
 			printf "%s\n\n\n\n%s\n%s\n%s" "$(cat -)" '<br/><br/>' '---' \
-			'<sup><i>formatted with <b><a href="'"$repo_url"'">styli.sh</a></b></i></sup>'
+			'<sup><i>created with <b><a href="'"$repo_url"'">styli.sh</a></b></i></sup>'
 			;;
 		raw)
-			printf "%s\n\n\n\n\n%s\n%s" "$(cat -)" '---' 'formatted with styli.sh ('"$repo_url"')'
+			printf "%s\n\n\n\n\n%s\n%s" "$(cat -)" '---' 'created with styli.sh ('"$repo_url"')'
 			;;
 	esac
 }
