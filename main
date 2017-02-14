@@ -9,8 +9,8 @@ t_main() {
 	local source_dir=$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )
 	
 	# include the libs
-	source ${source_dir}/sh-dox-format
-	source ${source_dir}/sh-dox-render
+	source ${source_dir}/formatter
+	source ${source_dir}/renderer
 
 	# todo - if $BASH_SOURCE == $0 we're executing dox, not including it: parse "-h" and show usage than
 

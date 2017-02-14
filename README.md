@@ -1,4 +1,4 @@
 
-# sh-dox
+# styli.sh
 
-> docs generator and text formatting for the shell
+> text formatter and converter for the shell
