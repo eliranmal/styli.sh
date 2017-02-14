@@ -10,4 +10,4 @@ aliases: <code>assemble</code>, <code>gather</code>, <code>huddle</code>.<br/></
 
 <br/><br/>
 ---
-<sup><i>formatted with <b><a href="https://github.com/eliranmal/styli.sh">styli.sh</a></b></i></sup>
+<sup><i>created with <b><a href="https://github.com/eliranmal/styli.sh">styli.sh</a></b></i></sup>
