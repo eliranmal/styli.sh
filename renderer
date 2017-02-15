@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 
+show_help() {
+	printf "todo"
+}
+
 init_renderer() {
 
 	echo "> rendering output to a file"
@@ -93,7 +97,17 @@ squeeze_blanks() {
 
 
 main() {
-	init_renderer
+
+	if [[ -n $RENDER ]]; then
+		init_renderer
+	fi
+
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
+		local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+		source "$source_dir"/formatter
+		show_help
+	fi
 }
 
 main "$@"

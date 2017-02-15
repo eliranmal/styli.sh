@@ -25,10 +25,7 @@ main() {
 	local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
 
 	source "$source_dir"/formatter
-
-	if [[ -n $RENDER ]]; then
-		source "$source_dir"/renderer
-	fi
+	source "$source_dir"/renderer
 
 	# test if this script is executed (i.e. not sourced)
 	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
