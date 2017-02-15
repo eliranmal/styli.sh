@@ -15,39 +15,6 @@ cmd_init_renderer() {
 }
 
 
-format_usage_line() {
-	case $FORMAT in
-		markdown)
-			sed -e 'N' -e 's,usage: \(.*\)\(\n\)$,\2    \1\2\2,'
-			;;
-	esac
-}
-
-add_message() {
-	local repo_url="https://github.com/eliranmal/styli.sh"
-	case $FORMAT in
-		markdown)
-			printf "%s\n\n\n\n%s\n%s\n%s" "$(cat -)" '<br/><br/>' '---' \
-			'<sup><i>created with <b><a href="'"$repo_url"'">styli.sh</a></b></i></sup>'
-			;;
-		raw)
-			printf "%s\n\n\n\n\n%s\n%s" "$(cat -)" '---' 'created with styli.sh ('"$repo_url"')'
-			;;
-	esac
-}
-
-eof() {
-	case $FORMAT in
-		markdown)
-			echo "$(cat -)" # add newline at end of file
-			;;
-	esac
-}
-
-squeeze_blanks() {
-	cat -s
-}
-
 ensure_dir() {
 	if [[ ! -d $1 ]]; then
 		mkdir -p "$1"
@@ -89,4 +56,37 @@ strip_down() {
 			squeeze_blanks
 			;;
 	esac
+}
+
+format_usage_line() {
+	case $FORMAT in
+		markdown)
+			sed -e 'N' -e 's,usage: \(.*\)\(\n\)$,\2    \1\2\2,'
+			;;
+	esac
+}
+
+add_message() {
+	local repo_url="https://github.com/eliranmal/styli.sh"
+	case $FORMAT in
+		markdown)
+			printf "%s\n\n\n\n%s\n%s\n%s" "$(cat -)" '<br/><br/>' '---' \
+			'<sup><i>created with <b><a href="'"$repo_url"'">styli.sh</a></b></i></sup>'
+			;;
+		raw)
+			printf "%s\n\n\n\n\n%s\n%s" "$(cat -)" '---' 'created with styli.sh ('"$repo_url"')'
+			;;
+	esac
+}
+
+eof() {
+	case $FORMAT in
+		markdown)
+			echo "$(cat -)" # add newline at end of file
+			;;
+	esac
+}
+
+squeeze_blanks() {
+	cat -s
 }
