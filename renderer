@@ -90,3 +90,9 @@ eof() {
 squeeze_blanks() {
 	cat -s
 }
+
+main() {
+	cmd_init_renderer
+}
+
+main "$@"

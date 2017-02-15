@@ -316,3 +316,8 @@ cmd_init_formatter() {
 	t_init_api_composeable
 }
 
+main() {
+	cmd_init_formatter
+}
+
+main "$@"

@@ -20,11 +20,9 @@ main() {
 	# include the libs
 
 	source "$source_dir"/formatter
-	cmd_init_formatter
 
 	if [[ -n $RENDER ]]; then
 		source "$source_dir"/renderer
-		cmd_init_renderer
 	fi
 }
 
