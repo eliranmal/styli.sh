@@ -18,7 +18,7 @@ cmd_init_renderer() {
 format_usage_line() {
 	case $FORMAT in
 		markdown)
-			sed -e 'N' -e 's,usage:\(.*\)\(\n\)$,\2    \1\2\2,'
+			sed -e 'N' -e 's,usage: \(.*\)\(\n\)$,\2    \1\2\2,'
 			;;
 	esac
 }

@@ -1,5 +1,5 @@
 
-     git flux <sub-command> [action] [action-args...] [-h]
+    git flux <sub-command> [action] [action-args...] [-h]
 
 
 ## git-flux
