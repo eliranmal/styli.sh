@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 
-#$(t_heading $(t_fg_blue "styli"$(t_fg_yellow ".sh")))
-
 show_help() {
 	# eat our own dog food
 	printf "
@@ -22,11 +20,6 @@ $(t_code_definition \
 	exit 0
 }
 
-# test if this script is executed (i.e. not sourced)
-is_executed() {
-	[[ $BASH_SOURCE = $0 ]]
-}
-
 main() {
 
 	local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
@@ -39,7 +32,8 @@ main() {
 		cmd_init_renderer
 	fi
 
-	if is_executed && [[ $1 = "-h" ]]; then
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
 		show_help
 	fi
 }
