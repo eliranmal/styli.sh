@@ -1,7 +1,7 @@
 
-## styli.sh
+## renderer
 
-text formatter and renderer for the shell.
+the styli.sh renderer.
 
 #### flags
 
