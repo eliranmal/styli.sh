@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-show_help() {
+show_help_main() {
 	# eat our own dog food
 	printf "
 $(t_heading "styli.sh" | t_fg_yellow)
@@ -29,7 +29,7 @@ main() {
 
 	# test if this script is executed (i.e. not sourced)
 	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
-		show_help
+		show_help_main
 	fi
 }
 

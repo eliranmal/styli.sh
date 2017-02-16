@@ -65,6 +65,24 @@
 # 
 
 
+show_help_formatter() {
+	printf "
+$(t_heading "formatter" | t_fg_blue)
+
+the $(t_fg_yellow "styli.sh") formatter.
+
+
+$(t_subheading "flags")
+
+$(t_code_definition \
+"-h" \
+"shows this help message." \
+)
+
+"
+	exit 0
+}
+
 
 # parses function input from stdin or passed arguments
 # usage:
@@ -318,7 +336,13 @@ init_formatter() {
 
 
 main() {
+
 	init_formatter
+
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
+		show_help_formatter
+	fi
 }
 
 main "$@"

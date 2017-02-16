@@ -1,9 +1,24 @@
 #!/usr/bin/env bash
 
 
-show_help() {
-	printf "todo"
+show_help_renderer() {
+	printf "
+$(t_heading "renderer" | t_fg_red)
+
+the $(t_fg_yellow "styli.sh") renderer.
+
+
+$(t_subheading "flags")
+
+$(t_code_definition \
+"-h" \
+"shows this help message." \
+)
+
+"
+	exit 0
 }
+
 
 init_renderer() {
 
@@ -106,7 +121,7 @@ main() {
 	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
 		local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
 		source "$source_dir"/formatter
-		show_help
+		show_help_renderer
 	fi
 }
 
