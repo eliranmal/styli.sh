@@ -3,6 +3,12 @@
 
 show_help_renderer() {
 	printf "
+$(t_code_block \
+"sh" \
+"usage: ( export FORMAT=<format> OUTPUT_PATH=[<output_path>] ; my-command -h | ./renderer )"
+)
+
+
 $(t_heading "renderer" | t_fg_red)
 
 the $(t_fg_yellow "styli.sh") renderer.
@@ -22,7 +28,7 @@ $(t_code_definition \
 
 init_renderer() {
 
-	echo "> rendering output to a file"
+	echo "> > > rendering output to a file"
 
 	local output_path=$(resolve_output_path)
 	echo "> output path: '$output_path'"
@@ -30,9 +36,13 @@ init_renderer() {
 	ensure_dir "$( dirname "$output_path" )"
 
 	echo "> redirecting all output from now on to the output path"
-	exec 1> ${output_path} > >( strip_down | dress_up )
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 ]]; then
+		echo "$(cat -)" | strip_down | dress_up > ${output_path}
+	else
+		exec 1> ${output_path} > >( strip_down | dress_up )
+	fi
 }
-
 
 ensure_dir() {
 	if [[ ! -d $1 ]]; then
@@ -66,21 +76,13 @@ resolve_output_path() {
 }
 
 dress_up() {
-    format_usage_line | add_message | eof
+    add_message | eof
 }
 
 strip_down() {
 	case $FORMAT in
 		markdown)
 			squeeze_blanks
-			;;
-	esac
-}
-
-format_usage_line() {
-	case $FORMAT in
-		markdown)
-			sed -e 'N' -e 's,usage: \(.*\)\(\n\)$,\2    \1\2\2,'
 			;;
 	esac
 }
@@ -113,15 +115,14 @@ squeeze_blanks() {
 
 main() {
 
-	if [[ -n $RENDER ]]; then
-		init_renderer
-	fi
-
 	# test if this script is executed (i.e. not sourced)
-	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
-		local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
-		source "$source_dir"/formatter
-		show_help_renderer
+	if [[ $BASH_SOURCE = $0 ]]; then
+		if [[ $1 = "-h" ]]; then
+			local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+			source "$source_dir"/formatter
+			show_help_renderer
+		fi
+		init_renderer
 	fi
 }
 

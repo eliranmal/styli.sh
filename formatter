@@ -271,7 +271,11 @@ init_api_terminal() {
 		t_definition "$@"
 	}
 	t_code_block() {
-		util_wrap "$_t_new_line" "$_t_new_line$_t_new_line" "$@" | util_prefix_multiline
+		if [[ -n $2 ]]; then
+			shift # ignore the first arg if there are more, it's the language specifier
+		fi
+		local body="$@"
+		util_wrap "$_t_code" "$_t_code$_t_new_line$_t_new_line" "$body" | util_prefix_multiline '    '
 	}
 
 }
@@ -286,6 +290,8 @@ init_api_markdown() {
 	_t_strike_off=$_t_strike
 	_t_code='`'
 	_t_code_off=$_t_code
+	_t_code_block='```'
+	_t_code_block_off=$_t_code_block
 	_t_list_item='- '
 	_t_def_term='<dl>
 	<dt>'
@@ -327,7 +333,12 @@ init_api_markdown() {
 		t_definition "$title" "$2"
 	}
 	t_code_block() {
-		util_wrap "$_t_new_line" "$_t_new_line$_t_new_line" "$@" | util_prefix_multiline
+		local lang
+		if [[ -n $2 ]]; then
+			lang="$1"; shift
+		fi
+		local body="$1"
+		util_wrap "$_t_code_block$lang$_t_new_line" "$_t_new_line$_t_code_block_off$_t_new_line" "$body"
 	}
 
 }

@@ -1,4 +1,8 @@
 
+```sh
+usage: ( export FORMAT=<format> OUTPUT_PATH=[<output_path>] ; my-command -h | ./renderer )
+```
+
 ## renderer
 
 the styli.sh renderer.
