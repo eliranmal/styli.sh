@@ -2,6 +2,7 @@
 
 
 show_help_formatter() {
+	# todo - find a way to only activate the formatting of usage lines in markdown
 	printf "
 $(t_code_block \
 "sh" \
@@ -82,7 +83,7 @@ closing tags reset all formatting."
 $(t_subheading "references")
 
 $(t_list_item \
-'the colors used here are based on the SMYCK color scheme (http://color.smyck.org/):
+"the colors used here are based on the SMYCK color scheme (http://color.smyck.org/):
 
    red: #c75646
    green: #8eb33b
@@ -98,7 +99,7 @@ $(t_list_item \
    lightcyan: #77dfd8
    
    they were converted to their xterm-256 ansi equivalents with colortrans.py 
-   (https://gist.github.com/MicahElliott/719710).'
+   (https://gist.github.com/MicahElliott/719710)."
 )
 
 "
@@ -321,6 +322,8 @@ init_api_markdown() {
 			util_prefix "$_t_list_item" "$title$_t_new_line"
 		else
 			util_wrap "$_t_list_item$_t_bold" "$_t_bold_off$_t_line_break" "$title"
+			# todo - how to suffix with line breaks? ("  ")
+#			util_suffix_multiline "$_t_line_break" | util_prefix_multiline '  ' "$body$_t_blank_line"
 			util_prefix_multiline '  ' "$body$_t_blank_line"
 		fi
 	}
