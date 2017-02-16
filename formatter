@@ -79,6 +79,26 @@ $(t_code_definition \
 "shows this help message." \
 )
 
+$(t_subheading "showcase")
+
+here are some of the things your can do with the formatter:
+
+$(t_definition \
+"rainbow" \
+"
+$(t_fg_rainbow "The quick brown fox jumps over the lazy dog")" \
+)
+$(t_definition \
+"heading" \
+"
+$(t_heading "Important Stuff")" \
+)
+$(t_definition \
+"underline" \
+"
+$(t_under "looks like a link but it ain't")" \
+)
+
 "
 	exit 0
 }
