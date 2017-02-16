@@ -99,6 +99,20 @@ util_input() {
 	printf "%s" "$input"
 }
 
+util_fg_rainbow() {
+	local colors=('red' 'yellow' 'green' 'cyan' 'blue' 'magenta')
+	local input=$(util_input "$@")
+	local chars="$(printf "%s" "$input" | grep -o . --color=never)"
+	local i=0
+	while read -r; do
+		let "pos = $i % ${#colors[@]}"
+		let "i++"
+		local color="${colors[$pos]}"
+		local var_name="_t_fg_$color"
+		printf "${!var_name}$REPLY${_t_fg_off}"
+	done <<< "$chars"
+}
+
 util_repeat() {
     seq -f "$1" -s '' $2
 }
@@ -322,6 +336,7 @@ init_api_composeable() {
 	t_fg_lightblue() {      util_wrap     "$_t_fg_lightblue"      "$_t_fg_off"        "$@"; }
 	t_fg_lightmagenta() {   util_wrap     "$_t_fg_lightmagenta"   "$_t_fg_off"        "$@"; }
 	t_fg_lightcyan() {      util_wrap     "$_t_fg_lightcyan"      "$_t_fg_off"        "$@"; }
+	t_fg_rainbow() {        util_fg_rainbow                                           "$@"; }
 
 }
 
