@@ -318,6 +318,11 @@ init_api_composeable() {
 	t_fg_lightblue() {      util_wrap     "$_t_fg_lightblue"      "$_t_fg_off"        "$@"; }
 	t_fg_lightmagenta() {   util_wrap     "$_t_fg_lightmagenta"   "$_t_fg_off"        "$@"; }
 	t_fg_lightcyan() {      util_wrap     "$_t_fg_lightcyan"      "$_t_fg_off"        "$@"; }
+
+}
+
+init_api_common() {
+
 	t_fg_rainbow() {        util_fg_rainbow                                           "$@"; }
 
 }
@@ -328,6 +333,7 @@ init_formatter() {
 	else
 		init_api_terminal
 	fi
+	init_api_common
 	init_api_composeable
 }
 
