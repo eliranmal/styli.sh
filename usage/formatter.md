@@ -48,13 +48,16 @@ two possible ways:
   echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"
 
 - **using functions**
-  echo "$(t_heading "foo")"
+  ```sh
+echo "$(t_heading "foo")"
   echo "$(echo "foo" | t_heading)"
   echo "$(echo "foo" | t_heading | t_fg_yellow)"
+```
   
   you can also skip the echo, and compose the formatter functions in any which way:
-  
-  echo "$(t_heading "foo" | t_fg_yellow)"
+  ```sh
+echo "$(t_heading "foo" | t_fg_yellow)"
+```
 
 #### gotcha's
 

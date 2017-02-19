@@ -56,18 +56,20 @@ $(t_list_item \
 "wrapping with tags" \
 'echo "this text will be ${_t_bold}bold${_t_bold_off}"
 echo "text can be ${_t_under}underlined${_t_under_off} as well"
-echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"'
-)
+echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"')
 $(t_list_item \
 "using functions" \
+"$(t_code_block \
+"sh" \
 'echo "$(t_heading "foo")"
 echo "$(echo "foo" | t_heading)"
-echo "$(echo "foo" | t_heading | t_fg_yellow)"
+echo "$(echo "foo" | t_heading | t_fg_yellow)"')
 
 you can also skip the echo, and compose the formatter functions in any which way:
-
-echo "$(t_heading "foo" | t_fg_yellow)"'
-)
+$(t_code_block \
+"sh" \
+'echo "$(t_heading "foo" | t_fg_yellow)"'
+)")
 
 $(t_subheading "gotcha's")
 
@@ -263,7 +265,7 @@ init_api_terminal() {
 			shift # ignore the first arg if there are more, it's the language specifier
 		fi
 		local body="$@"
-		util_wrap "$_t_code" "$_t_code$_t_new_line$_t_new_line" "$body" | util_prefix_multiline '    '
+		util_wrap "$_t_code" "$_t_code" "$body" | util_prefix_multiline '    '
 	}
 
 }
@@ -326,7 +328,7 @@ init_api_markdown() {
 			lang="$1"; shift
 		fi
 		local body="$1"
-		util_wrap "$_t_code_block$lang$_t_new_line" "$_t_new_line$_t_code_block_off$_t_new_line" "$body"
+		util_wrap "$_t_code_block$lang$_t_new_line" "$_t_new_line$_t_code_block_off" "$body"
 	}
 
 }
