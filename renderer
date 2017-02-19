@@ -84,6 +84,9 @@ strip_down() {
 		markdown)
 			squeeze_blanks
 			;;
+		*)
+			printf "$(cat -)"
+			;;
 	esac
 }
 
@@ -97,6 +100,9 @@ add_message() {
 		raw)
 			printf "%s\n\n\n\n\n%s\n%s" "$(cat -)" '---' 'created with styli.sh ('"$repo_url"')'
 			;;
+		*)
+			printf "$(cat -)"
+			;;
 	esac
 }
 
@@ -104,6 +110,9 @@ eof() {
 	case $FORMAT in
 		markdown)
 			echo "$(cat -)" # add newline at end of file
+			;;
+		*)
+			printf "$(cat -)"
 			;;
 	esac
 }
