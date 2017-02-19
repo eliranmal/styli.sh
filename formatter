@@ -21,7 +21,8 @@ $(t_code_definition \
 "-h" \
 "shows this help message."
 )
- 
+
+
 $(t_subheading "how to use")
  
 two possible ways:
@@ -33,32 +34,40 @@ tags must be closed with the appropriate $(t_code '_t_*_off') tag.")
 $(t_list_item \
 "use the formatter functions, they can be piped, or accept arguments.")
 
+
 $(t_subheading "examples")
 
 $(t_list_item \
 "wrapping with tags" \
+"
+$(t_code_block \
+"sh" \
 'echo "this text will be ${_t_bold}bold${_t_bold_off}"
 echo "text can be ${_t_under}underlined${_t_under_off} as well"
-echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"')
+echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"')")
 
 $(t_list_item \
 "using functions" \
-"$(t_code_block \
+"
+$(t_code_block \
 "sh" \
 'echo "$(t_heading "foo")"
 echo "$(echo "foo" | t_heading)"
 echo "$(echo "foo" | t_heading | t_fg_yellow)"')
 
 you can also skip the echo, and compose the formatter functions in any which way:
+
 $(t_code_block \
 "sh" \
 'echo "$(t_heading "foo" | t_fg_yellow)"')")
+
 
 $(t_subheading "gotcha's")
 
 $(t_list_item \
 "nesting formats may not behave as expected in the terminal mode, as some 
 closing tags reset all formatting.")
+
 
 $(t_subheading "references")
 
@@ -228,7 +237,7 @@ init_api_terminal() {
 		fi
 		body="$(util_prefix_multiline '   ' "$1$_t_new_line")"
 		if [[ -n $title ]]; then
-			util_prefix "$(util_wrap "$_t_bold$_t_list_item" "$_t_bold_off$_t_new_line" "$title")" "$body"
+			util_prefix "$(util_wrap "$_t_list_item$_t_under" "$_t_under_off$_t_new_line" "$title")" "$body"
 		else
 			util_trim_start "$body" | util_prefix "$_t_list_item"
 		fi

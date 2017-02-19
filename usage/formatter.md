@@ -15,7 +15,7 @@ the styli.sh formatter.
 	<dt><code>-h</code></dt>
 	<dd>shows this help message.<br/></dd>
 </dl>
- 
+
 #### how to use
  
 two possible ways:
@@ -28,11 +28,15 @@ two possible ways:
 #### examples
 
 - **wrapping with tags**
+  
+  ```sh
   echo "this text will be ${_t_bold}bold${_t_bold_off}"
   echo "text can be ${_t_under}underlined${_t_under_off} as well"
   echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"
+  ```
 
 - **using functions**
+  
   ```sh
   echo "$(t_heading "foo")"
   echo "$(echo "foo" | t_heading)"
@@ -40,6 +44,7 @@ two possible ways:
   ```
   
   you can also skip the echo, and compose the formatter functions in any which way:
+  
   ```sh
   echo "$(t_heading "foo" | t_fg_yellow)"
   ```
