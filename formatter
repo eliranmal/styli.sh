@@ -37,7 +37,6 @@ $(t_definition \
 "underline" \
 "$(t_under "looks like a link but it ain't")"
 )
-
  
 $(t_subheading "how to use")
  
@@ -50,7 +49,6 @@ tags must be closed with the appropriate _t_*_off tag."
 $(t_list_item \
 "use the formatter functions, they can be piped, or accept arguments."
 )
-
 
 $(t_subheading "examples")
 
@@ -71,7 +69,6 @@ you can also skip the echo, and compose the formatter functions in any which way
 echo "$(t_heading "foo" | t_fg_yellow)"'
 )
 
-
 $(t_subheading "gotcha's")
 
 $(t_list_item \
@@ -79,14 +76,12 @@ $(t_list_item \
 closing tags reset all formatting."
 )
 
-
 $(t_subheading "references")
 
 $(t_list_item \
 "the colors used here are based on the SMYCK color scheme (http://color.smyck.org/).
 they were converted to their xterm-256 ansi equivalents with colortrans.py (https://gist.github.com/MicahElliott/719710)."
 )
-
 "
 	# todo - create link tags
 	exit 0

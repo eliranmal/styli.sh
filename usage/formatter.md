@@ -30,7 +30,6 @@ here are some of the things your can do with the formatter:
 	<dt>underline</dt>
 	<dd>looks like a link but it ain't<br/></dd>
 </dl>
-
  
 #### how to use
  
