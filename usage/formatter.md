@@ -36,10 +36,10 @@ here are some of the things your can do with the formatter:
  
 two possible ways:
 
--   include the available _t_* tags within strings to wrap terms.
+- include the available _t_* tags within strings to wrap terms.
   tags must be closed with the appropriate _t_*_off tag.
 
--   use the formatter functions, they can be piped, or accept arguments.
+- use the formatter functions, they can be piped, or accept arguments.
 
 #### examples
 
@@ -59,12 +59,12 @@ two possible ways:
 
 #### gotcha's
 
--   nesting formats may not behave as expected in the terminal mode, as some 
+- nesting formats may not behave as expected in the terminal mode, as some 
   closing tags reset all formatting.
 
 #### references
 
--   the colors used here are based on the SMYCK color scheme (http://color.smyck.org/).
+- the colors used here are based on the SMYCK color scheme (http://color.smyck.org/).
   they were converted to their xterm-256 ansi equivalents with colortrans.py (https://gist.github.com/MicahElliott/719710).
 
 

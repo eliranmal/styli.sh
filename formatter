@@ -122,6 +122,11 @@ util_fg_rainbow() {
 	done <<< "$chars"
 }
 
+util_trim_start() {
+	local input=$(util_input "$@")
+	printf "%s" "$input" | sed -e '1s,[[:space:]][[:space:]]*\(.*\),\1,'
+}
+
 util_repeat() {
     seq -f "$1" -s '' $2
 }
@@ -246,7 +251,7 @@ init_api_terminal() {
 		if [[ -n $title ]]; then
 			util_prefix "$(util_wrap "$_t_bold$_t_list_item" "$_t_bold_off$_t_new_line" "$title")" "$body"
 		else
-			util_prefix "$_t_list_item" "$body"
+			util_trim_start "$body" | util_prefix "$_t_list_item"
 		fi
 	}
 	t_definition() {
@@ -304,11 +309,10 @@ init_api_markdown() {
 			title="$1"; shift
 		fi
 		body="$(util_prefix_multiline '  ' "$1$_t_new_line")"
-#		body="$(util_prefix_multiline '  ' "$1$_t_new_line" | sed -e 'N' -e 's,^\s,watwatwat,')"
 		if [[ -n $title ]]; then
 			util_prefix "$(util_wrap "$_t_list_item$_t_bold" "$_t_bold_off$_t_new_line" "$title")" "$body"
 		else
-			util_prefix "$_t_list_item" "$body"
+			util_trim_start "$body" | util_prefix "$_t_list_item"
 		fi
 	}
 	t_definition() {
