@@ -45,6 +45,7 @@ two possible ways:
   echo "this text will be ${_t_bold}bold${_t_bold_off}"
   echo "text can be ${_t_under}underlined${_t_under_off} as well"
   echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"
+
 - **using functions**
   ```sh
   echo "$(t_heading "foo")"
