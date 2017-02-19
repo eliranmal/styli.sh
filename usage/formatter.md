@@ -9,14 +9,14 @@ usage:
 
 the styli.sh formatter.
 
-#### flags
+### flags
 
 <dl>
 	<dt><code>-h</code></dt>
 	<dd>shows this help message.<br/></dd>
 </dl>
 
-#### how to use
+### how to use
  
 two possible ways:
 
@@ -25,7 +25,7 @@ two possible ways:
 
 - use the formatter functions, they can be piped, or accept arguments.
 
-#### examples
+### examples
 
 - **wrapping with tags**
   
@@ -49,12 +49,12 @@ two possible ways:
   echo "$(t_heading "foo" | t_fg_yellow)"
   ```
 
-#### gotcha's
+### gotcha's
 
 - nesting formats may not behave as expected in the terminal mode, as some 
   closing tags reset all formatting.
 
-#### references
+### references
 
 - the colors used here are based on the SMYCK color scheme (http://color.smyck.org/).
   they were converted to their xterm-256 ansi equivalents with colortrans.py (https://gist.github.com/MicahElliott/719710).

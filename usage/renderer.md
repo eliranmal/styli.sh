@@ -7,7 +7,7 @@ usage: ( export FORMAT=<format> OUTPUT_PATH=[<output_path>] ; my-command -h | ./
 
 the styli.sh renderer.
 
-#### flags
+### flags
 
 <dl>
 	<dt><code>-h</code></dt>
