@@ -83,23 +83,8 @@ closing tags reset all formatting."
 $(t_subheading "references")
 
 $(t_list_item \
-"the colors used here are based on the SMYCK color scheme (http://color.smyck.org/):
-
-red: #c75646
-green: #8eb33b
-yellow: #d0b03c
-blue: #72b3cc
-magenta: #c8a0d1
-cyan: #218693
-lightred: #e09690
-lightgreen: #cdee69
-lightyellow: #ffe377
-lightblue: #9cd9f0
-lightmagenta: #fbb1f9
-lightcyan: #77dfd8
-
-they were converted to their xterm-256 ansi equivalents with colortrans.py 
-(https://gist.github.com/MicahElliott/719710)."
+"the colors used here are based on the SMYCK color scheme (http://color.smyck.org/).
+they were converted to their xterm-256 ansi equivalents with colortrans.py (https://gist.github.com/MicahElliott/719710)."
 )
 
 "
@@ -243,11 +228,8 @@ init_api_terminal() {
 	_t_strike_off=$'\033[29m'
 	_t_code=$_t_bold
 	_t_code_off=$_t_bold_off
-	_t_list_item=' * '
-	_t_new_line='
-'
-	_t_line_break=$_t_new_line
-	_t_blank_line="$_t_new_line "
+	_t_list_item=' - '
+	_t_new_line="\n"
 
 	t_heading() {
 		util_underline '-' "$_t_fg_off" "$@" | util_wrap "$_t_bold" "$_t_bold_off"
@@ -256,20 +238,22 @@ init_api_terminal() {
 		util_wrap "$_t_under" "$_t_under_off" "$@"
 	}
 	t_list_item() {
-		local title="$1"
-		local body="$2"
-		if [[ -z $body ]]; then
-			util_prefix "$_t_list_item" "$title$_t_new_line"
+		local title; local body
+		if [[ -n $2 ]]; then
+			title="$1"; shift
+		fi
+		body="$(util_prefix_multiline '   ' "$1$_t_new_line")"
+		if [[ -n $title ]]; then
+			util_prefix "$(util_wrap "$_t_bold$_t_list_item" "$_t_bold_off$_t_new_line" "$title")" "$body"
 		else
-			util_wrap "$_t_bold$_t_list_item" "$_t_bold_off$_t_line_break" "$title"
-			util_prefix_multiline '      ' "$body$_t_blank_line"
+			util_prefix "$_t_list_item" "$body"
 		fi
 	}
 	t_definition() {
 		local term="$1"
 		local desc="$2"
 		util_prefix '   ' "$term" | util_wrap "$_t_bold" "$_t_bold_off$_t_new_line"
-		util_prefix_multiline '      ' "$desc$_t_blank_line"
+		util_prefix_multiline '      ' "$desc$_t_new_line"
 	}
 	t_code_definition() {
 		t_definition "$@"
@@ -305,10 +289,8 @@ init_api_markdown() {
 	_t_def_desc_off='</dd>
 </dl>
 '
-	_t_new_line='
-'
+	_t_new_line="\n"
 	_t_line_break="  $_t_new_line"
-	_t_blank_line="\n"
 
 	t_heading() {
 		util_prefix '## ' "$1"
@@ -317,15 +299,16 @@ init_api_markdown() {
 		util_prefix '#### ' "$1"
 	}
 	t_list_item() {
-		local title="$1"
-		local body="$2"
-		if [[ -z $body ]]; then
-			util_prefix "$_t_list_item" "$title$_t_new_line"
+		local title; local body
+		if [[ -n $2 ]]; then
+			title="$1"; shift
+		fi
+		body="$(util_prefix_multiline '  ' "$1$_t_new_line")"
+#		body="$(util_prefix_multiline '  ' "$1$_t_new_line" | sed -e 'N' -e 's,^\s,watwatwat,')"
+		if [[ -n $title ]]; then
+			util_prefix "$(util_wrap "$_t_list_item$_t_bold" "$_t_bold_off$_t_new_line" "$title")" "$body"
 		else
-			util_wrap "$_t_list_item$_t_bold" "$_t_bold_off$_t_line_break" "$title"
-			# todo - how to suffix with line breaks? ("  ")
-#			util_suffix_multiline "$_t_line_break" | util_prefix_multiline '  ' "$body$_t_blank_line"
-			util_prefix_multiline '  ' "$body$_t_blank_line"
+			util_prefix "$_t_list_item" "$body"
 		fi
 	}
 	t_definition() {
