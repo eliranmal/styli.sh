@@ -156,7 +156,7 @@ util_prefix_multiline() {
 util_suffix_multiline() {
 	local suffix=$1; shift
 	local input=$(util_input "$@")
-	printf "%s" "$input" | sed -e 's,^\(.*\)$,\1'"$suffix"','
+	printf "$input" | sed -e 's,^\(.*\)$,\1'"$suffix"','
 }
 
 util_underline() {
