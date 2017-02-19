@@ -1,6 +1,8 @@
 
+usage:
+
 ```sh
-usage: [env [FORMAT=terminal|markdown|raw]] ; source ./formatter
+[env [FORMAT=terminal|markdown|raw]] ; source ./formatter
 ```
 
 ## formatter
@@ -13,30 +15,14 @@ the styli.sh formatter.
 	<dt><code>-h</code></dt>
 	<dd>shows this help message.<br/></dd>
 </dl>
-
-#### showcase
-
-here are some of the things your can do with the formatter:
-
-<dl>
-	<dt>rainbow</dt>
-	<dd>The quick brown fox jumps over the lazy dog<br/></dd>
-</dl>
-<dl>
-	<dt>heading</dt>
-	<dd>## Important Stuff<br/></dd>
-</dl>
-<dl>
-	<dt>underline</dt>
-	<dd>looks like a link but it ain't<br/></dd>
-</dl>
  
 #### how to use
  
 two possible ways:
 
-- include the available _t_* tags within strings to wrap terms.
-  tags must be closed with the appropriate _t_*_off tag.
+- include the available `_t_*` tags within strings to wrap terms.
+  tags must be closed with the appropriate `_t_*_off` tag.
+
 - use the formatter functions, they can be piped, or accept arguments.
 
 #### examples
