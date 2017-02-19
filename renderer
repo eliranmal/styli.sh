@@ -35,7 +35,7 @@ init_renderer() {
 
 	ensure_dir "$( dirname "$output_path" )"
 
-	echo "> redirecting all output from now on to the output path"
+	echo "> redirecting all output to the output path"
 	# test if this script is executed (i.e. not sourced)
 	if [[ $BASH_SOURCE = $0 ]]; then
 		echo "$(cat -)" | strip_down | dress_up > ${output_path}
