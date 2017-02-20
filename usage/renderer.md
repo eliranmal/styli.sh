@@ -8,7 +8,7 @@ before the actual write, the output is passed through some transformers that str
 if you don't want to use the transformers, you can just skip the renderer and redirect your program's output directly to a file, after setting the desired format. for example:
 
 ```sh
-env FORMAT=markdown ./my-command -h > ./usage/my-command.md )
+env FORMAT=markdown ./my-command -h > ./usage/my-command.md
 ```
 
 ### usage
