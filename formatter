@@ -2,7 +2,6 @@
 
 
 show_help_formatter() {
-	# todo - find a way to only activate the formatting of usage lines in markdown
 	printf "
 
 $(t_heading "formatter" | t_fg_yellow)
