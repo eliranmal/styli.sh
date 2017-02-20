@@ -57,7 +57,8 @@ two possible ways:
 ### references
 
 - the colors used here are based on the [SMYCK color scheme](http://color.smyck.org/).
-  they were converted to their xterm-256 ansi equivalents with https://gist.github.com/MicahElliott/719710.
+
+- they were converted to their xterm-256 ansi approximations with [colortrans.py](https://gist.github.com/MicahElliott/719710).
 
 
 

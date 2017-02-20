@@ -72,8 +72,10 @@ closing tags reset all formatting.")
 $(t_subheading "references")
 
 $(t_list_item \
-"the colors used here are based on the $(t_link "SMYCK color scheme" 'http://color.smyck.org/').
-they were converted to their xterm-256 ansi equivalents with $(t_link 'https://gist.github.com/MicahElliott/719710').")
+"the colors used here are based on the $(t_link "SMYCK color scheme" 'http://color.smyck.org/').")
+
+$(t_list_item \
+"they were converted to their xterm-256 ansi approximations with $(t_link "colortrans.py" 'https://gist.github.com/MicahElliott/719710').")
 
 "
 	# todo - create link tags
