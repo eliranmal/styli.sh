@@ -7,6 +7,7 @@ provides an abstract API for formatting shell output.
 
 ```sh
 [env [FORMAT=terminal|markdown|raw]] ; source ./formatter
+./formatter -h
 ```
 
 ### flags
