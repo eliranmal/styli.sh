@@ -23,7 +23,7 @@ $(t_subheading "usage")
 
 $(t_code_block \
 "sh" \
-'( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./renderer )')
+'( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./styli.sh/renderer )')
 
 $(t_code_block \
 "sh" \

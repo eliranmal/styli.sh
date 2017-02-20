@@ -14,7 +14,7 @@ env FORMAT=markdown ./my-command -h > ./usage/my-command.md
 ### usage
 
 ```sh
-( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./renderer )
+( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./styli.sh/renderer )
 ```
 
 ```sh
