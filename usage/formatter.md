@@ -34,9 +34,9 @@ two possible ways:
 - **wrapping with tags**
   
   ```sh
-  echo "this text will be ${_t_bold}bold${_t_bold_off}"
+  echo "${_t_bold}this text will be bold${_t_bold_off}"
   echo "text can be ${_t_under}underlined${_t_under_off} as well"
-  echo "color text in ${_t_fg_yellow}yellow${_t_fg_off} or ${_t_fg_blue}blue${_t_fg_off}"
+  echo "color me ${_t_fg_yellow}yellow${_t_fg_off}"
   ```
 
 - **using functions**
@@ -47,10 +47,17 @@ two possible ways:
   echo "$(echo "foo" | t_heading | t_fg_yellow)"
   ```
   
-  you can also skip the echo, and compose the formatter functions in any which way:
+  you can also skip the echo, and compose most of the formatter functions in any which way:
   
   ```sh
   echo "$(t_heading "foo" | t_fg_yellow)"
+  echo "$(t_fg_yellow "foo" | t_bold | t_under)"
+  ```
+  
+  some formatter functions cannot be composed, but can still be used regardless:
+  
+  ```sh
+  echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"
   ```
 
 ### gotcha's
