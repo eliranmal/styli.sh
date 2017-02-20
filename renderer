@@ -38,9 +38,6 @@ $(t_code_definition \
 where $(t_code '<cmd>') is the command name that's piped to the renderer, \
 and $(t_code '<ext>') is a file extension resolved from the passed format.")
 
-$(t_list_item \
-"")
-
 
 $(t_subheading "what it does")
 
