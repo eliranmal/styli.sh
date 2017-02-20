@@ -14,7 +14,7 @@ $(t_subheading "usage")
 
 $(t_code_block \
 "sh" \
-'[env [FORMAT=terminal|markdown|raw]] ; source ./formatter
+'[env [FORMAT=terminal|markdown|raw] ;] source ./formatter
 ./formatter -h')
 
 
@@ -80,7 +80,6 @@ $(t_list_item \
 "they were converted to their xterm-256 ansi approximations with $(t_link "colortrans.py" 'https://gist.github.com/MicahElliott/719710').")
 
 "
-	# todo - create link tags
 	exit 0
 }
 

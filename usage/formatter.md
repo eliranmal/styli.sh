@@ -6,7 +6,7 @@ provides an abstract API for formatting shell output.
 ### usage
 
 ```sh
-[env [FORMAT=terminal|markdown|raw]] ; source ./formatter
+[env [FORMAT=terminal|markdown|raw] ;] source ./formatter
 ./formatter -h
 ```
 
