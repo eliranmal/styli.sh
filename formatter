@@ -19,8 +19,7 @@ $(t_subheading "flags")
 
 $(t_code_definition \
 "-h" \
-"shows this help message."
-)
+"shows this help message.")
 
 
 $(t_subheading "how to use")
@@ -65,7 +64,7 @@ $(t_code_block \
 $(t_subheading "gotcha's")
 
 $(t_list_item \
-"nesting formats may not behave as expected in the terminal mode, as some 
+"nesting formats may not behave as expected in the terminal mode, as some \
 closing tags reset all formatting.")
 
 

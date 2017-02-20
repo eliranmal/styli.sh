@@ -3,9 +3,11 @@
 
 show_help_renderer() {
 	printf "
+usage:
+
 $(t_code_block \
 "sh" \
-"usage: ( export FORMAT=<format> OUTPUT_PATH=[<output_path>] ; my-command -h | ./renderer )"
+"( export FORMAT=<format> [OUTPUT_PATH=<output_path>] ; my-command -h | ./renderer )"
 )
 
 
@@ -18,8 +20,53 @@ $(t_subheading "flags")
 
 $(t_code_definition \
 "-h" \
-"shows this help message." \
-)
+"shows this help message.")
+
+
+$(t_subheading "environment")
+
+environment variables for the renderer must be declared using $(t_code 'export') \
+(rather than $(t_code 'env')), in order to share them both with the renderer and the formatter in your program.
+
+$(t_code_definition \
+"FORMAT" \
+"which format to use. possible values: $(t_code 'markdown'), $(t_code 'terminal'), $(t_code 'raw').")
+
+$(t_code_definition \
+"OUTPUT_PATH" \
+"where to write to. defaults to $(t_code '<working-dir>/output/<cmd>.<ext>'), \
+where $(t_code '<cmd>') is the command name that's piped to the renderer, \
+and $(t_code '<ext>') is a file extension resolved from the passed format.")
+
+$(t_list_item \
+"")
+
+
+$(t_subheading "what it does")
+
+the renderer's job is to read the formatted output of a program, and write it to a file.
+
+
+$(t_subheading "examples")
+
+$(t_list_item \
+"auto resolve the output path" \
+"
+$(t_code_block \
+"sh" \
+'( export FORMAT="markdown" ; ./foo -h | ./styli.sh/renderer )')
+
+writes to $(t_code './output/foo.md')")
+
+$(t_list_item \
+"be explicit about everything" \
+"
+$(t_code_block \
+"sh" \
+'( export FORMAT="markdown" OUTPUT_PATH='./usage/bar.md' ; ./foo -h | ./styli.sh/renderer )')
+
+writes to $(t_code './usage/bar.md')")
+
 
 "
 	exit 0

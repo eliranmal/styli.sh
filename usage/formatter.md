@@ -51,8 +51,7 @@ two possible ways:
 
 ### gotcha's
 
-- nesting formats may not behave as expected in the terminal mode, as some 
-  closing tags reset all formatting.
+- nesting formats may not behave as expected in the terminal mode, as some closing tags reset all formatting.
 
 ### references
 
