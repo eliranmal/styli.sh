@@ -96,7 +96,11 @@ util_fg_rainbow() {
 }
 
 util_repeat() {
-    seq -f "$1" -s '' $2
+	local str=""
+	for (( n=$2; n > 0; n-- )); do
+		str="$str$1"
+	done
+	printf "%s" "$str"	
 }
 
 util_wrap() {
