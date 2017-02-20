@@ -34,7 +34,6 @@ two possible ways:
 $(t_list_item \
 "include the available $(t_code '_t_*') tags within strings to wrap terms.
 tags must be closed with the appropriate $(t_code '_t_*_off') tag.")
-
 $(t_list_item \
 "use the formatter functions, they can be piped, or accept arguments.")
 
@@ -49,7 +48,6 @@ $(t_code_block \
 'echo "${_t_bold}this text will be bold${_t_bold_off}"
 echo "text can be ${_t_under}underlined${_t_under_off} as well"
 echo "color me ${_t_fg_yellow}yellow${_t_fg_off}"')")
-
 $(t_list_item \
 "using functions" \
 "
@@ -86,7 +84,6 @@ $(t_subheading "references")
 
 $(t_list_item \
 "the colors used here are based on the $(t_link "SMYCK color scheme" 'http://color.smyck.org/').")
-
 $(t_list_item \
 "the hex color values from SMYCK were converted to their xterm-256 ansi approximations with $(t_link "colortrans.py" 'https://gist.github.com/MicahElliott/719710').")
 

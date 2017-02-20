@@ -26,7 +26,6 @@ two possible ways:
 
 - include the available `_t_*` tags within strings to wrap terms.
   tags must be closed with the appropriate `_t_*_off` tag.
-
 - use the formatter functions, they can be piped, or accept arguments.
 
 ### examples
@@ -38,7 +37,6 @@ two possible ways:
   echo "text can be ${_t_under}underlined${_t_under_off} as well"
   echo "color me ${_t_fg_yellow}yellow${_t_fg_off}"
   ```
-
 - **using functions**
   
   ```sh
@@ -68,7 +66,6 @@ two possible ways:
 ### references
 
 - the colors used here are based on the [SMYCK color scheme](http://color.smyck.org/).
-
 - the hex color values from SMYCK were converted to their xterm-256 ansi approximations with [colortrans.py](https://gist.github.com/MicahElliott/719710).
 
 
