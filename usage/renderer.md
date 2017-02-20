@@ -47,10 +47,10 @@ environment variables for the renderer must be declared using `export` (rather t
 - **render a markdown file**
   
   ```sh
-  ( export FORMAT="markdown" OUTPUT_PATH=./usage/bar.md ; ./foo -h | ./styli.sh/renderer )
+  ( export FORMAT="markdown" OUTPUT_PATH=./usage/foo.md ; ./foo -h | ./styli.sh/renderer )
   ```
   
-  writes the markdown-formatted output of `./foo -h` to `./usage/bar.md`
+  writes the markdown-formatted output of `./foo -h` to `./usage/foo.md`
 
 
 

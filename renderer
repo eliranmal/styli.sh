@@ -58,9 +58,9 @@ $(t_list_item \
 "
 $(t_code_block \
 "sh" \
-'( export FORMAT="markdown" OUTPUT_PATH='./usage/bar.md' ; ./foo -h | ./styli.sh/renderer )')
+'( export FORMAT="markdown" OUTPUT_PATH='./usage/foo.md' ; ./foo -h | ./styli.sh/renderer )')
 
-writes the markdown-formatted output of $(t_code './foo -h') to $(t_code './usage/bar.md')")
+writes the markdown-formatted output of $(t_code './foo -h') to $(t_code './usage/foo.md')")
 
 "
 	exit 0
