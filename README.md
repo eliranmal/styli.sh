@@ -11,7 +11,7 @@ it also has the ability to render the formatted output to a file, or
 convert this output to a different format on the fly.
 
 we [eat our own dog food][3]. that means you can delve into the code, 
-and see how _styli.sh_ is used (by itself) to format help/usage output.
+and see how _styli.sh_ is used (by itself) to format and to render its output.
 
 ## setup
 
