@@ -6,7 +6,7 @@ show_help_formatter() {
 
 $(t_heading "formatter" | t_fg_yellow)
 
-provides an abstract API for formatting shell output.
+utilities for shell output formatting.
 
 
 $(t_subheading "usage")

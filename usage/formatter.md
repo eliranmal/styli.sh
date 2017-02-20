@@ -1,7 +1,7 @@
 
 ## formatter
 
-provides an abstract API for formatting shell output.
+utilities for shell output formatting.
 
 ### usage
 
