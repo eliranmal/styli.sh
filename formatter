@@ -78,6 +78,8 @@ $(t_subheading "gotcha's")
 $(t_list_item \
 "nesting formats may not behave as expected in the terminal mode, as some \
 closing tags reset all formatting.")
+$(t_list_item \
+"heavy use of formatter functions will impact performance, so use them wisely.")
 
 
 $(t_subheading "references")

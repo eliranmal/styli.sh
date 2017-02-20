@@ -63,6 +63,7 @@ two possible ways:
 ### gotcha's
 
 - nesting formats may not behave as expected in the terminal mode, as some closing tags reset all formatting.
+- heavy use of formatter functions will impact performance, so use them wisely.
 
 ### references
 
