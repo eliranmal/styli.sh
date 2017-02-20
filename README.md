@@ -5,8 +5,8 @@
 
 ## overview
 
-_styli.sh_ is a formatting tool for shell programs.
-
+_styli.sh_ is a formatting tool for shell programs, which provides a 
+collection of utility functions and tags for text styling.  
 it also has the ability to render the formatted output to a file, or 
 convert this output to a different format on the fly.
 
