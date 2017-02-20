@@ -72,8 +72,8 @@ closing tags reset all formatting.")
 $(t_subheading "references")
 
 $(t_list_item \
-"the colors used here are based on the SMYCK color scheme (http://color.smyck.org/).
-they were converted to their xterm-256 ansi equivalents with colortrans.py (https://gist.github.com/MicahElliott/719710).")
+"the colors used here are based on the $(t_link "SMYCK color scheme" 'http://color.smyck.org/').
+they were converted to their xterm-256 ansi equivalents with $(t_link 'https://gist.github.com/MicahElliott/719710').")
 
 "
 	# todo - create link tags
@@ -162,7 +162,7 @@ util_replace_tags() {
 	sed -e 's,'"$from_tag"'\([^'"$from_tag"']*\)'"$from_tag_off"','"$to_tag"'\1'"$to_tag_off"',g'
 }
 
-util_replace_entities() {
+util_escape_entities() {
 	sed -e 's,\&,\&amp;,g' | sed -e 's,\<,\&lt;,g' | sed -e 's,\>,\&gt;,g'
 }
 
@@ -253,10 +253,22 @@ init_api_terminal() {
 	}
 	t_code_block() {
 		if [[ -n $2 ]]; then
-			shift # ignore the first arg if there are more, it's the language specifier
+			shift # ignore the first arg if there are more than one, it's the language specifier
 		fi
-		local body="$@"
+		local body="$1"
 		util_wrap "$_t_code" "$_t_code_off" "$body" | util_prefix_multiline '    '
+	}
+	t_link() {
+		local name; local target
+		if [[ -n $2 ]]; then
+			name="$1"; shift
+		fi
+		target="$1"
+		if [[ -n $name ]]; then
+			printf "%s [%s]" "$name" "$target" | util_wrap "$_t_italic" "$_t_italic_off"
+		else
+			util_wrap "$_t_italic" "$_t_italic_off" "$target"
+		fi
 	}
 
 }
@@ -304,8 +316,8 @@ init_api_markdown() {
 		fi
 	}
 	t_definition() {
-		local term="$(echo "$1" | util_replace_entities)"
-		local desc="$(echo "$2" | util_replace_entities | util_suffix_multiline '<br/>')"
+		local term="$(echo "$1" | util_escape_entities)"
+		local desc="$(echo "$2" | util_escape_entities | util_suffix_multiline '<br/>')"
 		util_wrap "$_t_def_term" "$_t_def_term_off" "$term" | util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
 		util_wrap "$_t_def_desc" "$_t_def_desc_off" "$desc" | util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
 	}
@@ -320,6 +332,18 @@ init_api_markdown() {
 		fi
 		local body="$1"
 		util_wrap "$_t_code_block$lang$_t_new_line" "$_t_new_line$_t_code_block_off" "$body"
+	}
+	t_link() {
+		local name; local target
+		if [[ -n $2 ]]; then
+			name="$1"; shift
+		fi
+		target="$1"
+		if [[ -n $name ]]; then
+			printf "[%s](%s)" "$name" "$target"
+		else
+			printf "%s" "$target"
+		fi
 	}
 
 }
