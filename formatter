@@ -13,8 +13,11 @@ $(t_subheading "usage")
 
 $(t_code_block \
 "sh" \
-'[env [FORMAT=terminal|markdown|raw] ;] source ./formatter
-./formatter -h')
+'[env [FORMAT=terminal|markdown|raw] ;] source ./formatter')
+
+$(t_code_block \
+"sh" \
+'./formatter -h')
 
 
 $(t_subheading "flags")

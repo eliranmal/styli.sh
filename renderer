@@ -5,16 +5,29 @@ show_help_renderer() {
 	printf "
 $(t_heading "renderer" | t_fg_yellow)
 
-reads the formatted output of a program, and writes it to a file, with the \
-ability to convert it to a different format.
+reads the formatted output of a program, and writes it to a file.
+
+before the actual write, the output is passed through some transformers that \
+strip-down and dress-up the text, e.g. get rid of redundant blank lines, or \
+append an auto-generated message to the end of the file.
+
+if you don't want to use the transformers, you can just skip the renderer and \
+redirect your program's output directly to a file, after setting the desired format. for example:
+
+$(t_code_block \
+"sh" \
+'env FORMAT=markdown ./my-command -h > ./usage/my-command.md )')
 
 
 $(t_subheading "usage")
 
 $(t_code_block \
 "sh" \
-'( export FORMAT=<format> [OUTPUT_PATH=<output_path>] ; my-command -h | ./renderer )
-./renderer -h')
+'( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./renderer )')
+
+$(t_code_block \
+"sh" \
+'./renderer -h')
 
 
 $(t_subheading "flags")
@@ -35,31 +48,19 @@ $(t_code_definition \
 
 $(t_code_definition \
 "OUTPUT_PATH" \
-"where to write to. defaults to $(t_code '<working-dir>/output/<cmd>.<ext>'), \
-where $(t_code '<cmd>') is the command name that's piped to the renderer, \
-and $(t_code '<ext>') is a file extension resolved from the passed format.")
+"where to write to. value should be a full path, including file name and extension.")
 
 
 $(t_subheading "examples")
 
 $(t_list_item \
-"auto resolve the output path" \
-"
-$(t_code_block \
-"sh" \
-'( export FORMAT="markdown" ; ./foo -h | ./styli.sh/renderer )')
-
-writes to $(t_code './output/foo.md')")
-
-$(t_list_item \
-"be explicit about everything" \
+"render a markdown file" \
 "
 $(t_code_block \
 "sh" \
 '( export FORMAT="markdown" OUTPUT_PATH='./usage/bar.md' ; ./foo -h | ./styli.sh/renderer )')
 
-writes to $(t_code './usage/bar.md')")
-
+writes the markdown-formatted output of $(t_code './foo -h') to $(t_code './usage/bar.md')")
 
 "
 	exit 0
@@ -67,52 +68,40 @@ writes to $(t_code './usage/bar.md')")
 
 
 init_renderer() {
+	require_var "FORMAT"
+	require_var "OUTPUT_PATH"
+	
+	echo
+	echo "> > > start rendering"
 
-	echo "> > > rendering output to a file"
-
-	local output_path=$(resolve_output_path)
-	echo "> output path: '$output_path'"
-
-	ensure_dir "$( dirname "$output_path" )"
-
-	echo "> redirecting all output to the output path"
+	echo "> format: '$FORMAT'"
+	echo "> output path: '$OUTPUT_PATH'"
+	
+	echo "> ensuring output directory..."
+	local output_dir="$( dirname "$OUTPUT_PATH" )"
+	ensure_dir "$output_dir"
+	echo "> directory ensured: '$output_dir'"
+	
+	echo "> redirecting all input to the output path"
 	# test if this script is executed (i.e. not sourced)
 	if [[ $BASH_SOURCE = $0 ]]; then
-		echo "$(cat -)" | strip_down | dress_up > ${output_path}
+		echo "$(cat -)" | strip_down | dress_up > ${OUTPUT_PATH}
 	else
-		exec 1> ${output_path} > >( strip_down | dress_up )
+		exec 1> ${OUTPUT_PATH} > >( strip_down | dress_up )
 	fi
+}
+
+require_var() {
+    if [[ -z "${!1}" ]]; then
+        echo "$1 is mandatory!"
+        exit 1
+    fi
 }
 
 ensure_dir() {
 	if [[ ! -d $1 ]]; then
 		mkdir -p "$1"
 	fi
-}
-
-resolve_output_path() {
-
-	local output_path
-	if [[ -n $OUTPUT_PATH ]]; then
-		output_path="$OUTPUT_PATH"
-	else
-		local working_dir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
-		local output_dir="$working_dir/output"
-		# default file name is the executed command
-		local output_file_name="$(basename $0)"
-		local output_file_ext
-		case $FORMAT in
-			markdown)
-				output_file_ext="md"
-				;;
-			*) # raw/terminal formats will be written to plain text files
-				output_file_ext="txt"
-				;;
-		esac
-		output_path="$output_dir"'/'"$output_file_name"'.'"$output_file_ext"
-	fi
-
-	printf "%s" "$output_path"
 }
 
 dress_up() {

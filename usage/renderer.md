@@ -1,12 +1,23 @@
 
 ## renderer
 
-reads the formatted output of a program, and writes it to a file, with the ability to convert it to a different format.
+reads the formatted output of a program, and writes it to a file.
+
+before the actual write, the output is passed through some transformers that strip-down and dress-up the text, e.g. get rid of redundant blank lines, or append an auto-generated message to the end of the file.
+
+if you don't want to use the transformers, you can just skip the renderer and redirect your program's output directly to a file, after setting the desired format. for example:
+
+```sh
+env FORMAT=markdown ./my-command -h > ./usage/my-command.md )
+```
 
 ### usage
 
 ```sh
-( export FORMAT=<format> [OUTPUT_PATH=<output_path>] ; my-command -h | ./renderer )
+( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./renderer )
+```
+
+```sh
 ./renderer -h
 ```
 
@@ -28,26 +39,18 @@ environment variables for the renderer must be declared using `export` (rather t
 
 <dl>
 	<dt><code>OUTPUT_PATH</code></dt>
-	<dd>where to write to. defaults to <code>&lt;working-dir&gt;/output/&lt;cmd&gt;.&lt;ext&gt;</code>, where <code>&lt;cmd&gt;</code> is the command name that's piped to the renderer, and <code>&lt;ext&gt;</code> is a file extension resolved from the passed format.<br/></dd>
+	<dd>where to write to. value should be a full path, including file name and extension.<br/></dd>
 </dl>
 
 ### examples
 
-- **auto resolve the output path**
-  
-  ```sh
-  ( export FORMAT="markdown" ; ./foo -h | ./styli.sh/renderer )
-  ```
-  
-  writes to `./output/foo.md`
-
-- **be explicit about everything**
+- **render a markdown file**
   
   ```sh
   ( export FORMAT="markdown" OUTPUT_PATH=./usage/bar.md ; ./foo -h | ./styli.sh/renderer )
   ```
   
-  writes to `./usage/bar.md`
+  writes the markdown-formatted output of `./foo -h` to `./usage/bar.md`
 
 
 
