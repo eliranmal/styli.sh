@@ -4,15 +4,18 @@
 show_help_formatter() {
 	# todo - find a way to only activate the formatting of usage lines in markdown
 	printf "
-usage:
+
+$(t_heading "formatter" | t_fg_yellow)
+
+provides an abstract API for formatting shell output.
+
+
+$(t_subheading "usage")
 
 $(t_code_block \
 "sh" \
-'[env [FORMAT=terminal|markdown|raw]] ; source ./formatter')
-
-$(t_heading "formatter" | t_fg_blue)
-
-the $(t_fg_yellow "styli.sh") formatter.
+'[env [FORMAT=terminal|markdown|raw]] ; source ./formatter
+./formatter -h')
 
 
 $(t_subheading "flags")

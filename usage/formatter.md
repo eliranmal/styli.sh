@@ -1,13 +1,13 @@
 
-usage:
+## formatter
+
+provides an abstract API for formatting shell output.
+
+### usage
 
 ```sh
 [env [FORMAT=terminal|markdown|raw]] ; source ./formatter
 ```
-
-## formatter
-
-the styli.sh formatter.
 
 ### flags
 

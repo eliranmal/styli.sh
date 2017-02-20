@@ -1,13 +1,14 @@
 
-usage:
+## renderer
+
+reads the formatted output of a program, and writes it to a file, with the ability to convert it to a different format.
+
+### usage
 
 ```sh
 ( export FORMAT=<format> [OUTPUT_PATH=<output_path>] ; my-command -h | ./renderer )
+./renderer -h
 ```
-
-## renderer
-
-the styli.sh renderer.
 
 ### flags
 
@@ -29,12 +30,6 @@ environment variables for the renderer must be declared using `export` (rather t
 	<dt><code>OUTPUT_PATH</code></dt>
 	<dd>where to write to. defaults to <code>&lt;working-dir&gt;/output/&lt;cmd&gt;.&lt;ext&gt;</code>, where <code>&lt;cmd&gt;</code> is the command name that's piped to the renderer, and <code>&lt;ext&gt;</code> is a file extension resolved from the passed format.<br/></dd>
 </dl>
-
-- 
-
-### what it does
-
-the renderer's job is to read the formatted output of a program, and write it to a file.
 
 ### examples
 
