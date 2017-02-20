@@ -16,7 +16,7 @@ redirect your program's output directly to a file, after setting the desired for
 
 $(t_code_block \
 "sh" \
-'env FORMAT=markdown ./my-command -h > ./usage/my-command.md )')
+'env FORMAT=markdown ./my-command -h > ./usage/my-command.md')
 
 
 $(t_subheading "usage")
