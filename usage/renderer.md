@@ -44,6 +44,8 @@ environment variables for the renderer must be declared using `export` (rather t
 
 ### examples
 
+assuming `./foo` is a program that `source`s the _styli.sh_ formatter, and its output is formatted when using the `-h` flag:
+
 - **render a markdown file**
   
   ```sh

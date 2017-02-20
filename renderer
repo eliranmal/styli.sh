@@ -53,6 +53,9 @@ $(t_code_definition \
 
 $(t_subheading "examples")
 
+assuming $(t_code './foo') is a program that $(t_code 'source')s the $(t_italic 'styli.sh') \
+formatter, and its output is formatted when using the $(t_code '-h') flag:
+
 $(t_list_item \
 "render a markdown file" \
 "
