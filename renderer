@@ -1,19 +1,105 @@
 #!/usr/bin/env bash
 
 
-init_renderer() {
+show_help_renderer() {
+	printf "
+$(t_heading "renderer" | t_fg_yellow)
 
-	echo "> rendering output to a file"
+reads the formatted output of a program, and writes it to a file.
 
-	local output_path=$(resolve_output_path)
-	echo "> output path: '$output_path'"
+before the actual write, the output is passed through some transformers that \
+strip-down and dress-up the text, e.g. get rid of redundant blank lines, or \
+append an auto-generated message to the end of the file.
 
-	ensure_dir "$( dirname "$output_path" )"
+if you don't want to use the transformers, you can just skip the renderer and \
+redirect your program's output directly to a file, after setting the desired format. for example:
 
-	echo "> redirecting all output from now on to the output path"
-	exec 1> ${output_path} > >( strip_down | dress_up )
+$(t_code_block \
+"sh" \
+'env FORMAT=markdown ./my-command -h > ./usage/my-command.md')
+
+
+$(t_subheading "usage")
+
+$(t_code_block \
+"sh" \
+'( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./styli.sh/renderer )')
+
+$(t_code_block \
+"sh" \
+'./renderer -h')
+
+
+$(t_subheading "flags")
+
+$(t_code_definition \
+"-h" \
+"shows this help message.")
+
+
+$(t_subheading "environment")
+
+environment variables for the renderer must be declared using $(t_code 'export') \
+(rather than $(t_code 'env')), in order to share them both with the renderer and the formatter in your program.
+
+$(t_code_definition \
+"FORMAT" \
+"which format to use. possible values: $(t_code 'markdown'), $(t_code 'terminal'), $(t_code 'raw').")
+
+$(t_code_definition \
+"OUTPUT_PATH" \
+"where to write to. value should be a full path, including file name and extension.")
+
+
+$(t_subheading "examples")
+
+assuming $(t_code './foo') is a program that $(t_code 'source')s the $(t_italic 'styli.sh') \
+formatter, and its output is formatted when using the $(t_code '-h') flag:
+
+$(t_list_item \
+"render a markdown file" \
+"
+$(t_code_block \
+"sh" \
+'( export FORMAT="markdown" OUTPUT_PATH='./usage/foo.md' ; ./foo -h | ./styli.sh/renderer )')
+
+writes the markdown-formatted output of $(t_code './foo -h') to $(t_code './usage/foo.md')")
+
+"
+	exit 0
 }
 
+
+init_renderer() {
+	require_var "FORMAT"
+	require_var "OUTPUT_PATH"
+	
+	echo
+	echo "> > > start rendering"
+
+	echo "> format: '$FORMAT'"
+	echo "> output path: '$OUTPUT_PATH'"
+	
+	echo "> ensuring output directory..."
+	local output_dir="$( dirname "$OUTPUT_PATH" )"
+	ensure_dir "$output_dir"
+	echo "> directory ensured: '$output_dir'"
+	
+	echo "> redirecting all input to the output path"
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 ]]; then
+		echo "$(cat -)" | strip_down | dress_up > ${OUTPUT_PATH}
+	else
+		exec 1> ${OUTPUT_PATH} > >( strip_down | dress_up )
+	fi
+}
+
+require_var() {
+    if [[ -z "${!1}" ]]; then
+        echo "$1 is mandatory!"
+        exit 1
+    fi
+}
 
 ensure_dir() {
 	if [[ ! -d $1 ]]; then
@@ -21,33 +107,8 @@ ensure_dir() {
 	fi
 }
 
-resolve_output_path() {
-
-	local output_path
-	if [[ -n $OUTPUT_PATH ]]; then
-		output_path="$OUTPUT_PATH"
-	else
-		local working_dir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
-		local output_dir="$working_dir/output"
-		# default file name is the executed command
-		local output_file_name="$(basename $0)"
-		local output_file_ext
-		case $FORMAT in
-			markdown)
-				output_file_ext="md"
-				;;
-			*) # raw/terminal formats will be written to plain text files
-				output_file_ext="txt"
-				;;
-		esac
-		output_path="$output_dir"'/'"$output_file_name"'.'"$output_file_ext"
-	fi
-
-	printf "%s" "$output_path"
-}
-
 dress_up() {
-    format_usage_line | add_message | eof
+    add_message | eof
 }
 
 strip_down() {
@@ -55,13 +116,8 @@ strip_down() {
 		markdown)
 			squeeze_blanks
 			;;
-	esac
-}
-
-format_usage_line() {
-	case $FORMAT in
-		markdown)
-			sed -e 'N' -e 's,usage: \(.*\)\(\n\)$,\2    \1\2\2,'
+		*)
+			printf "$(cat -)"
 			;;
 	esac
 }
@@ -76,6 +132,9 @@ add_message() {
 		raw)
 			printf "%s\n\n\n\n\n%s\n%s" "$(cat -)" '---' 'created with styli.sh ('"$repo_url"')'
 			;;
+		*)
+			printf "$(cat -)"
+			;;
 	esac
 }
 
@@ -83,6 +142,9 @@ eof() {
 	case $FORMAT in
 		markdown)
 			echo "$(cat -)" # add newline at end of file
+			;;
+		*)
+			printf "$(cat -)"
 			;;
 	esac
 }
@@ -93,7 +155,16 @@ squeeze_blanks() {
 
 
 main() {
-	init_renderer
+
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 ]]; then
+		if [[ $1 = "-h" ]]; then
+			local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+			source "$source_dir"/formatter
+			show_help_renderer
+		fi
+		init_renderer
+	fi
 }
 
 main "$@"
