@@ -3,7 +3,6 @@
 
 show_help_formatter() {
 	printf "
-
 $(t_heading "formatter" | t_fg_yellow)
 
 utilities for shell output formatting.
@@ -68,8 +67,10 @@ some formatter functions cannot be composed, but can still be used regardless:
 
 $(t_code_block \
 "sh" \
-'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')")
-
+'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')
+$(t_if "terminal" \
+"
+... outputs: $(t_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
 
 $(t_subheading "gotcha's")
 
@@ -105,6 +106,27 @@ util_input() {
 		input=$(cat -)
 	fi
 	printf "%s" "$input"
+}
+
+util_resolve_format() {
+	local format
+	if type "init_api_${FORMAT}" >/dev/null 2>&1; then
+		format="$FORMAT"
+	else
+		format="terminal"
+	fi
+	printf "%s" "$format"
+}
+
+util_switch() {
+	local match_format="$1"; shift
+	local format=$(util_resolve_format)
+	[[ $format = $match_format ]] && {
+		local input=$(util_input "$@")
+		printf "%s" "$input"
+	} || {
+		printf "%s" ''
+	}
 }
 
 util_fg_rainbow() {
@@ -364,44 +386,43 @@ init_api_markdown() {
 }
 
 init_api_raw() {
+# todo - stubs
 	return 0
 }
 
 init_api_composeable() {
 
-	t_bold() {              util_wrap     "$_t_bold"              "$_t_bold_off"      "$@"; }
-	t_italic() {            util_wrap     "$_t_italic"            "$_t_italic_off"    "$@"; }
-	t_strike() {            util_wrap     "$_t_strike"            "$_t_strike_off"    "$@"; }
-	t_code() {              util_wrap     "$_t_code"              "$_t_code_off"      "$@"; }
-	t_under() {             util_wrap     "$_t_under"             "$_t_under_off"     "$@"; }
+	t_bold() {              util_wrap     "$_t_bold"              "$_t_bold_off"    "$@"; }
+	t_italic() {            util_wrap     "$_t_italic"            "$_t_italic_off"  "$@"; }
+	t_strike() {            util_wrap     "$_t_strike"            "$_t_strike_off"  "$@"; }
+	t_code() {              util_wrap     "$_t_code"              "$_t_code_off"    "$@"; }
+	t_under() {             util_wrap     "$_t_under"             "$_t_under_off"   "$@"; }
 
-	t_fg_red() {            util_wrap     "$_t_fg_red"            "$_t_fg_off"        "$@"; }
-	t_fg_green() {          util_wrap     "$_t_fg_green"          "$_t_fg_off"        "$@"; }
-	t_fg_yellow() {         util_wrap     "$_t_fg_yellow"         "$_t_fg_off"        "$@"; }
-	t_fg_blue() {           util_wrap     "$_t_fg_blue"           "$_t_fg_off"        "$@"; }
-	t_fg_magenta() {        util_wrap     "$_t_fg_magenta"        "$_t_fg_off"        "$@"; }
-	t_fg_cyan() {           util_wrap     "$_t_fg_cyan"           "$_t_fg_off"        "$@"; }
-	t_fg_lightred() {       util_wrap     "$_t_fg_lightred"       "$_t_fg_off"        "$@"; }
-	t_fg_lightgreen() {     util_wrap     "$_t_fg_lightgreen"     "$_t_fg_off"        "$@"; }
-	t_fg_lightyellow() {    util_wrap     "$_t_fg_lightyellow"    "$_t_fg_off"        "$@"; }
-	t_fg_lightblue() {      util_wrap     "$_t_fg_lightblue"      "$_t_fg_off"        "$@"; }
-	t_fg_lightmagenta() {   util_wrap     "$_t_fg_lightmagenta"   "$_t_fg_off"        "$@"; }
-	t_fg_lightcyan() {      util_wrap     "$_t_fg_lightcyan"      "$_t_fg_off"        "$@"; }
+	t_fg_red() {            util_wrap     "$_t_fg_red"            "$_t_fg_off"      "$@"; }
+	t_fg_green() {          util_wrap     "$_t_fg_green"          "$_t_fg_off"      "$@"; }
+	t_fg_yellow() {         util_wrap     "$_t_fg_yellow"         "$_t_fg_off"      "$@"; }
+	t_fg_blue() {           util_wrap     "$_t_fg_blue"           "$_t_fg_off"      "$@"; }
+	t_fg_magenta() {        util_wrap     "$_t_fg_magenta"        "$_t_fg_off"      "$@"; }
+	t_fg_cyan() {           util_wrap     "$_t_fg_cyan"           "$_t_fg_off"      "$@"; }
+	t_fg_lightred() {       util_wrap     "$_t_fg_lightred"       "$_t_fg_off"      "$@"; }
+	t_fg_lightgreen() {     util_wrap     "$_t_fg_lightgreen"     "$_t_fg_off"      "$@"; }
+	t_fg_lightyellow() {    util_wrap     "$_t_fg_lightyellow"    "$_t_fg_off"      "$@"; }
+	t_fg_lightblue() {      util_wrap     "$_t_fg_lightblue"      "$_t_fg_off"      "$@"; }
+	t_fg_lightmagenta() {   util_wrap     "$_t_fg_lightmagenta"   "$_t_fg_off"      "$@"; }
+	t_fg_lightcyan() {      util_wrap     "$_t_fg_lightcyan"      "$_t_fg_off"      "$@"; }
 
 }
 
 init_api_common() {
 
-	t_fg_rainbow() {        util_fg_rainbow                                           "$@"; }
+	t_fg_rainbow() {        util_fg_rainbow         "$@"; }
+	t_if() {                util_switch             "$@"; }
 
 }
 
 init_formatter() {
-	if type "init_api_${FORMAT}" >/dev/null 2>&1; then
-		init_api_${FORMAT}
-	else
-		init_api_terminal
-	fi
+	local format=$(util_resolve_format)
+	init_api_${format}
 	init_api_common
 	init_api_composeable
 }
