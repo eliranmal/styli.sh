@@ -64,6 +64,10 @@ $(t_list_item \
 
 writes the markdown-formatted output of $(t_code './foo -h') to $(t_code './usage/foo.md')")
 
+$(t_list_item \
+"test title" \
+"test content")
+
 "
 	exit 0
 }
