@@ -67,8 +67,7 @@ some formatter functions cannot be composed, but can still be used regardless:
 
 $(t_code_block \
 "sh" \
-'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')
-$(t_if "terminal" \
+'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')$(t_if "terminal" \
 "
 ... outputs: $(t_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
 
@@ -121,12 +120,13 @@ util_resolve_format() {
 util_switch() {
 	local match_format="$1"; shift
 	local format=$(util_resolve_format)
+	local output
 	[[ $format = $match_format ]] && {
-		local input=$(util_input "$@")
-		printf "%s" "$input"
+		output=$(util_input "$@")
 	} || {
-		printf "%s" ''
+		output=""
 	}
+	printf "%s" "$output"
 }
 
 util_fg_rainbow() {
