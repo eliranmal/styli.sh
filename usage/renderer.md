@@ -53,9 +53,6 @@ assuming `./foo` is a program that `source`s the _styli.sh_ formatter, and its o
   
   writes the markdown-formatted output of `./foo -h` to `./usage/foo.md`
 
-- **test title**  
-  test content
-
 
 
 <br/><br/>
