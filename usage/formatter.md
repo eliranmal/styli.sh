@@ -30,14 +30,14 @@ two possible ways:
 
 ### examples
 
-- **wrapping with tags**
+- **wrapping with tags**  
   ```sh
   echo "${_t_bold}this text will be bold${_t_bold_off}"
   echo "text can be ${_t_under}underlined${_t_under_off} as well"
   echo "color me ${_t_fg_yellow}yellow${_t_fg_off}"
   ```
 
-- **using functions**
+- **using functions**  
   ```sh
   echo "$(t_heading "foo")"
   echo "$(echo "foo" | t_heading)"

@@ -358,7 +358,7 @@ init_api_markdown() {
 		fi
 		body="$(util_prefix_multiline '  ' "$1$_t_new_line")"
 		if [[ -n $title ]]; then
-			util_prefix "$(util_wrap "$_t_list_item$_t_bold" "$_t_bold_off" "$title")" "$_t_new_line$body"
+			util_prefix "$(util_wrap "$_t_list_item$_t_bold" "$_t_bold_off" "$title")" "$_t_line_break$body"
 		else
 			util_trim_start "$body" | util_prefix "$_t_list_item"
 		fi
