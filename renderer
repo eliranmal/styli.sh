@@ -58,8 +58,7 @@ formatter, and its output is formatted when using the $(t_code '-h') flag:
 
 $(t_list_item \
 "render a markdown file" \
-"
-$(t_code_block \
+"$(t_code_block \
 "sh" \
 '( export FORMAT="markdown" OUTPUT_PATH='./usage/foo.md' ; ./foo -h | ./styli.sh/renderer )')
 

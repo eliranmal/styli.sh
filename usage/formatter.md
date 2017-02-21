@@ -31,7 +31,6 @@ two possible ways:
 ### examples
 
 - **wrapping with tags**
-  
   ```sh
   echo "${_t_bold}this text will be bold${_t_bold_off}"
   echo "text can be ${_t_under}underlined${_t_under_off} as well"
@@ -39,7 +38,6 @@ two possible ways:
   ```
 
 - **using functions**
-  
   ```sh
   echo "$(t_heading "foo")"
   echo "$(echo "foo" | t_heading)"
