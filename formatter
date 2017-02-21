@@ -268,7 +268,8 @@ init_api_terminal() {
 	_t_code=$_t_bold
 	_t_code_off=$_t_bold_off
 	_t_list_item=' - '
-	_t_new_line="\n"
+	_t_new_line='
+'
 
 	t_heading() {
 		util_underline '-' "$_t_fg_off" "$@" | util_wrap "$_t_bold" "$_t_bold_off"
