@@ -47,6 +47,7 @@ $(t_code_block \
 'echo "${_t_bold}this text will be bold${_t_bold_off}"
 echo "text can be ${_t_under}underlined${_t_under_off} as well"
 echo "color me ${_t_fg_yellow}yellow${_t_fg_off}"')")
+
 $(t_list_item \
 "using functions" \
 "
@@ -60,14 +61,17 @@ you can also skip the echo, and compose most of the formatter functions in any w
 
 $(t_code_block \
 "sh" \
-'echo "$(t_heading "foo" | t_fg_yellow)"
-echo "$(t_fg_yellow "foo" | t_bold | t_under)"')
+'echo "$(t_heading "foo" | t_fg_yellow)"')
 $(t_if "terminal" "
-outputs:
+$(t_output \
+"$(t_heading "yellow heading" | t_fg_yellow)")")
 
-$(t_heading "foo" | t_fg_yellow)
-$(t_fg_yellow "foo" | t_bold | t_under)
-")
+$(t_code_block \
+"sh" \
+'echo "$(t_fg_yellow "foo" | t_bold | t_under)"')
+$(t_if "terminal" "
+$(t_output \
+"$(t_fg_yellow "yellow bold underlined" | t_bold | t_under)")")
 
 some formatter functions cannot be composed, but can still be used regardless:
 
@@ -312,6 +316,9 @@ init_api_terminal() {
 			util_wrap "$_t_italic" "$_t_italic_off" "$target"
 		fi
 	}
+	t_output() {
+		util_prefix_multiline ' -> ' "$@"
+	}
 
 }
 
@@ -386,6 +393,9 @@ init_api_markdown() {
 		else
 			printf "%s" "$target"
 		fi
+	}
+	t_output() {
+		t_code_block
 	}
 
 }

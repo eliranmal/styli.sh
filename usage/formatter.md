@@ -37,6 +37,7 @@ two possible ways:
   echo "text can be ${_t_under}underlined${_t_under_off} as well"
   echo "color me ${_t_fg_yellow}yellow${_t_fg_off}"
   ```
+
 - **using functions**
   
   ```sh
@@ -49,6 +50,10 @@ two possible ways:
   
   ```sh
   echo "$(t_heading "foo" | t_fg_yellow)"
+  ```
+  
+  
+  ```sh
   echo "$(t_fg_yellow "foo" | t_bold | t_under)"
   ```
   
