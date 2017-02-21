@@ -62,14 +62,21 @@ $(t_code_block \
 "sh" \
 'echo "$(t_heading "foo" | t_fg_yellow)"
 echo "$(t_fg_yellow "foo" | t_bold | t_under)"')
+$(t_if "terminal" "
+outputs:
+
+$(t_heading "foo" | t_fg_yellow)
+$(t_fg_yellow "foo" | t_bold | t_under)
+")
 
 some formatter functions cannot be composed, but can still be used regardless:
 
 $(t_code_block \
 "sh" \
-'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')$(t_if "terminal" \
-"
-... outputs: $(t_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
+'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')
+$(t_if "terminal" "
+outputs:
+$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
 
 $(t_subheading "gotcha's")
 
@@ -121,11 +128,9 @@ util_switch() {
 	local match_format="$1"; shift
 	local format=$(util_resolve_format)
 	local output
-	[[ $format = $match_format ]] && {
+	if [[ $format = $match_format ]]; then
 		output=$(util_input "$@")
-	} || {
-		output=""
-	}
+	fi
 	printf "%s" "$output"
 }
 

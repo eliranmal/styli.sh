@@ -52,11 +52,13 @@ two possible ways:
   echo "$(t_fg_yellow "foo" | t_bold | t_under)"
   ```
   
+  
   some formatter functions cannot be composed, but can still be used regardless:
   
   ```sh
   echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"
   ```
+  
 
 ### gotcha's
 
