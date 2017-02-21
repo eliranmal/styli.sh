@@ -79,8 +79,8 @@ $(t_code_block \
 "sh" \
 'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')
 $(t_if "terminal" "
-outputs:
-$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
+$(t_output \
+"$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")")")")
 
 $(t_subheading "gotcha's")
 
