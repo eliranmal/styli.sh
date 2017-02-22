@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-show_help_formatter() {
+__f_show_help_formatter() {
 	printf "
 $(t_heading "formatter" | t_fg_yellow)
 
@@ -103,8 +103,8 @@ $(t_list_item \
 
 # parses function input from stdin or passed arguments
 # usage:
-# local input=$(util_input "$@")
-util_input() {
+# local input=$(__f_util_input "$@")
+__f_util_input() {
 	local input
 	if [ -t 0 ]; then
 		if [ $# -gt 0 ]; then
@@ -116,9 +116,13 @@ util_input() {
 	printf "%s" "$input"
 }
 
-util_resolve_format() {
+__f_util_noop() {
+	printf "%s" "$(__f_util_input "$@")"
+}
+
+__f_util_resolve_format() {
 	local format
-	if type "init_api_${FORMAT}" >/dev/null 2>&1; then
+	if type "__f_init_api_${FORMAT}" >/dev/null 2>&1; then
 		format="$FORMAT"
 	else
 		format="terminal"
@@ -126,19 +130,19 @@ util_resolve_format() {
 	printf "%s" "$format"
 }
 
-util_switch() {
+__f_util_switch() {
 	local match_format="$1"; shift
-	local format=$(util_resolve_format)
+	local format=$(__f_util_resolve_format)
 	local output
 	if [[ $format = $match_format ]]; then
-		output=$(util_input "$@")
+		output=$(__f_util_input "$@")
 	fi
 	printf "%s" "$output"
 }
 
-util_fg_rainbow() {
+__f_util_fg_rainbow() {
 	local colors=('red' 'yellow' 'green' 'cyan' 'blue' 'magenta')
-	local input=$(util_input "$@")
+	local input=$(__f_util_input "$@")
 	local chars="$(printf "%s" "$input" | grep -o . --color=never)"
 	local i=0
 	while read -r; do
@@ -150,12 +154,12 @@ util_fg_rainbow() {
 	done <<< "$chars"
 }
 
-util_trim_start() {
-	local input=$(util_input "$@")
+__f_util_trim_start() {
+	local input=$(__f_util_input "$@")
 	printf "%s" "$input" | sed -e '1s,[[:space:]][[:space:]]*\(.*\),\1,'
 }
 
-util_repeat() {
+__f_util_repeat() {
 	local str=""
 	for (( n=$2; n > 0; n-- )); do
 		str="$str$1"
@@ -163,55 +167,55 @@ util_repeat() {
 	printf "%s" "$str"	
 }
 
-util_wrap() {
+__f_util_wrap() {
 	local tag="$1"; shift; local tagoff="$1"; shift
-	local input=$(util_input "$@")
+	local input=$(__f_util_input "$@")
 	printf "%s%s%s" "$tag" "$input" "$tagoff"
 }
 
-util_prefix() {
+__f_util_prefix() {
 	local prefix="$1"; shift
-	local input=$(util_input "$@")
+	local input=$(__f_util_input "$@")
 	printf "%s%s" "$prefix" "$input"
 }
 
-util_suffix() {
+__f_util_suffix() {
 	local suffix="$1"; shift
-	local input=$(util_input "$@")
+	local input=$(__f_util_input "$@")
 	printf "%s%s" "$input" "$suffix"
 }
 
-util_prefix_multiline() {
+__f_util_prefix_multiline() {
 	local prefix=$1; shift
-	local input=$(util_input "$@")
+	local input=$(__f_util_input "$@")
 	printf "$input" | sed -e 's,^\(.*\)$,'"$prefix"'\1,'
 }
 
-util_suffix_multiline() {
+__f_util_suffix_multiline() {
 	local suffix=$1; shift
-	local input=$(util_input "$@")
+	local input=$(__f_util_input "$@")
 	printf "$input" | sed -e 's,^\(.*\)$,\1'"$suffix"','
 }
 
-util_underline() {
+__f_util_char_underline() {
 	local char="$1"; shift
 	local suffix="$1"; shift
-	local input=$(util_input "$@")
-	local underline="$(util_repeat ${char} ${#input})"
+	local input=$(__f_util_input "$@")
+	local underline="$(__f_util_repeat ${char} ${#input})"
 	printf "%s%s\n%s" "$input" "$suffix" "$underline"
 }
 
-util_replace_tags() {
+__f_util_replace_tags() {
 	local from_tag="$1"; local from_tag_off="$2"; local to_tag="$3"; local to_tag_off="$4";
 	sed -e 's,'"$from_tag"'\([^'"$from_tag"']*\)'"$from_tag_off"','"$to_tag"'\1'"$to_tag_off"',g'
 }
 
-util_escape_entities() {
+__f_util_escape_entities() {
 	sed -e 's,\&,\&amp;,g' | sed -e 's,\<,\&lt;,g' | sed -e 's,\>,\&gt;,g'
 }
 
 
-init_api_terminal() {
+__f_init_api_terminal() {
 
 	[[ -t 1 && -t 2 ]] && {
 	
@@ -270,28 +274,27 @@ init_api_terminal() {
 '
 
 	t_heading() {
-		util_underline '-' "$_t_fg_off" "$@" | util_wrap "$_t_bold" "$_t_bold_off"
+		__f_util_char_underline '-' "$_t_fg_off" "$@" | __f_util_wrap "$_t_bold" "$_t_bold_off"
 	}
 	t_subheading() {
-		util_wrap "$_t_under" "$_t_under_off" "$@"
+		__f_util_wrap "$_t_under" "$_t_under_off" "$@"
 	}
 	t_list_item() {
 		local title; local body
 		if [[ -n $2 ]]; then
 			title="$1"; shift
 		fi
-		body="$(util_prefix_multiline '   ' "$1$_t_new_line")"
+		body="$(__f_util_prefix_multiline '   ' "$1$_t_new_line")"
 		if [[ -n $title ]]; then
-			util_prefix "$(util_wrap "$_t_list_item$_t_under" "$_t_under_off" "$title")" "$_t_new_line$_t_new_line$body"
+			__f_util_prefix "$(__f_util_wrap "$_t_list_item$_t_under" "$_t_under_off" "$title")" "$_t_new_line$_t_new_line$body"
 		else
-			util_trim_start "$body" | util_prefix "$_t_list_item"
+			__f_util_trim_start "$body" | __f_util_prefix "$_t_list_item"
 		fi
 	}
 	t_definition() {
-		local term="$1"
-		local desc="$2"
-		util_prefix '   ' "$term" | util_wrap "$_t_bold" "$_t_bold_off$_t_new_line"
-		util_prefix_multiline '      ' "$desc$_t_new_line"
+		local term="$1"; local desc="$2"
+		__f_util_prefix '   ' "$term" | __f_util_wrap "$_t_bold" "$_t_bold_off$_t_new_line"
+		__f_util_prefix_multiline '      ' "$desc$_t_new_line"
 	}
 	t_code_definition() {
 		t_definition "$@"
@@ -301,7 +304,7 @@ init_api_terminal() {
 			shift # ignore the first arg if there are more than one, it's the language specifier
 		fi
 		local body="$1"
-		util_wrap "$_t_code" "$_t_code_off" "$body" | util_prefix_multiline '    '
+		__f_util_wrap "$_t_code" "$_t_code_off" "$body" | __f_util_prefix_multiline '    '
 	}
 	t_link() {
 		local name; local target
@@ -310,18 +313,18 @@ init_api_terminal() {
 		fi
 		target="$1"
 		if [[ -n $name ]]; then
-			printf "%s [%s]" "$name" "$target" | util_wrap "$_t_italic" "$_t_italic_off"
+			printf "%s [%s]" "$name" "$target" | __f_util_wrap "$_t_italic" "$_t_italic_off"
 		else
-			util_wrap "$_t_italic" "$_t_italic_off" "$target"
+			__f_util_wrap "$_t_italic" "$_t_italic_off" "$target"
 		fi
 	}
 	t_output() {
-		util_prefix_multiline ' -> ' "$@"
+		__f_util_prefix_multiline ' -> ' "$@"
 	}
 
 }
 
-init_api_markdown() {
+__f_init_api_markdown() {
 	
 	_t_bold='**'
 	_t_bold_off=$_t_bold
@@ -346,31 +349,31 @@ init_api_markdown() {
 	_t_line_break="  $_t_new_line"
 
 	t_heading() {
-		util_prefix '## ' "$1"
+		__f_util_prefix '## ' "$1"
 	}
 	t_subheading() {
-		util_prefix '### ' "$1"
+		__f_util_prefix '### ' "$1"
 	}
 	t_list_item() {
 		local title; local body
 		if [[ -n $2 ]]; then
 			title="$1"; shift
 		fi
-		body="$(util_prefix_multiline '  ' "$1$_t_new_line")"
+		body="$(__f_util_prefix_multiline '  ' "$1$_t_new_line")"
 		if [[ -n $title ]]; then
-			util_prefix "$(util_wrap "$_t_list_item$_t_bold" "$_t_bold_off" "$title")" "$_t_line_break$body"
+			__f_util_prefix "$(__f_util_wrap "$_t_list_item$_t_bold" "$_t_bold_off" "$title")" "$_t_line_break$body"
 		else
-			util_trim_start "$body" | util_prefix "$_t_list_item"
+			__f_util_trim_start "$body" | __f_util_prefix "$_t_list_item"
 		fi
 	}
 	t_definition() {
-		local term="$(echo "$1" | util_escape_entities)"
-		local desc="$(echo "$2" | util_escape_entities | util_suffix_multiline '<br/>')"
-		util_wrap "$_t_def_term" "$_t_def_term_off" "$term" | util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
-		util_wrap "$_t_def_desc" "$_t_def_desc_off" "$desc" | util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
+		local term="$(echo "$1" | __f_util_escape_entities)"
+		local desc="$(echo "$2" | __f_util_escape_entities | __f_util_suffix_multiline '<br/>')"
+		__f_util_wrap "$_t_def_term" "$_t_def_term_off" "$term" | __f_util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
+		__f_util_wrap "$_t_def_desc" "$_t_def_desc_off" "$desc" | __f_util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
 	}
 	t_code_definition() {
-		local title="$(util_wrap "$_t_code" "$_t_code_off" "$1")"
+		local title="$(__f_util_wrap "$_t_code" "$_t_code_off" "$1")"
 		t_definition "$title" "$2"
 	}
 	t_code_block() {
@@ -379,7 +382,7 @@ init_api_markdown() {
 			lang="$1"; shift
 		fi
 		local body="$1"
-		util_wrap "$_t_code_block$lang$_t_new_line" "$_t_new_line$_t_code_block_off" "$body"
+		__f_util_wrap "$_t_code_block$lang$_t_new_line" "$_t_new_line$_t_code_block_off" "$body"
 	}
 	t_link() {
 		local name; local target
@@ -399,57 +402,57 @@ init_api_markdown() {
 
 }
 
-init_api_raw() {
+__f_init_api_raw() {
 # todo - stubs
 	return 0
 }
 
-init_api_composeable() {
+__f_init_api_composeable() {
 
-	t_bold() {              util_wrap     "$_t_bold"              "$_t_bold_off"    "$@"; }
-	t_italic() {            util_wrap     "$_t_italic"            "$_t_italic_off"  "$@"; }
-	t_strike() {            util_wrap     "$_t_strike"            "$_t_strike_off"  "$@"; }
-	t_code() {              util_wrap     "$_t_code"              "$_t_code_off"    "$@"; }
-	t_under() {             util_wrap     "$_t_under"             "$_t_under_off"   "$@"; }
+	t_bold() {              __f_util_wrap     "$_t_bold"              "$_t_bold_off"    "$@"; }
+	t_italic() {            __f_util_wrap     "$_t_italic"            "$_t_italic_off"  "$@"; }
+	t_strike() {            __f_util_wrap     "$_t_strike"            "$_t_strike_off"  "$@"; }
+	t_code() {              __f_util_wrap     "$_t_code"              "$_t_code_off"    "$@"; }
+	t_under() {             __f_util_wrap     "$_t_under"             "$_t_under_off"   "$@"; }
 
-	t_fg_red() {            util_wrap     "$_t_fg_red"            "$_t_fg_off"      "$@"; }
-	t_fg_green() {          util_wrap     "$_t_fg_green"          "$_t_fg_off"      "$@"; }
-	t_fg_yellow() {         util_wrap     "$_t_fg_yellow"         "$_t_fg_off"      "$@"; }
-	t_fg_blue() {           util_wrap     "$_t_fg_blue"           "$_t_fg_off"      "$@"; }
-	t_fg_magenta() {        util_wrap     "$_t_fg_magenta"        "$_t_fg_off"      "$@"; }
-	t_fg_cyan() {           util_wrap     "$_t_fg_cyan"           "$_t_fg_off"      "$@"; }
-	t_fg_lightred() {       util_wrap     "$_t_fg_lightred"       "$_t_fg_off"      "$@"; }
-	t_fg_lightgreen() {     util_wrap     "$_t_fg_lightgreen"     "$_t_fg_off"      "$@"; }
-	t_fg_lightyellow() {    util_wrap     "$_t_fg_lightyellow"    "$_t_fg_off"      "$@"; }
-	t_fg_lightblue() {      util_wrap     "$_t_fg_lightblue"      "$_t_fg_off"      "$@"; }
-	t_fg_lightmagenta() {   util_wrap     "$_t_fg_lightmagenta"   "$_t_fg_off"      "$@"; }
-	t_fg_lightcyan() {      util_wrap     "$_t_fg_lightcyan"      "$_t_fg_off"      "$@"; }
-
-}
-
-init_api_common() {
-
-	t_fg_rainbow() {        util_fg_rainbow         "$@"; }
-	t_if() {                util_switch             "$@"; }
+	t_fg_red() {            __f_util_wrap     "$_t_fg_red"            "$_t_fg_off"      "$@"; }
+	t_fg_green() {          __f_util_wrap     "$_t_fg_green"          "$_t_fg_off"      "$@"; }
+	t_fg_yellow() {         __f_util_wrap     "$_t_fg_yellow"         "$_t_fg_off"      "$@"; }
+	t_fg_blue() {           __f_util_wrap     "$_t_fg_blue"           "$_t_fg_off"      "$@"; }
+	t_fg_magenta() {        __f_util_wrap     "$_t_fg_magenta"        "$_t_fg_off"      "$@"; }
+	t_fg_cyan() {           __f_util_wrap     "$_t_fg_cyan"           "$_t_fg_off"      "$@"; }
+	t_fg_lightred() {       __f_util_wrap     "$_t_fg_lightred"       "$_t_fg_off"      "$@"; }
+	t_fg_lightgreen() {     __f_util_wrap     "$_t_fg_lightgreen"     "$_t_fg_off"      "$@"; }
+	t_fg_lightyellow() {    __f_util_wrap     "$_t_fg_lightyellow"    "$_t_fg_off"      "$@"; }
+	t_fg_lightblue() {      __f_util_wrap     "$_t_fg_lightblue"      "$_t_fg_off"      "$@"; }
+	t_fg_lightmagenta() {   __f_util_wrap     "$_t_fg_lightmagenta"   "$_t_fg_off"      "$@"; }
+	t_fg_lightcyan() {      __f_util_wrap     "$_t_fg_lightcyan"      "$_t_fg_off"      "$@"; }
 
 }
 
-init_formatter() {
-	local format=$(util_resolve_format)
-	init_api_${format}
-	init_api_common
-	init_api_composeable
+__f_init_api_common() {
+
+	t_fg_rainbow() {        __f_util_fg_rainbow         "$@"; }
+	t_if() {                __f_util_switch             "$@"; }
+
+}
+
+__f_init_formatter() {
+	local format=$(__f_util_resolve_format)
+	__f_init_api_${format}
+	__f_init_api_common
+	__f_init_api_composeable
 }
 
 
-main() {
+__f_main() {
 
-	init_formatter
+	__f_init_formatter
 
 	# test if this script is executed (i.e. not sourced)
 	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
-		show_help_formatter
+		__f_show_help_formatter
 	fi
 }
 
-main "$@"
+__f_main "$@"
