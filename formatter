@@ -3,98 +3,98 @@
 
 __f_show_help_formatter() {
 	printf "
-$(t_heading "formatter" | t_fg_yellow)
+$(f_heading "formatter" | f_fg_yellow)
 
 utilities for shell output formatting.
 
 
-$(t_subheading "usage")
+$(f_subheading "usage")
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
 '[env FORMAT=terminal|markdown|raw ;] source ./formatter')
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
 './formatter -h')
 
 
-$(t_subheading "flags")
+$(f_subheading "flags")
 
-$(t_code_definition \
+$(f_code_definition \
 "-h" \
 "shows this help message.")
 
 
-$(t_subheading "how to use")
+$(f_subheading "how to use")
  
 two possible ways:
 
-$(t_list_item \
-"include the available $(t_code '_t_*') tags within strings to wrap terms.
-tags must be closed with the appropriate $(t_code '_t_*_off') tag.")
-$(t_list_item \
+$(f_list_item \
+"include the available $(f_code '_f_*') tags within strings to wrap terms.
+tags must be closed with the appropriate $(f_code '_f_*_off') tag.")
+$(f_list_item \
 "use the formatter functions, they can be piped, or accept arguments.")
 
 
-$(t_subheading "examples")
+$(f_subheading "examples")
 
-$(t_list_item \
+$(f_list_item \
 "wrapping with tags" \
-"$(t_code_block \
+"$(f_code_block \
 "sh" \
-'echo "${_t_bold}this text will be bold${_t_bold_off}"
-echo "text can be ${_t_under}underlined${_t_under_off} as well"
-echo "color me ${_t_fg_yellow}yellow${_t_fg_off}"')")
+'echo "${_f_bold}this text will be bold${_f_bold_off}"
+echo "text can be ${_f_under}underlined${_f_under_off} as well"
+echo "color me ${_f_fg_yellow}yellow${_f_fg_off}"')")
 
-$(t_list_item \
+$(f_list_item \
 "using functions" \
-"$(t_code_block \
+"$(f_code_block \
 "sh" \
-'echo "$(t_heading "foo")"
-echo "$(echo "foo" | t_heading)"
-echo "$(echo "foo" | t_heading | t_fg_yellow)"')
+'echo "$(f_heading "foo")"
+echo "$(echo "foo" | f_heading)"
+echo "$(echo "foo" | f_heading | f_fg_yellow)"')
 
 you can also skip the echo, and compose most of the formatter functions in any which way:
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
-'echo "$(t_heading "foo" | t_fg_yellow)"')
-$(t_if "terminal" "
-$(t_output \
-"$(t_heading "yellow heading" | t_fg_yellow)")")
+'echo "$(f_heading "foo" | f_fg_yellow)"')
+$(f_if "terminal" "
+$(f_output \
+"$(f_heading "yellow heading" | f_fg_yellow)")")
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
-'echo "$(t_fg_yellow "foo" | t_bold | t_under)"')
-$(t_if "terminal" "
-$(t_output \
-"$(t_fg_yellow "yellow bold underlined" | t_bold | t_under)")")
+'echo "$(f_fg_yellow "foo" | f_bold | f_under)"')
+$(f_if "terminal" "
+$(f_output \
+"$(f_fg_yellow "yellow bold underlined" | f_bold | f_under)")")
 
 some formatter functions cannot be composed, but can still be used regardless:
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
-'echo "$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")"')
-$(t_if "terminal" "
-$(t_output \
-"$(t_fg_rainbow "the quick brown fox jumps over the lazy dog")")")")
+'echo "$(f_fg_rainbow "the quick brown fox jumps over the lazy dog")"')
+$(f_if "terminal" "
+$(f_output \
+"$(f_fg_rainbow "the quick brown fox jumps over the lazy dog")")")")
 
-$(t_subheading "gotcha's")
+$(f_subheading "gotcha's")
 
-$(t_list_item \
-"nesting formats may not behave as expected with the $(t_code 'terminal') format, \
+$(f_list_item \
+"nesting formats may not behave as expected with the $(f_code 'terminal') format, \
 as some closing tags reset all formatting.")
-$(t_list_item \
+$(f_list_item \
 "heavy use of formatter functions will impact performance, so use them wisely.")
 
 
-$(t_subheading "references")
+$(f_subheading "references")
 
-$(t_list_item \
-"the colors used here are based on the $(t_link "SMYCK color scheme" 'http://color.smyck.org/').")
-$(t_list_item \
-"the hex color values from SMYCK were converted to their xterm-256 ansi approximations with $(t_link "colortrans.py" 'https://gist.github.com/MicahElliott/719710').")
+$(f_list_item \
+"the colors used here are based on the $(f_link "SMYCK color scheme" 'http://color.smyck.org/').")
+$(f_list_item \
+"the hex color values from SMYCK were converted to their xterm-256 ansi approximations with $(f_link "colortrans.py" 'https://gist.github.com/MicahElliott/719710').")
 
 "
 	exit 0
@@ -149,8 +149,8 @@ __f_util_fg_rainbow() {
 		let "pos = $i % ${#colors[@]}"
 		let "i++"
 		local color="${colors[$pos]}"
-		local var_name="_t_fg_$color"
-		printf "${!var_name}$REPLY${_t_fg_off}"
+		local var_name="_f_fg_$color"
+		printf "${!var_name}$REPLY${_f_fg_off}"
 	done <<< "$chars"
 }
 
@@ -219,106 +219,106 @@ __f_init_api_terminal() {
 
 	[[ -t 1 && -t 2 ]] && {
 	
-		_t_off=$(           tput sgr0                   )
+		_f_off=$(           tput sgr0                   )
 
-		_t_bold=$(          tput bold   || tput md      )
-		_t_bold_off=$_t_off
-		_t_italic=$(        tput sitm   || tput ZH      )
-		_t_italic_off=$(    tput ritm   || tput ZR      )
-		_t_under=$(         tput smul   || tput us      )
-		_t_under_off=$(     tput rmul   || tput ue      )
+		_f_bold=$(          tput bold   || tput md      )
+		_f_bold_off=$_f_off
+		_f_italic=$(        tput sitm   || tput ZH      )
+		_f_italic_off=$(    tput ritm   || tput ZR      )
+		_f_under=$(         tput smul   || tput us      )
+		_f_under_off=$(     tput rmul   || tput ue      )
 		
 		local tput_colors=$(tput colors)
 		if [[ $tput_colors ]]; then
 			# `tput setaf 0 || tput AF 0` cannot be used to reset the foreground, as some 
 			# terminal emulators (e.g. iterm2) will set it to explicit black. 
 			# too bad, nesting tags in terminal mode may misbehave as a consequence.
-			_t_fg_off=$_t_off
+			_f_fg_off=$_f_off
 			if (( $tput_colors >= 256 )); then
-				_t_fg_red=$(             tput setaf 167     || tput AF 167  )
-				_t_fg_green=$(           tput setaf 107     || tput AF 107  )
-				_t_fg_yellow=$(          tput setaf 179     || tput AF 179  )
-				_t_fg_blue=$(            tput setaf 74      || tput AF 74   )
-				_t_fg_magenta=$(         tput setaf 182     || tput AF 182  )
-				_t_fg_cyan=$(            tput setaf 30      || tput AF 30   )
-				_t_fg_lightred=$(        tput setaf 174     || tput AF 174  )
-				_t_fg_lightgreen=$(      tput setaf 191     || tput AF 191  )
-				_t_fg_lightyellow=$(     tput setaf 222     || tput AF 222  )
-				_t_fg_lightblue=$(       tput setaf 153     || tput AF 153  )
-				_t_fg_lightmagenta=$(    tput setaf 219     || tput AF 219  )
-				_t_fg_lightcyan=$(       tput setaf 116     || tput AF 116  )
+				_f_fg_red=$(             tput setaf 167     || tput AF 167  )
+				_f_fg_green=$(           tput setaf 107     || tput AF 107  )
+				_f_fg_yellow=$(          tput setaf 179     || tput AF 179  )
+				_f_fg_blue=$(            tput setaf 74      || tput AF 74   )
+				_f_fg_magenta=$(         tput setaf 182     || tput AF 182  )
+				_f_fg_cyan=$(            tput setaf 30      || tput AF 30   )
+				_f_fg_lightred=$(        tput setaf 174     || tput AF 174  )
+				_f_fg_lightgreen=$(      tput setaf 191     || tput AF 191  )
+				_f_fg_lightyellow=$(     tput setaf 222     || tput AF 222  )
+				_f_fg_lightblue=$(       tput setaf 153     || tput AF 153  )
+				_f_fg_lightmagenta=$(    tput setaf 219     || tput AF 219  )
+				_f_fg_lightcyan=$(       tput setaf 116     || tput AF 116  )
 			elif (( $tput_colors >= 8 )); then
-				_t_fg_red=$(             tput setaf 1       || tput AF 1    )
-				_t_fg_green=$(           tput setaf 2       || tput AF 2    )
-				_t_fg_yellow=$(          tput setaf 3       || tput AF 3    )
-				_t_fg_blue=$(            tput setaf 4       || tput AF 4    )
-				_t_fg_magenta=$(         tput setaf 5       || tput AF 5    )
-				_t_fg_cyan=$(            tput setaf 6       || tput AF 6    )
-				_t_fg_lightred=$_t_fg_red
-				_t_fg_lightgreen=$_t_fg_green
-				_t_fg_lightyellow=$_t_fg_yellow
-				_t_fg_lightblue=$_t_fg_blue
-				_t_fg_lightmagenta=$_t_fg_magenta
-				_t_fg_lightcyan=$_t_fg_cyan
+				_f_fg_red=$(             tput setaf 1       || tput AF 1    )
+				_f_fg_green=$(           tput setaf 2       || tput AF 2    )
+				_f_fg_yellow=$(          tput setaf 3       || tput AF 3    )
+				_f_fg_blue=$(            tput setaf 4       || tput AF 4    )
+				_f_fg_magenta=$(         tput setaf 5       || tput AF 5    )
+				_f_fg_cyan=$(            tput setaf 6       || tput AF 6    )
+				_f_fg_lightred=$_f_fg_red
+				_f_fg_lightgreen=$_f_fg_green
+				_f_fg_lightyellow=$_f_fg_yellow
+				_f_fg_lightblue=$_f_fg_blue
+				_f_fg_lightmagenta=$_f_fg_magenta
+				_f_fg_lightcyan=$_f_fg_cyan
 			fi
 		fi
 
 	} 2>/dev/null ||: # protect from "unknown terminfo capability" errors
 
-	_t_strike=$'\033[9m'
-	_t_strike_off=$'\033[29m'
-	_t_code=$_t_bold
-	_t_code_off=$_t_bold_off
-	_t_list_item=' - '
-	_t_new_line='
+	_f_strike=$'\033[9m'
+	_f_strike_off=$'\033[29m'
+	_f_code=$_f_bold
+	_f_code_off=$_f_bold_off
+	_f_list_item=' - '
+	_f_new_line='
 '
 
-	t_heading() {
-		__f_util_char_underline '-' "$_t_fg_off" "$@" | __f_util_wrap "$_t_bold" "$_t_bold_off"
+	f_heading() {
+		__f_util_char_underline '-' "$_f_fg_off" "$@" | __f_util_wrap "$_f_bold" "$_f_bold_off"
 	}
-	t_subheading() {
-		__f_util_wrap "$_t_under" "$_t_under_off" "$@"
+	f_subheading() {
+		__f_util_wrap "$_f_under" "$_f_under_off" "$@"
 	}
-	t_list_item() {
+	f_list_item() {
 		local title; local body
 		if [[ -n $2 ]]; then
 			title="$1"; shift
 		fi
-		body="$(__f_util_prefix_multiline '   ' "$1$_t_new_line")"
+		body="$(__f_util_prefix_multiline '   ' "$1$_f_new_line")"
 		if [[ -n $title ]]; then
-			__f_util_prefix "$(__f_util_wrap "$_t_list_item$_t_under" "$_t_under_off" "$title")" "$_t_new_line$_t_new_line$body"
+			__f_util_prefix "$(__f_util_wrap "$_f_list_item$_f_under" "$_f_under_off" "$title")" "$_f_new_line$_f_new_line$body"
 		else
-			__f_util_trim_start "$body" | __f_util_prefix "$_t_list_item"
+			__f_util_trim_start "$body" | __f_util_prefix "$_f_list_item"
 		fi
 	}
-	t_definition() {
+	f_definition() {
 		local term="$1"; local desc="$2"
-		__f_util_prefix '   ' "$term" | __f_util_wrap "$_t_bold" "$_t_bold_off$_t_new_line"
-		__f_util_prefix_multiline '      ' "$desc$_t_new_line"
+		__f_util_prefix '   ' "$term" | __f_util_wrap "$_f_bold" "$_f_bold_off$_f_new_line"
+		__f_util_prefix_multiline '      ' "$desc$_f_new_line"
 	}
-	t_code_definition() {
-		t_definition "$@"
+	f_code_definition() {
+		f_definition "$@"
 	}
-	t_code_block() {
+	f_code_block() {
 		if [[ -n $2 ]]; then
 			shift # ignore the first arg if there are more than one, it's the language specifier
 		fi
 		local body="$1"
-		__f_util_wrap "$_t_code" "$_t_code_off" "$body" | __f_util_prefix_multiline '    '
+		__f_util_wrap "$_f_code" "$_f_code_off" "$body" | __f_util_prefix_multiline '    '
 	}
-	t_link() {
+	f_link() {
 		local name; local target
 		if [[ -n $2 ]]; then
 			name="$1"; shift
 		fi
 		target="$1"
 		if [[ -n $name ]]; then
-			printf "%s [%s]" "$name" "$target" | __f_util_wrap "$_t_italic" "$_t_italic_off"
+			printf "%s [%s]" "$name" "$target" | __f_util_wrap "$_f_italic" "$_f_italic_off"
 		else
-			__f_util_wrap "$_t_italic" "$_t_italic_off" "$target"
+			__f_util_wrap "$_f_italic" "$_f_italic_off" "$target"
 		fi
 	}
-	t_output() {
+	f_output() {
 		__f_util_prefix_multiline ' -> ' "$@"
 	}
 
@@ -326,65 +326,65 @@ __f_init_api_terminal() {
 
 __f_init_api_markdown() {
 	
-	_t_bold='**'
-	_t_bold_off=$_t_bold
-	_t_italic='_'
-	_t_italic_off=$_t_italic
-	_t_strike='~~'
-	_t_strike_off=$_t_strike
-	_t_code='`'
-	_t_code_off=$_t_code
-	_t_code_block='```'
-	_t_code_block_off=$_t_code_block
-	_t_list_item='- '
-	_t_def_term='<dl>
+	_f_bold='**'
+	_f_bold_off=$_f_bold
+	_f_italic='_'
+	_f_italic_off=$_f_italic
+	_f_strike='~~'
+	_f_strike_off=$_f_strike
+	_f_code='`'
+	_f_code_off=$_f_code
+	_f_code_block='```'
+	_f_code_block_off=$_f_code_block
+	_f_list_item='- '
+	_f_def_term='<dl>
 	<dt>'
-	_t_def_term_off='</dt>
+	_f_def_term_off='</dt>
 '
-	_t_def_desc='	<dd>'
-	_t_def_desc_off='</dd>
+	_f_def_desc='	<dd>'
+	_f_def_desc_off='</dd>
 </dl>
 '
-	_t_new_line="\n"
-	_t_line_break="  $_t_new_line"
+	_f_new_line="\n"
+	_f_line_break="  $_f_new_line"
 
-	t_heading() {
+	f_heading() {
 		__f_util_prefix '## ' "$1"
 	}
-	t_subheading() {
+	f_subheading() {
 		__f_util_prefix '### ' "$1"
 	}
-	t_list_item() {
+	f_list_item() {
 		local title; local body
 		if [[ -n $2 ]]; then
 			title="$1"; shift
 		fi
-		body="$(__f_util_prefix_multiline '  ' "$1$_t_new_line")"
+		body="$(__f_util_prefix_multiline '  ' "$1$_f_new_line")"
 		if [[ -n $title ]]; then
-			__f_util_prefix "$(__f_util_wrap "$_t_list_item$_t_bold" "$_t_bold_off" "$title")" "$_t_line_break$body"
+			__f_util_prefix "$(__f_util_wrap "$_f_list_item$_f_bold" "$_f_bold_off" "$title")" "$_f_line_break$body"
 		else
-			__f_util_trim_start "$body" | __f_util_prefix "$_t_list_item"
+			__f_util_trim_start "$body" | __f_util_prefix "$_f_list_item"
 		fi
 	}
-	t_definition() {
+	f_definition() {
 		local term="$(echo "$1" | __f_util_escape_entities)"
 		local desc="$(echo "$2" | __f_util_escape_entities | __f_util_suffix_multiline '<br/>')"
-		__f_util_wrap "$_t_def_term" "$_t_def_term_off" "$term" | __f_util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
-		__f_util_wrap "$_t_def_desc" "$_t_def_desc_off" "$desc" | __f_util_replace_tags "$_t_code" "$_t_code_off" '<code>' '</code>'
+		__f_util_wrap "$_f_def_term" "$_f_def_term_off" "$term" | __f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
+		__f_util_wrap "$_f_def_desc" "$_f_def_desc_off" "$desc" | __f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
 	}
-	t_code_definition() {
-		local title="$(__f_util_wrap "$_t_code" "$_t_code_off" "$1")"
-		t_definition "$title" "$2"
+	f_code_definition() {
+		local title="$(__f_util_wrap "$_f_code" "$_f_code_off" "$1")"
+		f_definition "$title" "$2"
 	}
-	t_code_block() {
+	f_code_block() {
 		local lang
 		if [[ -n $2 ]]; then
 			lang="$1"; shift
 		fi
 		local body="$1"
-		__f_util_wrap "$_t_code_block$lang$_t_new_line" "$_t_new_line$_t_code_block_off" "$body"
+		__f_util_wrap "$_f_code_block$lang$_f_new_line" "$_f_new_line$_f_code_block_off" "$body"
 	}
-	t_link() {
+	f_link() {
 		local name; local target
 		if [[ -n $2 ]]; then
 			name="$1"; shift
@@ -396,8 +396,8 @@ __f_init_api_markdown() {
 			printf "%s" "$target"
 		fi
 	}
-	t_output() {
-		t_code_block
+	f_output() {
+		f_code_block
 	}
 
 }
@@ -409,31 +409,31 @@ __f_init_api_raw() {
 
 __f_init_api_composeable() {
 
-	t_bold() {              __f_util_wrap     "$_t_bold"              "$_t_bold_off"    "$@"; }
-	t_italic() {            __f_util_wrap     "$_t_italic"            "$_t_italic_off"  "$@"; }
-	t_strike() {            __f_util_wrap     "$_t_strike"            "$_t_strike_off"  "$@"; }
-	t_code() {              __f_util_wrap     "$_t_code"              "$_t_code_off"    "$@"; }
-	t_under() {             __f_util_wrap     "$_t_under"             "$_t_under_off"   "$@"; }
+	f_bold() {              __f_util_wrap     "$_f_bold"              "$_f_bold_off"    "$@"; }
+	f_italic() {            __f_util_wrap     "$_f_italic"            "$_f_italic_off"  "$@"; }
+	f_strike() {            __f_util_wrap     "$_f_strike"            "$_f_strike_off"  "$@"; }
+	f_code() {              __f_util_wrap     "$_f_code"              "$_f_code_off"    "$@"; }
+	f_under() {             __f_util_wrap     "$_f_under"             "$_f_under_off"   "$@"; }
 
-	t_fg_red() {            __f_util_wrap     "$_t_fg_red"            "$_t_fg_off"      "$@"; }
-	t_fg_green() {          __f_util_wrap     "$_t_fg_green"          "$_t_fg_off"      "$@"; }
-	t_fg_yellow() {         __f_util_wrap     "$_t_fg_yellow"         "$_t_fg_off"      "$@"; }
-	t_fg_blue() {           __f_util_wrap     "$_t_fg_blue"           "$_t_fg_off"      "$@"; }
-	t_fg_magenta() {        __f_util_wrap     "$_t_fg_magenta"        "$_t_fg_off"      "$@"; }
-	t_fg_cyan() {           __f_util_wrap     "$_t_fg_cyan"           "$_t_fg_off"      "$@"; }
-	t_fg_lightred() {       __f_util_wrap     "$_t_fg_lightred"       "$_t_fg_off"      "$@"; }
-	t_fg_lightgreen() {     __f_util_wrap     "$_t_fg_lightgreen"     "$_t_fg_off"      "$@"; }
-	t_fg_lightyellow() {    __f_util_wrap     "$_t_fg_lightyellow"    "$_t_fg_off"      "$@"; }
-	t_fg_lightblue() {      __f_util_wrap     "$_t_fg_lightblue"      "$_t_fg_off"      "$@"; }
-	t_fg_lightmagenta() {   __f_util_wrap     "$_t_fg_lightmagenta"   "$_t_fg_off"      "$@"; }
-	t_fg_lightcyan() {      __f_util_wrap     "$_t_fg_lightcyan"      "$_t_fg_off"      "$@"; }
+	f_fg_red() {            __f_util_wrap     "$_f_fg_red"            "$_f_fg_off"      "$@"; }
+	f_fg_green() {          __f_util_wrap     "$_f_fg_green"          "$_f_fg_off"      "$@"; }
+	f_fg_yellow() {         __f_util_wrap     "$_f_fg_yellow"         "$_f_fg_off"      "$@"; }
+	f_fg_blue() {           __f_util_wrap     "$_f_fg_blue"           "$_f_fg_off"      "$@"; }
+	f_fg_magenta() {        __f_util_wrap     "$_f_fg_magenta"        "$_f_fg_off"      "$@"; }
+	f_fg_cyan() {           __f_util_wrap     "$_f_fg_cyan"           "$_f_fg_off"      "$@"; }
+	f_fg_lightred() {       __f_util_wrap     "$_f_fg_lightred"       "$_f_fg_off"      "$@"; }
+	f_fg_lightgreen() {     __f_util_wrap     "$_f_fg_lightgreen"     "$_f_fg_off"      "$@"; }
+	f_fg_lightyellow() {    __f_util_wrap     "$_f_fg_lightyellow"    "$_f_fg_off"      "$@"; }
+	f_fg_lightblue() {      __f_util_wrap     "$_f_fg_lightblue"      "$_f_fg_off"      "$@"; }
+	f_fg_lightmagenta() {   __f_util_wrap     "$_f_fg_lightmagenta"   "$_f_fg_off"      "$@"; }
+	f_fg_lightcyan() {      __f_util_wrap     "$_f_fg_lightcyan"      "$_f_fg_off"      "$@"; }
 
 }
 
 __f_init_api_common() {
 
-	t_fg_rainbow() {        __f_util_fg_rainbow         "$@"; }
-	t_if() {                __f_util_switch             "$@"; }
+	f_fg_rainbow() {        __f_util_fg_rainbow         "$@"; }
+	f_if() {                __f_util_switch             "$@"; }
 
 }
 

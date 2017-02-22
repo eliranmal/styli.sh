@@ -3,7 +3,7 @@
 
 show_help_renderer() {
 	printf "
-$(t_heading "renderer" | t_fg_yellow)
+$(f_heading "renderer" | f_fg_yellow)
 
 reads the formatted output of a program, and writes it to a file.
 
@@ -14,55 +14,55 @@ append an auto-generated message to the end of the file.
 if you don't want to use the transformers, you can just skip the renderer and \
 redirect your program's output directly to a file, after setting the desired format. for example:
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
 'env FORMAT=markdown ./my-command -h > ./usage/my-command.md')
 
 
-$(t_subheading "usage")
+$(f_subheading "usage")
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
 '( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./styli.sh/renderer )')
 
-$(t_code_block \
+$(f_code_block \
 "sh" \
 './renderer -h')
 
 
-$(t_subheading "flags")
+$(f_subheading "flags")
 
-$(t_code_definition \
+$(f_code_definition \
 "-h" \
 "shows this help message.")
 
 
-$(t_subheading "environment")
+$(f_subheading "environment")
 
-environment variables for the renderer must be declared using $(t_code 'export') \
-(rather than $(t_code 'env')), in order to share them both with the renderer and the formatter in your program.
+environment variables for the renderer must be declared using $(f_code 'export') \
+(rather than $(f_code 'env')), in order to share them both with the renderer and the formatter in your program.
 
-$(t_code_definition \
+$(f_code_definition \
 "FORMAT" \
-"which format to use. possible values: $(t_code 'markdown'), $(t_code 'terminal'), $(t_code 'raw').")
+"which format to use. possible values: $(f_code 'markdown'), $(f_code 'terminal'), $(f_code 'raw').")
 
-$(t_code_definition \
+$(f_code_definition \
 "OUTPUT_PATH" \
 "where to write to. value should be a full path, including file name and extension.")
 
 
-$(t_subheading "examples")
+$(f_subheading "examples")
 
-assuming $(t_code './foo') is a program that $(t_code 'source')s the $(t_italic 'styli.sh') \
-formatter, and its output is formatted when using the $(t_code '-h') flag:
+assuming $(f_code './foo') is a program that $(f_code 'source')s the $(f_italic 'styli.sh') \
+formatter, and its output is formatted when using the $(f_code '-h') flag:
 
-$(t_list_item \
+$(f_list_item \
 "render a markdown file" \
-"$(t_code_block \
+"$(f_code_block \
 "sh" \
 '( export FORMAT="markdown" OUTPUT_PATH='./usage/foo.md' ; ./foo -h | ./styli.sh/renderer )')
 
-writes the markdown-formatted output of $(t_code './foo -h') to $(t_code './usage/foo.md')")
+writes the markdown-formatted output of $(f_code './foo -h') to $(f_code './usage/foo.md')")
 
 "
 	exit 0
