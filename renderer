@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-show_help_renderer() {
+show_help() {
 	printf "
 $(f_heading "renderer" | f_fg_yellow)
 
@@ -160,7 +160,7 @@ main() {
 		if [[ $1 = "-h" ]]; then
 			local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
 			source "$source_dir"/formatter
-			show_help_renderer
+			show_help
 		fi
 		init_renderer
 	fi

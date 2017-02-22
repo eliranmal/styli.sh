@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-__f_show_help_formatter() {
+__f_show_help() {
 	printf "
 $(f_heading "formatter" | f_fg_yellow)
 
@@ -140,20 +140,6 @@ __f_util_switch() {
 	printf "%s" "$output"
 }
 
-__f_util_fg_rainbow() {
-	local colors=('red' 'yellow' 'green' 'cyan' 'blue' 'magenta')
-	local input=$(__f_util_input "$@")
-	local chars="$(printf "%s" "$input" | grep -o . --color=never)"
-	local i=0
-	while read -r; do
-		let "pos = $i % ${#colors[@]}"
-		let "i++"
-		local color="${colors[$pos]}"
-		local var_name="_f_fg_$color"
-		printf "${!var_name}$REPLY${_f_fg_off}"
-	done <<< "$chars"
-}
-
 __f_util_trim_start() {
 	local input=$(__f_util_input "$@")
 	printf "%s" "$input" | sed -e '1s,[[:space:]][[:space:]]*\(.*\),\1,'
@@ -215,6 +201,57 @@ __f_util_escape_entities() {
 }
 
 
+# declare all api functions, in case some are not declared later. use pipe-through implementation for all
+__f_init_api_stubs() {
+
+	f_bold() {              __f_util_noop "$@"; }
+	f_italic() {            __f_util_noop "$@"; }
+	f_strike() {            __f_util_noop "$@"; }
+	f_code() {              __f_util_noop "$@"; }
+	f_under() {             __f_util_noop "$@"; }
+
+	f_fg_red() {            __f_util_noop "$@"; }
+	f_fg_green() {          __f_util_noop "$@"; }
+	f_fg_yellow() {         __f_util_noop "$@"; }
+	f_fg_blue() {           __f_util_noop "$@"; }
+	f_fg_magenta() {        __f_util_noop "$@"; }
+	f_fg_cyan() {           __f_util_noop "$@"; }
+	f_fg_lightred() {       __f_util_noop "$@"; }
+	f_fg_lightgreen() {     __f_util_noop "$@"; }
+	f_fg_lightyellow() {    __f_util_noop "$@"; }
+	f_fg_lightblue() {      __f_util_noop "$@"; }
+	f_fg_lightmagenta() {   __f_util_noop "$@"; }
+	f_fg_lightcyan() {      __f_util_noop "$@"; }
+	f_fg_rainbow() {        __f_util_noop "$@"; }
+
+	f_heading() {           __f_util_noop "$@"; }
+	f_subheading() {        __f_util_noop "$@"; }
+	f_list_item() {         __f_util_noop "$@"; }
+	f_definition() {        __f_util_noop "$@"; }
+	f_code_definition() {   __f_util_noop "$@"; }
+	f_code_block() {        __f_util_noop "$@"; }
+	f_link() {              __f_util_noop "$@"; }
+	f_output() {            __f_util_noop "$@"; }
+
+	f_if() {                __f_util_noop "$@"; }
+}
+
+# declare base implementations for common functions that all api flavors share
+__f_init_api_common() {
+
+	# uncomposeable functions
+	f_if() {                __f_util_switch             "$@"; }
+
+	# composeable functions
+	f_bold() {              __f_util_wrap     "$_f_bold"              "$_f_bold_off"    "$@"; }
+	f_italic() {            __f_util_wrap     "$_f_italic"            "$_f_italic_off"  "$@"; }
+	f_strike() {            __f_util_wrap     "$_f_strike"            "$_f_strike_off"  "$@"; }
+	f_code() {              __f_util_wrap     "$_f_code"              "$_f_code_off"    "$@"; }
+	f_under() {             __f_util_wrap     "$_f_under"             "$_f_under_off"   "$@"; }
+
+}
+
+# declare/override implementations for terminal api functions and tags
 __f_init_api_terminal() {
 
 	[[ -t 1 && -t 2 ]] && {
@@ -273,6 +310,33 @@ __f_init_api_terminal() {
 	_f_new_line='
 '
 
+	f_fg_red() {            __f_util_wrap     "$_f_fg_red"            "$_f_fg_off"      "$@"; }
+	f_fg_green() {          __f_util_wrap     "$_f_fg_green"          "$_f_fg_off"      "$@"; }
+	f_fg_yellow() {         __f_util_wrap     "$_f_fg_yellow"         "$_f_fg_off"      "$@"; }
+	f_fg_blue() {           __f_util_wrap     "$_f_fg_blue"           "$_f_fg_off"      "$@"; }
+	f_fg_magenta() {        __f_util_wrap     "$_f_fg_magenta"        "$_f_fg_off"      "$@"; }
+	f_fg_cyan() {           __f_util_wrap     "$_f_fg_cyan"           "$_f_fg_off"      "$@"; }
+	f_fg_lightred() {       __f_util_wrap     "$_f_fg_lightred"       "$_f_fg_off"      "$@"; }
+	f_fg_lightgreen() {     __f_util_wrap     "$_f_fg_lightgreen"     "$_f_fg_off"      "$@"; }
+	f_fg_lightyellow() {    __f_util_wrap     "$_f_fg_lightyellow"    "$_f_fg_off"      "$@"; }
+	f_fg_lightblue() {      __f_util_wrap     "$_f_fg_lightblue"      "$_f_fg_off"      "$@"; }
+	f_fg_lightmagenta() {   __f_util_wrap     "$_f_fg_lightmagenta"   "$_f_fg_off"      "$@"; }
+	f_fg_lightcyan() {      __f_util_wrap     "$_f_fg_lightcyan"      "$_f_fg_off"      "$@"; }
+	
+	f_fg_rainbow() {
+		local colors=('red' 'yellow' 'green' 'cyan' 'blue' 'magenta')
+		local input=$(__f_util_input "$@")
+		local chars="$(printf "%s" "$input" | grep -o . --color=never)"
+		local i=0
+		while read -r; do
+			let "pos = $i % ${#colors[@]}"
+			let "i++"
+			local color="${colors[$pos]}"
+			local var_name="_f_fg_$color"
+			printf "${!var_name}$REPLY${_f_fg_off}"
+		done <<< "$chars"
+	}
+
 	f_heading() {
 		__f_util_char_underline '-' "$_f_fg_off" "$@" | __f_util_wrap "$_f_bold" "$_f_bold_off"
 	}
@@ -324,6 +388,7 @@ __f_init_api_terminal() {
 
 }
 
+# declare/override implementations for markdown api functions and tags
 __f_init_api_markdown() {
 	
 	_f_bold='**'
@@ -347,6 +412,7 @@ __f_init_api_markdown() {
 '
 	_f_new_line="\n"
 	_f_line_break="  $_f_new_line"
+
 
 	f_heading() {
 		__f_util_prefix '## ' "$1"
@@ -403,45 +469,41 @@ __f_init_api_markdown() {
 }
 
 __f_init_api_raw() {
-# todo - stubs
-	return 0
-}
 
-__f_init_api_composeable() {
+	f_list_item() {
+		local title; local body
+		if [[ -n $2 ]]; then
+			title="$1"; shift
+		fi
+		body="$1"
+		if [[ -n $title ]]; then
+			__f_util_prefix "$title" "
 
-	f_bold() {              __f_util_wrap     "$_f_bold"              "$_f_bold_off"    "$@"; }
-	f_italic() {            __f_util_wrap     "$_f_italic"            "$_f_italic_off"  "$@"; }
-	f_strike() {            __f_util_wrap     "$_f_strike"            "$_f_strike_off"  "$@"; }
-	f_code() {              __f_util_wrap     "$_f_code"              "$_f_code_off"    "$@"; }
-	f_under() {             __f_util_wrap     "$_f_under"             "$_f_under_off"   "$@"; }
+$body"
+		else
+			__f_util_noop "$body"
+		fi
+	}
+	f_code_block() {
+		if [[ -n $2 ]]; then
+			shift
+		fi
+		local body="$1"
+		__f_util_noop "$body"
+	}
 
-	f_fg_red() {            __f_util_wrap     "$_f_fg_red"            "$_f_fg_off"      "$@"; }
-	f_fg_green() {          __f_util_wrap     "$_f_fg_green"          "$_f_fg_off"      "$@"; }
-	f_fg_yellow() {         __f_util_wrap     "$_f_fg_yellow"         "$_f_fg_off"      "$@"; }
-	f_fg_blue() {           __f_util_wrap     "$_f_fg_blue"           "$_f_fg_off"      "$@"; }
-	f_fg_magenta() {        __f_util_wrap     "$_f_fg_magenta"        "$_f_fg_off"      "$@"; }
-	f_fg_cyan() {           __f_util_wrap     "$_f_fg_cyan"           "$_f_fg_off"      "$@"; }
-	f_fg_lightred() {       __f_util_wrap     "$_f_fg_lightred"       "$_f_fg_off"      "$@"; }
-	f_fg_lightgreen() {     __f_util_wrap     "$_f_fg_lightgreen"     "$_f_fg_off"      "$@"; }
-	f_fg_lightyellow() {    __f_util_wrap     "$_f_fg_lightyellow"    "$_f_fg_off"      "$@"; }
-	f_fg_lightblue() {      __f_util_wrap     "$_f_fg_lightblue"      "$_f_fg_off"      "$@"; }
-	f_fg_lightmagenta() {   __f_util_wrap     "$_f_fg_lightmagenta"   "$_f_fg_off"      "$@"; }
-	f_fg_lightcyan() {      __f_util_wrap     "$_f_fg_lightcyan"      "$_f_fg_off"      "$@"; }
-
-}
-
-__f_init_api_common() {
-
-	f_fg_rainbow() {        __f_util_fg_rainbow         "$@"; }
-	f_if() {                __f_util_switch             "$@"; }
-
+	f_if() {
+		shift
+		local body="$1"
+		__f_util_noop "$body"
+	}
 }
 
 __f_init_formatter() {
 	local format=$(__f_util_resolve_format)
-	__f_init_api_${format}
+	__f_init_api_stubs
 	__f_init_api_common
-	__f_init_api_composeable
+	__f_init_api_${format}
 }
 
 
@@ -451,7 +513,7 @@ __f_main() {
 
 	# test if this script is executed (i.e. not sourced)
 	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
-		__f_show_help_formatter
+		__f_show_help
 	fi
 }
 
