@@ -484,6 +484,14 @@ $body"
 			__f_util_noop "$body"
 		fi
 	}
+	f_definition() {
+		local term="$1"; local desc="$2"
+		__f_util_prefix "$term" "
+$desc"
+	}
+	f_code_definition() {
+		f_definition "$@"
+	}
 	f_code_block() {
 		if (( $# > 1 )); then
 			shift
