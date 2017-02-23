@@ -345,7 +345,7 @@ __f_init_api_terminal() {
 	}
 	f_list_item() {
 		local title; local body
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			title="$1"; shift
 		fi
 		body="$(__f_util_prefix_multiline '   ' "$1$_f_new_line")"
@@ -364,7 +364,7 @@ __f_init_api_terminal() {
 		f_definition "$@"
 	}
 	f_code_block() {
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			shift # ignore the first arg if there are more than one, it's the language specifier
 		fi
 		local body="$1"
@@ -372,7 +372,7 @@ __f_init_api_terminal() {
 	}
 	f_link() {
 		local name; local target
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			name="$1"; shift
 		fi
 		target="$1"
@@ -422,7 +422,7 @@ __f_init_api_markdown() {
 	}
 	f_list_item() {
 		local title; local body
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			title="$1"; shift
 		fi
 		body="$(__f_util_prefix_multiline '  ' "$1$_f_new_line")"
@@ -444,7 +444,7 @@ __f_init_api_markdown() {
 	}
 	f_code_block() {
 		local lang
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			lang="$1"; shift
 		fi
 		local body="$1"
@@ -452,7 +452,7 @@ __f_init_api_markdown() {
 	}
 	f_link() {
 		local name; local target
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			name="$1"; shift
 		fi
 		target="$1"
@@ -472,7 +472,7 @@ __f_init_api_raw() {
 
 	f_list_item() {
 		local title; local body
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			title="$1"; shift
 		fi
 		body="$1"
@@ -485,7 +485,7 @@ $body"
 		fi
 	}
 	f_code_block() {
-		if [[ -n $2 ]]; then
+		if (( $# > 1 )); then
 			shift
 		fi
 		local body="$1"
