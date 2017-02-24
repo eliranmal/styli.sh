@@ -20,13 +20,19 @@ utilities for shell output formatting.
 	<dd>shows this help message.<br/></dd>
 </dl>
 
-### how to use
+### API
  
-two possible ways:
+when the formatter is sourced, it exposes an API composed of two parts; tag variables, and functions.
 
-- include the available `_f_*` tags within strings to wrap terms.
-  tags must be closed with the appropriate `_f_*_off` tag.
-- use the formatter functions, they can be piped, or accept arguments.
+### tags 
+
+include the available `_f_[tag-name]` tags within strings to wrap terms.
+tags must be closed with the appropriate `_f_[tag-name]_off` tag.
+
+### functions 
+
+include the available `_f_[tag-name]` tags within strings to wrap terms.
+tags must be closed with the appropriate `_f_[tag-name]_off` tag.
 
 ### examples
 

@@ -26,15 +26,22 @@ $(f_code_definition \
 "shows this help message.")
 
 
-$(f_subheading "how to use")
+$(f_subheading "API")
  
-two possible ways:
+when the formatter is sourced, it exposes an API composed of two parts; \
+tag variables, and functions.
 
-$(f_list_item \
-"include the available $(f_code '_f_*') tags within strings to wrap terms.
-tags must be closed with the appropriate $(f_code '_f_*_off') tag.")
-$(f_list_item \
-"use the formatter functions, they can be piped, or accept arguments.")
+
+$(f_subheading "tags") 
+
+include the available $(f_code '_f_[tag-name]') tags within strings to wrap terms.
+tags must be closed with the appropriate $(f_code '_f_[tag-name]_off') tag.
+
+
+$(f_subheading "functions") 
+
+include the available $(f_code '_f_[tag-name]') tags within strings to wrap terms.
+tags must be closed with the appropriate $(f_code '_f_[tag-name]_off') tag.
 
 
 $(f_subheading "examples")
