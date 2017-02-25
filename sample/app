@@ -15,6 +15,8 @@ another line with $(f_under "underline"), $(f_strike "strikethrough"), and $(f_i
 
 $(f_subheading "subheading")
 
+a sprinkle of free text.
+
 $(f_code_block \
 "sh" \
 'code block with shell highlighting')
@@ -26,15 +28,13 @@ $(f_code_definition \
 "code definition title" \
 "code definition body content.")
 
-some free text again.
+some free text yet again.
 
+$(f_if "terminal" "$(f_heading "heading (visible only in terminal)" | f_fg_yellow)")
+$(f_if "markdown" "$(f_heading "heading (visible only in markdown)" | f_fg_yellow)")
 
-$(f_heading "yellow heading" | f_fg_yellow)
-
-$(f_list_item \
-"list item with some $(f_code 'inline code') in it.")
-$(f_list_item \
-"list item with some $(f_bold 'bold text') in it.")
+$(f_list_item "list item with some $(f_code 'inline code') in it.")
+$(f_list_item "list item with some $(f_bold 'bold text') in it.")
 
 
 $(f_list_item \
@@ -63,7 +63,7 @@ $(f_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
 ")
 
 
-$(f_subheading "blue bold subheading" | f_fg_blue | f_bold)
+$(f_fg_blue "blue bold subheading" | f_bold | f_subheading)
 
 free text with an $(f_link "inline link" 'http://color.smyck.org/').
 
