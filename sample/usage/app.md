@@ -6,6 +6,8 @@ another line with underline, ~~strikethrough~~, and _italic_ text.
 
 ### subheading
 
+a sprinkle of free text.
+
 ```sh
 code block with shell highlighting
 ```
@@ -17,9 +19,9 @@ some more free text.
 	<dd>code definition body content.<br/></dd>
 </dl>
 
-some free text again.
+some free text yet again.
 
-## yellow heading
+## heading (visible only in markdown)
 
 - list item with some `inline code` in it.
 - list item with some **bold text** in it.
@@ -43,7 +45,7 @@ some free text again.
   
   
 
-**### blue bold subheading**
+### **blue bold subheading**
 
 free text with an [inline link](http://color.smyck.org/).
 
