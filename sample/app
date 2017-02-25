@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+
+source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+source "$source_dir"/../formatter
+
+
+show_help() {
+	printf "
+$(f_heading "heading")
+
+some free text.
+another line with $(f_under "underline"), $(f_strike "strikethrough"), and $(f_italic "italic") text.
+
+
+$(f_subheading "subheading")
+
+$(f_code_block \
+"sh" \
+'code block with shell highlighting')
+
+some more free text.
+
+
+$(f_code_definition \
+"code definition title" \
+"code definition body content.")
+
+some free text again.
+
+
+$(f_heading "yellow heading" | f_fg_yellow)
+
+$(f_list_item \
+"list item with some $(f_code 'inline code') in it.")
+$(f_list_item \
+"list item with some $(f_bold 'bold text') in it.")
+
+
+$(f_list_item \
+"list item title" \
+"list item body content
+another line of content")
+
+$(f_list_item \
+"list item title" \
+"$(f_code_block \
+"sh" \
+'code block inside a list item')
+
+some list item content text, and than:
+
+$(f_code_block \
+"sh" \
+'another code block inside the list item')
+
+$(f_if "terminal" "conditional content, only visible in a terminal:
+
+$(f_output \
+"output block:
+$(f_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
+
+")
+
+
+$(f_subheading "blue bold subheading" | f_fg_blue | f_bold)
+
+free text with an $(f_link "inline link" 'http://color.smyck.org/').
+
+
+"
+	exit 0
+}
+
+main() {
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
+		show_help
+	fi
+}
+
+main "$@"
