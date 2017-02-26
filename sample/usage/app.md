@@ -34,6 +34,7 @@ just free text.
 - **list item title**  
   list item body content
   another line of content
+
 - **list item title**  
   ```sh
   code block inside a list item
