@@ -40,6 +40,8 @@ $(f_list_item "list item with some $(f_bold 'bold text') in it.")
 $(f_list_item "another list item with plain text.")
 
 
+just free text.
+
 $(f_list_item \
 "list item title" \
 "list item body content
