@@ -34,14 +34,72 @@ tag variables, and functions.
 
 $(f_subheading "tags") 
 
-include the available $(f_code '_f_[tag-name]') tags within strings to wrap terms.
-tags must be closed with the appropriate $(f_code '_f_[tag-name]_off') tag.
+include the available $(f_code '_f_[name]') tags within strings to wrap terms.
+tags must be closed with the appropriate $(f_code '_f_[name]_off') tag.
+
 
 
 $(f_subheading "functions") 
 
-include the available $(f_code '_f_[tag-name]') tags within strings to wrap terms.
-tags must be closed with the appropriate $(f_code '_f_[tag-name]_off') tag.
+most of the tag variables has equivalent functions. they all follow the \
+$(f_code 'f_[name]()') convention.
+
+formatter functions can be piped, or accept arguments. those that can do both, 
+with no side effects, will be marked with $(f_bold "composeable").
+
+$(f_code_definition 'f_bold()' \
+"$(f_bold "composeable")
+applies bold style to the passed arguments.")
+
+$(f_code_definition 'f_italic()' \
+"")
+
+$(f_code_definition 'f_strike()' \
+"")
+
+$(f_code_definition 'f_code()' \
+"")
+
+$(f_code_definition 'f_under()' \
+"")
+
+f_fg_red() {            __f_util_noop "$@"; }
+f_fg_green() {          __f_util_noop "$@"; }
+f_fg_yellow() {         __f_util_noop "$@"; }
+f_fg_blue() {           __f_util_noop "$@"; }
+f_fg_magenta() {        __f_util_noop "$@"; }
+f_fg_cyan() {           __f_util_noop "$@"; }
+f_fg_lightred() {       __f_util_noop "$@"; }
+f_fg_lightgreen() {     __f_util_noop "$@"; }
+f_fg_lightyellow() {    __f_util_noop "$@"; }
+f_fg_lightblue() {      __f_util_noop "$@"; }
+f_fg_lightmagenta() {   __f_util_noop "$@"; }
+f_fg_lightcyan() {      __f_util_noop "$@"; }
+f_fg_rainbow() {        __f_util_noop "$@"; }
+
+f_bg_red() {            __f_util_noop "$@"; }
+f_bg_green() {          __f_util_noop "$@"; }
+f_bg_yellow() {         __f_util_noop "$@"; }
+f_bg_blue() {           __f_util_noop "$@"; }
+f_bg_magenta() {        __f_util_noop "$@"; }
+f_bg_cyan() {           __f_util_noop "$@"; }
+f_bg_lightred() {       __f_util_noop "$@"; }
+f_bg_lightgreen() {     __f_util_noop "$@"; }
+f_bg_lightyellow() {    __f_util_noop "$@"; }
+f_bg_lightblue() {      __f_util_noop "$@"; }
+f_bg_lightmagenta() {   __f_util_noop "$@"; }
+f_bg_lightcyan() {      __f_util_noop "$@"; }
+
+f_heading() {           __f_util_noop "$@"; }
+f_subheading() {        __f_util_noop "$@"; }
+f_list_item() {         __f_util_noop "$@"; }
+f_definition() {        __f_util_noop "$@"; }
+f_code_definition() {   __f_util_noop "$@"; }
+f_code_block() {        __f_util_noop "$@"; }
+f_link() {              __f_util_noop "$@"; }
+f_output() {            __f_util_noop "$@"; }
+
+f_if() {                __f_util_noop "$@"; }
 
 
 $(f_subheading "examples")
@@ -200,7 +258,7 @@ __f_util_char_underline() {
 
 __f_util_replace_tags() {
 	local from_tag="$1"; local from_tag_off="$2"; local to_tag="$3"; local to_tag_off="$4";
-	sed -e 's,'"$from_tag"'\([^'"$from_tag"']*\)'"$from_tag_off"','"$to_tag"'\1'"$to_tag_off"',g'
+	sed -e 's,'"$from_tag"'\([^'"$from_tag_off"']*\)'"$from_tag_off"','"$to_tag"'\1'"$to_tag_off"',g'
 }
 
 __f_util_escape_entities() {
@@ -470,6 +528,9 @@ __f_init_api_markdown() {
 	_f_new_line="\n"
 	_f_line_break="  $_f_new_line"
 
+	_f_bold_escaped='\*\*'
+	_f_bold_escaped_off=$_f_bold_escaped
+
 
 	f_heading() {
 		__f_util_prefix '## ' "$1"
@@ -492,8 +553,11 @@ __f_init_api_markdown() {
 	f_definition() {
 		local term="$(echo "$1" | __f_util_escape_entities)"
 		local desc="$(echo "$2" | __f_util_escape_entities | __f_util_suffix_multiline '<br/>')"
-		__f_util_wrap "$_f_def_term" "$_f_def_term_off" "$term" | __f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
-		__f_util_wrap "$_f_def_desc" "$_f_def_desc_off" "$desc" | __f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
+		__f_util_wrap "$_f_def_term" "$_f_def_term_off" "$term" | \
+			__f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
+		__f_util_wrap "$_f_def_desc" "$_f_def_desc_off" "$desc" | \
+			__f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>' | \
+			__f_util_replace_tags "$_f_bold_escaped" "$_f_bold_escaped_off" '<strong>' '</strong>'
 	}
 	f_code_definition() {
 		local title="$(__f_util_wrap "$_f_code" "$_f_code_off" "$1")"
