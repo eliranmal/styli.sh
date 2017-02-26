@@ -43,8 +43,7 @@ $(f_list_item "another list item with plain text.")
 just free text.
 
 $(f_list_item "list item title" \
-"list item body content
-another line of content")
+"list item body content")
 
 $(f_list_item "list item title" \
 "$(f_code_block \
@@ -57,11 +56,12 @@ $(f_code_block \
 "sh" \
 'another code block inside the list item')
 
-$(f_if "terminal" "conditional content, only visible in a terminal:
+$(f_if "terminal" "conditional content (visible only in terminal):
 
 $(f_output \
 "output block:
 $(f_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
+$(f_if "markdown" "conditional content (visible only in markdown)")
 ")
 
 $(f_if "terminal" "$(f_fg_blue "blue bold subheading (visible only in terminal)" | f_bold | f_subheading)")

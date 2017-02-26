@@ -33,7 +33,6 @@ just free text.
 
 - **list item title**  
   list item body content
-  another line of content
 
 - **list item title**  
   ```sh
@@ -47,6 +46,7 @@ just free text.
   ```
   
   
+  conditional content (visible only in markdown)
   
 
 free text with an [inline link](http://color.smyck.org/).
