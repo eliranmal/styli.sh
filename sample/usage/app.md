@@ -26,8 +26,9 @@ some free text yet again.
 - list item with plain text.
 - another list item with plain text.
 - list item with some `inline code` in it.
-- list item with some __bold text__ in it.
+- list item with some **bold text** in it.
 - another list item with plain text.
+
 
 - **list item title**  
   list item body content
