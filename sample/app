@@ -33,6 +33,8 @@ some free text yet again.
 
 $(f_if "terminal" "$(f_heading "heading (visible only in terminal)" | f_fg_yellow)")$(f_if "markdown" "$(f_heading "heading (visible only in markdown)" | f_fg_yellow)")
 
+$(f_list_item "list item with plain text.")
+$(f_list_item "another list item with plain text.")
 $(f_list_item "list item with some $(f_code 'inline code') in it.")
 $(f_list_item "list item with some $(f_bold 'bold text') in it.")
 

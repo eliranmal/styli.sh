@@ -23,6 +23,8 @@ some free text yet again.
 
 ## heading (visible only in markdown)
 
+- list item with plain text.
+- another list item with plain text.
 - list item with some `inline code` in it.
 - list item with some **bold text** in it.
 
