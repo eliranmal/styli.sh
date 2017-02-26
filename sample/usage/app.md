@@ -29,6 +29,7 @@ some free text yet again.
 - list item with some **bold text** in it.
 - another list item with plain text.
 
+plain text
 
 - **list item title**  
   list item body content
