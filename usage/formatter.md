@@ -36,95 +36,97 @@ most of the tag variables has equivalent functions. they all follow the `f_[name
 formatter functions can be piped, or accept arguments. those that can do both, 
 with no side effects, will be marked with **composeable**.
 
-some formatters will only be rendered in a certain format, e.g. 'terminal'. in such cases, the available formats are marked in each function description, under **formats: ...**.
+some formatters will only be rendered in a certain format, e.g. 'terminal'. in such cases, the available formats are marked in each function description, under **available in: ...**.
 if no formats are mentioned, the rendering will apply on all formats.
 
 <dl>
 	<dt><code>f_bold(string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
-applies bold style to the passed arguments.<br/></dd>
+formats passed arguments as bold text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_italic(string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
-applies italics style to the passed arguments.<br/></dd>
+formats passed arguments as italics text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_strike(string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
-applies strike-through style to the passed arguments.<br/></dd>
+formats passed arguments as strike-through text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_code(string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
-applies code style to the passed arguments. always pass arguments with 'strong quoting', to avoid values being interpreted by the shell.<br/></dd>
+formats passed arguments as inline code.<br/>
+note to always pass arguments with <code>'strong quoting'</code>, or properly escape them, to avoid arbitrary code being interpreted by the shell.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_under(string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
-formats: <strong>terminal</strong><br/>
-applies underline style to the passed arguments.<br/></dd>
+available in: <strong>terminal</strong><br/>
+formats passed arguments as underlined text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_fg_[color](string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
-formats: <strong>terminal</strong><br/>
-applies foreground color to the passed arguments. e.g. f_fg_red("my text")<br/></dd>
+available in: <strong>terminal</strong><br/>
+applies foreground color to passed arguments. e.g. <code>f_fg_red("my text")</code>.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_bg_[color](string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
-formats: <strong>terminal</strong><br/>
-applies background color to the passed arguments. e.g. f_bg_red("my text")<br/></dd>
+available in: <strong>terminal</strong><br/>
+applies background color to passed arguments. e.g. <code>f_bg_red("my text")</code><br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_heading(string)</code></dt>
 	<dd><strong>composeable</strong><br/>
-applies heading style to the passed argument.<br/></dd>
+formats the passed <code>string</code> as heading.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_subheading(string)</code></dt>
 	<dd><strong>composeable</strong><br/>
-applies subheading style to the passed argument.<br/></dd>
+formats the passed <code>string</code> as subheading.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_list_item([title], body)</code></dt>
-	<dd>applies list item style. if <code>title</code> is passed, it will appear as the list item's first line, and will be styled as bold.<br/></dd>
+	<dd>formats passed arguments as a list item. if <code>title</code> is passed, it will appear as the list item's first line, and will be styled as bold.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_definition(term, description)</code></dt>
-	<dd>applies definition list item style. <code>term</code> is used as the item's term, and <code>description</code> is used as the item's description (its body content).<br/></dd>
+	<dd>formats passed arguments as a definition list item. <code>term</code> is used as the item's term, and <code>description</code> is used as the item's description (its body content).<br/>
+note that only inline code and bold styles are allowed to be nested inside definition list items.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_code_definition(term, description)</code></dt>
-	<dd>same as <code>f_definition()</code>, except the term is formatted as inline code.<br/></dd>
+	<dd>same as <code>f_definition()</code>, except <code>term</code> is formatted as inline code.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_code_block([lang], body)</code></dt>
-	<dd>applies code block style. if <code>lang</code> is passed, it will be used in the markdown format to highlight the code block. allowed <code>lang</code> values can be found [linguist languages yaml](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml).<br/>
-always enclose the <code>body</code> in 'strong quotes', to avoid values being interpreted by the shell.<br/></dd>
+	<dd>formats passed arguments as a code block. if <code>lang</code> is passed, it will be used in the markdown format to highlight the code block. allowed <code>lang</code> values are those allowed in github-flavored markdown code blocks.<br/>
+note to always enclose the passed <code>body</code> in <code>'strong quotes'</code>, or properly escape it, to avoid arbitrary code being interpreted by the shell.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_link([name], target)</code></dt>
-	<dd>applies link style. if <code>name</code> is passed, it will be used in the markdown format to name the link, and the target will be used as the link ref.<br/></dd>
+	<dd>formats passed arguments as an inline link. if <code>name</code> is passed, it will be used in the markdown format to name the link. the target will be used as the link ref.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_output(body)</code></dt>
-	<dd>applies output block style. in markdown this is the same as <code>f_code_block</code>, and in terminal every line of the body will be prefixed with an arrow, to mark code output.<br/></dd>
+	<dd>formats passed arguments as an output block. in markdown this is the same as <code>f_code_block</code>, and in terminal every line of the body will be prefixed with an arrow, to mark code output.<br/></dd>
 </dl>
 
 <dl>

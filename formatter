@@ -49,77 +49,86 @@ with no side effects, will be marked with $(f_bold "composeable").
 
 some formatters will only be rendered in a certain format, e.g. 'terminal'. \
 in such cases, the available formats are marked in each function description, \
-under $(f_bold "formats: ...").
+under $(f_bold "available in: ...").
 if no formats are mentioned, the rendering will apply on all formats.
 
 $(f_code_definition 'f_bold(string...)' \
 "$(f_bold "composeable")
-applies bold style to the passed arguments.")
+formats passed arguments as bold text.")
 
 $(f_code_definition 'f_italic(string...)' \
 "$(f_bold "composeable")
-applies italics style to the passed arguments.")
+formats passed arguments as italics text.")
 
 $(f_code_definition 'f_strike(string...)' \
 "$(f_bold "composeable")
-applies strike-through style to the passed arguments.")
+formats passed arguments as strike-through text.")
 
 $(f_code_definition 'f_code(string...)' \
 "$(f_bold "composeable")
-applies code style to the passed arguments. always pass arguments with \'strong quoting\', \
-to avoid values being interpreted by the shell.")
+formats passed arguments as inline code.
+note to always pass arguments with $(f_code "\'strong quoting\'"), \
+or properly escape them, to avoid arbitrary code being interpreted by the shell.")
 
 $(f_code_definition 'f_under(string...)' \
 "$(f_bold "composeable")
-formats: $(f_bold "terminal")
-applies underline style to the passed arguments.")
+available in: $(f_bold "terminal")
+formats passed arguments as underlined text.")
 
 $(f_code_definition 'f_fg_[color](string...)' \
 "$(f_bold "composeable")
-formats: $(f_bold "terminal")
-applies foreground color to the passed arguments. e.g. f_fg_red(\"my text\")")
+available in: $(f_bold "terminal")
+applies foreground color to passed arguments. e.g. $(f_code 'f_fg_red("my text")').")
 
 $(f_code_definition 'f_bg_[color](string...)' \
 "$(f_bold "composeable")
-formats: $(f_bold "terminal")
-applies background color to the passed arguments. e.g. f_bg_red(\"my text\")")
+available in: $(f_bold "terminal")
+applies background color to passed arguments. e.g. $(f_code 'f_bg_red("my text")')")
 
 $(f_code_definition 'f_heading(string)' \
 "$(f_bold "composeable")
-applies heading style to the passed argument.")
+formats the passed $(f_code 'string') as heading.")
 
 $(f_code_definition 'f_subheading(string)' \
 "$(f_bold "composeable")
-applies subheading style to the passed argument.")
+formats the passed $(f_code 'string') as subheading.")
 
 $(f_code_definition 'f_list_item([title], body)' \
-"applies list item style. if $(f_code "title") is passed, it will appear as \
-the list item's first line, and will be styled as bold.")
+"formats passed arguments as a list item. if $(f_code "title") is passed, it will \
+appear as the list item's first line, and will be styled as bold.")
 
 $(f_code_definition 'f_definition(term, description)' \
-"applies definition list item style. $(f_code "term") is used as the item's term, \
-and $(f_code "description") is used as the item's description (its body content).")
+"formats passed arguments as a definition list item. $(f_code "term") is used as \
+the item's term, and $(f_code "description") is used as the item's description \
+(its body content).
+note that only inline code and bold styles are allowed to be nested inside \
+definition list items.")
 
 $(f_code_definition 'f_code_definition(term, description)' \
-"same as $(f_code "f_definition()"), except the term is formatted as inline code.")
+"same as $(f_code "f_definition()"), except $(f_code "term") is formatted as \
+inline code.")
 
 $(f_code_definition 'f_code_block([lang], body)' \
-"applies code block style. if $(f_code "lang") is passed, it will be used in \
-the markdown format to highlight the code block. allowed $(f_code "lang") values \
-can be found $(f_link "linguist languages yaml" 'https://github.com/github/linguist/blob/master/lib/linguist/languages.yml').
-always enclose the $(f_code "body") in \'strong quotes\', to avoid values being \
-interpreted by the shell.")
+"formats passed arguments as a code block. if $(f_code "lang") is passed, \
+it will be used in the markdown format to highlight the code block. \
+allowed $(f_code "lang") values are those allowed in github-flavored markdown \
+code blocks.
+note to always enclose the passed $(f_code 'body') in $(f_code "\'strong quotes\'"), \
+or properly escape it, to avoid arbitrary code being interpreted by the shell.")
 
 $(f_code_definition 'f_link([name], target)' \
-"applies link style. if $(f_code "name") is passed, it will be used in \
-the markdown format to name the link, and the target will be used as the link ref.")
+"formats passed arguments as an inline link. if $(f_code "name") is passed, \
+it will be used in the markdown format to name the link. the target will be \
+used as the link ref.")
 
 $(f_code_definition 'f_output(body)' \
-"applies output block style. in markdown this is the same as $(f_code 'f_code_block'), \
-and in terminal every line of the body will be prefixed with an arrow, to mark code output.")
+"formats passed arguments as an output block. in markdown this is the same as \
+$(f_code 'f_code_block'), and in terminal every line of the body will be \
+prefixed with an arrow, to mark code output.")
 
 $(f_code_definition 'f_if(format, content)' \
-"only renders the $(f_code 'content') if the current format matches the passed $(f_code 'format').")
+"only renders the $(f_code 'content') if the current format matches the passed \
+$(f_code 'format').")
 
 
 
