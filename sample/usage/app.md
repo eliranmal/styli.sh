@@ -2,7 +2,8 @@
 ## heading
 
 some free text.
-another line with underline, ~~strikethrough~~, and _italic_ text.
+
+another line with **bold**, underline, ~~strikethrough~~, and _italic_ text.
 
 ### subheading
 
@@ -15,8 +16,21 @@ code block with shell highlighting
 some more free text.
 
 <dl>
+	<dt>definition title</dt>
+	<dd>definition body content.<br/></dd>
+</dl>
+<dl>
+	<dt>another definition title</dt>
+	<dd>another definition body content.<br/></dd>
+</dl>
+
+<dl>
 	<dt><code>code definition title</code></dt>
 	<dd>code definition body content.<br/></dd>
+</dl>
+<dl>
+	<dt><code>another code definition title</code></dt>
+	<dd>another code definition body content.<br/></dd>
 </dl>
 
 some free text yet again.

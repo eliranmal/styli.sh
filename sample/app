@@ -10,7 +10,8 @@ show_help() {
 $(f_heading "heading")
 
 some free text.
-another line with $(f_under "underline"), $(f_strike "strikethrough"), and $(f_italic "italic") text.
+
+another line with $(f_bold "bold"), $(f_under "underline"), $(f_strike "strikethrough"), and $(f_italic "italic") text.
 
 
 $(f_subheading "subheading")
@@ -24,9 +25,19 @@ $(f_code_block \
 some more free text.
 
 
+$(f_definition \
+"definition title" \
+"definition body content.")
+$(f_definition \
+"another definition title" \
+"another definition body content.")
+
 $(f_code_definition \
 "code definition title" \
 "code definition body content.")
+$(f_code_definition \
+"another code definition title" \
+"another code definition body content.")
 
 some free text yet again.
 
