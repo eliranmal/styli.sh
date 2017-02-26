@@ -42,12 +42,11 @@ $(f_list_item "another list item with plain text.")
 
 just free text.
 
-$(f_list_item \
-"list item title" \
+$(f_list_item "list item title" \
 "list item body content
 another line of content")
-$(f_list_item \
-"list item title" \
+
+$(f_list_item "list item title" \
 "$(f_code_block \
 "sh" \
 'code block inside a list item')
