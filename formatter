@@ -231,6 +231,19 @@ __f_init_api_stubs() {
 	f_fg_lightcyan() {      __f_util_noop "$@"; }
 	f_fg_rainbow() {        __f_util_noop "$@"; }
 
+	f_bg_red() {            __f_util_noop "$@"; }
+	f_bg_green() {          __f_util_noop "$@"; }
+	f_bg_yellow() {         __f_util_noop "$@"; }
+	f_bg_blue() {           __f_util_noop "$@"; }
+	f_bg_magenta() {        __f_util_noop "$@"; }
+	f_bg_cyan() {           __f_util_noop "$@"; }
+	f_bg_lightred() {       __f_util_noop "$@"; }
+	f_bg_lightgreen() {     __f_util_noop "$@"; }
+	f_bg_lightyellow() {    __f_util_noop "$@"; }
+	f_bg_lightblue() {      __f_util_noop "$@"; }
+	f_bg_lightmagenta() {   __f_util_noop "$@"; }
+	f_bg_lightcyan() {      __f_util_noop "$@"; }
+
 	f_heading() {           __f_util_noop "$@"; }
 	f_subheading() {        __f_util_noop "$@"; }
 	f_list_item() {         __f_util_noop "$@"; }
@@ -291,6 +304,18 @@ __f_init_api_terminal() {
 				_f_fg_lightblue=$(       tput setaf 153     || tput AF 153  )
 				_f_fg_lightmagenta=$(    tput setaf 219     || tput AF 219  )
 				_f_fg_lightcyan=$(       tput setaf 116     || tput AF 116  )
+				_f_bg_red=$(             tput setab 167     || tput AB 167  )
+				_f_bg_green=$(           tput setab 107     || tput AB 107  )
+				_f_bg_yellow=$(          tput setab 179     || tput AB 179  )
+				_f_bg_blue=$(            tput setab 74      || tput AB 74   )
+				_f_bg_magenta=$(         tput setab 182     || tput AB 182  )
+				_f_bg_cyan=$(            tput setab 30      || tput AB 30   )
+				_f_bg_lightred=$(        tput setab 174     || tput AB 174  )
+				_f_bg_lightgreen=$(      tput setab 191     || tput AB 191  )
+				_f_bg_lightyellow=$(     tput setab 222     || tput AB 222  )
+				_f_bg_lightblue=$(       tput setab 153     || tput AB 153  )
+				_f_bg_lightmagenta=$(    tput setab 219     || tput AB 219  )
+				_f_bg_lightcyan=$(       tput setab 116     || tput AB 116  )
 			elif (( $tput_colors >= 8 )); then
 				_f_fg_red=$(             tput setaf 1       || tput AF 1    )
 				_f_fg_green=$(           tput setaf 2       || tput AF 2    )
@@ -304,6 +329,18 @@ __f_init_api_terminal() {
 				_f_fg_lightblue=$_f_fg_blue
 				_f_fg_lightmagenta=$_f_fg_magenta
 				_f_fg_lightcyan=$_f_fg_cyan
+				_f_bg_red=$(             tput setab 1       || tput AB 1    )
+				_f_bg_green=$(           tput setab 2       || tput AB 2    )
+				_f_bg_yellow=$(          tput setab 3       || tput AB 3    )
+				_f_bg_blue=$(            tput setab 4       || tput AB 4    )
+				_f_bg_magenta=$(         tput setab 5       || tput AB 5    )
+				_f_bg_cyan=$(            tput setab 6       || tput AB 6    )
+				_f_bg_lightred=$_f_bg_red
+				_f_bg_lightgreen=$_f_bg_green
+				_f_bg_lightyellow=$_f_bg_yellow
+				_f_bg_lightblue=$_f_bg_blue
+				_f_bg_lightmagenta=$_f_bg_magenta
+				_f_bg_lightcyan=$_f_bg_cyan
 			fi
 		fi
 
@@ -330,6 +367,19 @@ __f_init_api_terminal() {
 	f_fg_lightmagenta() {   __f_util_wrap     "$_f_fg_lightmagenta"   "$_f_fg_off"      "$@"; }
 	f_fg_lightcyan() {      __f_util_wrap     "$_f_fg_lightcyan"      "$_f_fg_off"      "$@"; }
 	
+	f_bg_red() {            __f_util_wrap     "$_f_bg_red"            "$_f_bg_off"      "$@"; }
+	f_bg_green() {          __f_util_wrap     "$_f_bg_green"          "$_f_bg_off"      "$@"; }
+	f_bg_yellow() {         __f_util_wrap     "$_f_bg_yellow"         "$_f_bg_off"      "$@"; }
+	f_bg_blue() {           __f_util_wrap     "$_f_bg_blue"           "$_f_bg_off"      "$@"; }
+	f_bg_magenta() {        __f_util_wrap     "$_f_bg_magenta"        "$_f_bg_off"      "$@"; }
+	f_bg_cyan() {           __f_util_wrap     "$_f_bg_cyan"           "$_f_bg_off"      "$@"; }
+	f_bg_lightred() {       __f_util_wrap     "$_f_bg_lightred"       "$_f_bg_off"      "$@"; }
+	f_bg_lightgreen() {     __f_util_wrap     "$_f_bg_lightgreen"     "$_f_bg_off"      "$@"; }
+	f_bg_lightyellow() {    __f_util_wrap     "$_f_bg_lightyellow"    "$_f_bg_off"      "$@"; }
+	f_bg_lightblue() {      __f_util_wrap     "$_f_bg_lightblue"      "$_f_bg_off"      "$@"; }
+	f_bg_lightmagenta() {   __f_util_wrap     "$_f_bg_lightmagenta"   "$_f_bg_off"      "$@"; }
+	f_bg_lightcyan() {      __f_util_wrap     "$_f_bg_lightcyan"      "$_f_bg_off"      "$@"; }
+
 	f_fg_rainbow() {
 		local colors=('red' 'yellow' 'green' 'cyan' 'blue' 'magenta')
 		local input=$(__f_util_input "$@")

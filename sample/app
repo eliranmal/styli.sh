@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+
+source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+source "$source_dir"/../formatter
+
+
+show_help() {
+	printf "
+$(f_heading "heading")
+
+plain free text.
+
+text with inline formatting for $(f_bold "bold"), $(f_strike "strikethrough"), and $(f_italic "italic").
+
+$(f_under "underlined") text will be rendered correctly in terminal, but has no effect in markdown.
+
+text with inline formatting for $(f_code "code"), and $(f_link "a link" 'https://github.com/eliranmal/styli.sh').
+
+
+$(f_subheading "subheading")
+
+a sprinkle of free text.
+
+$(f_code_block \
+"sh" \
+'code block with shell highlighting')
+
+some more free text.
+
+
+$(f_definition \
+"definition title" \
+"definition body content.")
+$(f_definition \
+"another definition title" \
+"another definition body content.")
+
+$(f_code_definition \
+"code definition title" \
+"code definition body content.")
+$(f_code_definition \
+"another code definition title" \
+"another code definition body content.")
+
+some free text yet again.
+
+
+$(f_if "terminal" "$(f_heading "heading (visible only in terminal)" | f_fg_yellow)")$(f_if "markdown" "$(f_heading "heading (visible only in markdown)" | f_fg_yellow)")
+
+$(f_list_item "list item with plain text.")
+$(f_list_item "another list item with plain text.")
+$(f_list_item "list item with some $(f_code 'inline code') in it.")
+$(f_list_item "list item with some $(f_bold 'bold text') in it.")
+$(f_list_item "another list item with plain text.")
+
+
+just free text.
+
+$(f_list_item "list item title" \
+"list item body content")
+
+$(f_list_item "list item title" \
+"$(f_code_block \
+"sh" \
+'code block inside a list item')
+
+some list item content text, and than:
+
+$(f_code_block \
+"sh" \
+'another code block inside the list item')
+
+$(f_if "terminal" "conditional content (visible only in terminal):
+
+$(f_output \
+"output block:
+$(f_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
+$(f_if "markdown" "conditional content (visible only in markdown)")
+")
+
+$(f_if "terminal" "$(f_fg_blue "blue bold subheading (visible only in terminal)" | f_bold | f_subheading)")
+
+free text at the end. yup.
+
+"
+	exit 0
+}
+
+main() {
+	# test if this script is executed (i.e. not sourced)
+	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
+		show_help
+	fi
+}
+
+main "$@"
