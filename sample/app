@@ -44,7 +44,6 @@ $(f_list_item \
 "list item title" \
 "list item body content
 another line of content")
-
 $(f_list_item \
 "list item title" \
 "$(f_code_block \
@@ -62,14 +61,11 @@ $(f_if "terminal" "conditional content, only visible in a terminal:
 $(f_output \
 "output block:
 $(f_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
-
 ")
 
-
-$(f_fg_blue "blue bold subheading" | f_bold | f_subheading)
+$(f_if "terminal" "$(f_fg_blue "blue bold subheading (visible only in terminal)" | f_bold | f_subheading)")
 
 free text with an $(f_link "inline link" 'http://color.smyck.org/').
-
 
 "
 	exit 0

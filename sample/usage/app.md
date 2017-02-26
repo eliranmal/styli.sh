@@ -32,7 +32,6 @@ some free text yet again.
 - **list item title**  
   list item body content
   another line of content
-
 - **list item title**  
   ```sh
   code block inside a list item
@@ -46,9 +45,6 @@ some free text yet again.
   
   
   
-  
-
-### **blue bold subheading**
 
 free text with an [inline link](http://color.smyck.org/).
 
