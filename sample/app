@@ -9,9 +9,13 @@ show_help() {
 	printf "
 $(f_heading "heading")
 
-some free text.
+plain free text.
 
-another line with $(f_bold "bold"), $(f_under "underline"), $(f_strike "strikethrough"), and $(f_italic "italic") text.
+text with inline formatting for $(f_bold "bold"), $(f_strike "strikethrough"), and $(f_italic "italic").
+
+$(f_under "underlined") text will be rendered correctly in terminal, but has no effect in markdown.
+
+text with inline formatting for $(f_code "code"), and $(f_link "a link" 'https://github.com/eliranmal/styli.sh').
 
 
 $(f_subheading "subheading")
@@ -77,7 +81,7 @@ $(f_if "markdown" "conditional content (visible only in markdown)")
 
 $(f_if "terminal" "$(f_fg_blue "blue bold subheading (visible only in terminal)" | f_bold | f_subheading)")
 
-free text with an $(f_link "inline link" 'http://color.smyck.org/').
+free text at the end. yup.
 
 "
 	exit 0

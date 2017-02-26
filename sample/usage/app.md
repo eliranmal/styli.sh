@@ -1,9 +1,13 @@
 
 ## heading
 
-some free text.
+plain free text.
 
-another line with **bold**, underline, ~~strikethrough~~, and _italic_ text.
+text with inline formatting for **bold**, ~~strikethrough~~, and _italic_.
+
+underlined text will be rendered correctly in terminal, but has no effect in markdown.
+
+text with inline formatting for `code`, and [a link](https://github.com/eliranmal/styli.sh).
 
 ### subheading
 
@@ -63,7 +67,7 @@ just free text.
   conditional content (visible only in markdown)
   
 
-free text with an [inline link](http://color.smyck.org/).
+free text at the end. yup.
 
 
 
