@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
 
-source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
-source "$source_dir"/../formatter
-
-
-show_help() {
+output_showcase() {
 	printf "
 $(f_heading "heading")
 
@@ -87,14 +83,16 @@ $(f_if "terminal" "$(f_fg_blue "blue bold subheading (visible only in terminal)"
 free text at the end. yup.
 
 "
-	exit 0
 }
 
 main() {
 	# test if this script is executed (i.e. not sourced)
-	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
-		show_help
+	if [[ $BASH_SOURCE = $0 ]]; then
+		local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+		source "$source_dir"/formatter
+		output_showcase
+		exit 0
 	fi
 }
 
-main "$@"
+main

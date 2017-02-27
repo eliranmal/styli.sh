@@ -14,7 +14,7 @@ main() {
 
 	for f in $files; do
 		(
-			export FORMAT="$output_format" OUTPUT_PATH="$output_dir"'/'"$f"'.'"md"
+			export FORMAT="$output_format" OUTPUT_PATH="$output_dir"'/'"$f"'.md'
 			${root_dir}/${f} -h | ${root_dir}/renderer
 		)
 	done
