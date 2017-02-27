@@ -50,8 +50,9 @@ the definitions below describe only the start tag, for brevity.
 </dl>
 
 <dl>
-	<dt><code>_f_code</code></dt>
-	<dd>formats the text as inline code.<br/></dd>
+	<dt><code>_f_under</code></dt>
+	<dd><sup>available in: <strong>terminal</strong></sup><br/>
+formats the text as underlined.<br/></dd>
 </dl>
 
 <dl>
@@ -73,12 +74,14 @@ formats the text as super-text.<br/></dd>
 
 <dl>
 	<dt><code>_f_fg_&lt;color&gt;</code></dt>
-	<dd>applies foreground color to the text.<br/></dd>
+	<dd><sup>available in: <strong>terminal</strong></sup><br/>
+applies foreground color to the text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>_f_bg_&lt;color&gt;</code></dt>
-	<dd>applies background color to the text.<br/></dd>
+	<dd><sup>available in: <strong>terminal</strong></sup><br/>
+applies background color to the text.<br/></dd>
 </dl>
 
 ### functions 
