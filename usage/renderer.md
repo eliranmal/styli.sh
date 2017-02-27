@@ -1,5 +1,5 @@
 
-## renderer
+# renderer
 
 reads the formatted output of a program, and writes it to a file.
 
@@ -11,7 +11,7 @@ if you don't want to use the transformers, you can just skip the renderer and re
 env FORMAT=markdown ./my-command -h > ./usage/my-command.md
 ```
 
-### usage
+## usage
 
 ```sh
 ( export FORMAT=<format> OUTPUT_PATH=<output_path> ; <my-command> | ./styli.sh/renderer )
@@ -21,14 +21,14 @@ env FORMAT=markdown ./my-command -h > ./usage/my-command.md
 ./renderer -h
 ```
 
-### flags
+## flags
 
 <dl>
 	<dt><code>-h</code></dt>
 	<dd>shows this help message.<br/></dd>
 </dl>
 
-### environment
+## environment
 
 environment variables for the renderer must be declared using `export` (rather than `env`), in order to share them both with the renderer and the formatter in your program.
 
@@ -42,7 +42,7 @@ environment variables for the renderer must be declared using `export` (rather t
 	<dd>where to write to. value should be a full path, including file name and extension.<br/></dd>
 </dl>
 
-### examples
+## examples
 
 assuming `./foo` is a program that `source`s the _styli.sh_ formatter, and its output is formatted when using the `-h` flag:
 

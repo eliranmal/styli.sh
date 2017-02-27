@@ -1,9 +1,9 @@
 
-## formatter
+# formatter
 
 utilities for shell output formatting.
 
-### usage
+## usage
 
 ```sh
 [env FORMAT=terminal|markdown|raw ;] source ./formatter
@@ -13,21 +13,21 @@ utilities for shell output formatting.
 ./formatter -h
 ```
 
-### flags
+## flags
 
 <dl>
 	<dt><code>-h</code></dt>
 	<dd>shows this help message. works only when the script is executed (not sourced).<br/></dd>
 </dl>
 
-### API
+## API
  
 when the formatter is sourced, it exposes an API composed of two parts; tags and functions.
 
 some tags or functions will only be applied in a certain format, e.g. `terminal`. in such cases, the available formats will be  marked in the description body, with **available in: <formats...>**.
 if no available formats are mentioned, the rendering will apply on all formats.
 
-### tags 
+## tags 
 
 tags are predefined variables that can be used to format text terms.
 wrap the terms with a start tag in the form `_f_<name>`, and a close tag in the form `_f_<name>_off`.
@@ -84,7 +84,7 @@ applies foreground color to the text.<br/></dd>
 applies background color to the text.<br/></dd>
 </dl>
 
-### functions 
+## functions 
 
 most of the tag variables has equivalent functions. they all follow the `f_<name>()` convention.
 
@@ -200,7 +200,7 @@ note to always enclose the passed <code>body</code> in <code>'strong quotes'</co
 	<dd>only renders the <code>content</code> if the current format matches the passed <code>format</code>.<br/></dd>
 </dl>
 
-### colors
+## colors
 
 here are the available color names to be used with the color formatting tags and functions:
 
@@ -219,7 +219,7 @@ lightmagenta
 lightcyan
 ```
 
-### examples
+## examples
 
 - **wrapping with tags**  
   ```sh
@@ -254,12 +254,12 @@ lightcyan
   ```
   
 
-### gotcha's
+## gotcha's
 
 - nesting formats may not behave as expected with the `terminal` format, as some closing tags reset all formatting.
 - heavy use of formatter functions will impact performance, so use them wisely.
 
-### references
+## references
 
 - the colors used here are based on the [SMYCK color scheme](http://color.smyck.org/).
 - the hex color values from SMYCK were converted to their xterm-256 ansi approximations with [colortrans.py](https://gist.github.com/MicahElliott/719710).

@@ -1,5 +1,5 @@
 
-## heading
+# heading
 
 plain free text.
 
@@ -9,7 +9,7 @@ underlined text will be rendered correctly in terminal, but has no effect in mar
 
 text with inline formatting for `code`, and [a link](https://github.com/eliranmal/styli.sh).
 
-### subheading
+## subheading
 
 a sprinkle of free text.
 
@@ -43,7 +43,7 @@ some more free text.
 
 some free text yet again.
 
-## conditional heading (visible only in markdown)
+# conditional heading (visible only in markdown)
 
 - list item with plain text.
 - another list item with plain text.

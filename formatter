@@ -636,10 +636,10 @@ __f_init_api_markdown() {
 
 
 	f_heading() {
-		__f_util_prefix '## ' "$1"
+		__f_util_prefix '# ' "$1"
 	}
 	f_subheading() {
-		__f_util_prefix '### ' "$1"
+		__f_util_prefix '## ' "$1"
 	}
 	f_list_item() {
 		local title; local body
