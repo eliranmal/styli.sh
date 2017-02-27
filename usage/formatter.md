@@ -40,7 +40,7 @@ the definitions below describe only the start tag, for brevity.
 </dl>
 
 <dl>
-	<dt><code>_f_italic</code></dt>
+	<dt><code>_f_italics</code></dt>
 	<dd>formats the text as italics.<br/></dd>
 </dl>
 
@@ -98,7 +98,7 @@ formats passed arguments as bold text.<br/></dd>
 </dl>
 
 <dl>
-	<dt><code>f_italic(string...)</code></dt>
+	<dt><code>f_italics(string...)</code></dt>
 	<dd><strong><sup>composeable</sup></strong><br/>
 formats passed arguments as italics text.<br/></dd>
 </dl>

@@ -11,7 +11,7 @@ $(f_heading "heading")
 
 plain free text.
 
-text with inline formatting for $(f_bold "bold"), $(f_strike "strikethrough"), and $(f_italic "italic").
+text with inline formatting for $(f_bold "bold"), $(f_strike "strikethrough"), and $(f_italics "italics").
 
 $(f_under "underlined") text will be rendered correctly in terminal, but has no effect in markdown.
 

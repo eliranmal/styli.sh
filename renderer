@@ -53,7 +53,7 @@ $(f_code_definition \
 
 $(f_subheading "examples")
 
-assuming $(f_code './foo') is a program that $(f_code 'source')s the $(f_italic 'styli.sh') \
+assuming $(f_code './foo') is a program that $(f_code 'source')s the $(f_italics 'styli.sh') \
 formatter, and its output is formatted when using the $(f_code '-h') flag:
 
 $(f_list_item \

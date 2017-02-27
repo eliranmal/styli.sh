@@ -3,7 +3,7 @@
 
 plain free text.
 
-text with inline formatting for **bold**, ~~strikethrough~~, and _italic_.
+text with inline formatting for **bold**, ~~strikethrough~~, and _italics_.
 
 underlined text will be rendered correctly in terminal, but has no effect in markdown.
 

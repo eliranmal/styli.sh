@@ -48,7 +48,7 @@ the definitions below describe only the start tag, for brevity.
 $(f_code_definition '_f_bold' \
 "formats the text as bold.")
 
-$(f_code_definition '_f_italic' \
+$(f_code_definition '_f_italics' \
 "formats the text as italics.")
 
 $(f_code_definition '_f_strike' \
@@ -90,7 +90,7 @@ $(f_code_definition 'f_bold(string...)' \
 "$(f_sup "composeable" | f_bold)
 formats passed arguments as bold text.")
 
-$(f_code_definition 'f_italic(string...)' \
+$(f_code_definition 'f_italics(string...)' \
 "$(f_sup "composeable" | f_bold)
 formats passed arguments as italics text.")
 
@@ -363,7 +363,7 @@ __f_util_escape_entities() {
 __f_init_api_stubs() {
 
 	f_bold() {              __f_util_noop "$@"; }
-	f_italic() {            __f_util_noop "$@"; }
+	f_italics() {           __f_util_noop "$@"; }
 	f_strike() {            __f_util_noop "$@"; }
 	f_code() {              __f_util_noop "$@"; }
 	f_under() {             __f_util_noop "$@"; }
@@ -416,11 +416,11 @@ __f_init_api_common() {
 	f_if() {                __f_util_switch             "$@"; }
 
 	# composeable functions
-	f_bold() {              __f_util_wrap     "$_f_bold"              "$_f_bold_off"    "$@"; }
-	f_italic() {            __f_util_wrap     "$_f_italic"            "$_f_italic_off"  "$@"; }
-	f_strike() {            __f_util_wrap     "$_f_strike"            "$_f_strike_off"  "$@"; }
-	f_code() {              __f_util_wrap     "$_f_code"              "$_f_code_off"    "$@"; }
-	f_under() {             __f_util_wrap     "$_f_under"             "$_f_under_off"   "$@"; }
+	f_bold() {              __f_util_wrap     "$_f_bold"            "$_f_bold_off"      "$@"; }
+	f_italics() {           __f_util_wrap     "$_f_italics"         "$_f_italics_off"   "$@"; }
+	f_strike() {            __f_util_wrap     "$_f_strike"          "$_f_strike_off"    "$@"; }
+	f_code() {              __f_util_wrap     "$_f_code"            "$_f_code_off"      "$@"; }
+	f_under() {             __f_util_wrap     "$_f_under"           "$_f_under_off"     "$@"; }
 
 }
 
@@ -433,8 +433,8 @@ __f_init_api_terminal() {
 
 		_f_bold=$(          tput bold   || tput md      )
 		_f_bold_off=$_f_off
-		_f_italic=$(        tput sitm   || tput ZH      )
-		_f_italic_off=$(    tput ritm   || tput ZR      )
+		_f_italics=$(       tput sitm   || tput ZH      )
+		_f_italics_off=$(   tput ritm   || tput ZR      )
 		_f_under=$(         tput smul   || tput us      )
 		_f_under_off=$(     tput rmul   || tput ue      )
 		
@@ -587,9 +587,9 @@ __f_init_api_terminal() {
 		fi
 		target="$1"
 		if [[ -n $name ]]; then
-			printf "%s [%s]" "$name" "$target" | __f_util_wrap "$_f_italic" "$_f_italic_off"
+			printf "%s [%s]" "$name" "$target" | __f_util_wrap "$_f_italics" "$_f_italics_off"
 		else
-			__f_util_wrap "$_f_italic" "$_f_italic_off" "$target"
+			__f_util_wrap "$_f_italics" "$_f_italics_off" "$target"
 		fi
 	}
 	f_output() {
@@ -603,8 +603,8 @@ __f_init_api_markdown() {
 	
 	_f_bold='**'
 	_f_bold_off=$_f_bold
-	_f_italic='_'
-	_f_italic_off=$_f_italic
+	_f_italics='_'
+	_f_italics_off=$_f_italics
 	_f_strike='~~'
 	_f_strike_off=$_f_strike
 	_f_code='`'
