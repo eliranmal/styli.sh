@@ -43,7 +43,7 @@ some more free text.
 
 some free text yet again.
 
-## heading (visible only in markdown)
+## conditional heading (visible only in markdown)
 
 - list item with plain text.
 - another list item with plain text.
@@ -57,14 +57,14 @@ just free text.
   list item body content
 
 - **list item title**  
-  ```sh
-  code block inside a list item
+  ```
+  code block inside a list item with no highlighting
   ```
   
   some list item content text, and than:
   
-  ```sh
-  another code block inside the list item
+  ```js
+  console.log("code block inside the list item with javascript highlighting")
   ```
   
   

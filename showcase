@@ -45,7 +45,7 @@ $(f_code_definition \
 some free text yet again.
 
 
-$(f_if "terminal" "$(f_heading "heading (visible only in terminal)" | f_fg_yellow)")$(f_if "markdown" "$(f_heading "heading (visible only in markdown)" | f_fg_yellow)")
+$(f_if "terminal" "$(f_heading "conditional heading (visible only in terminal)" | f_fg_yellow)")$(f_if "markdown" "$(f_heading "conditional heading (visible only in markdown)" | f_fg_yellow)")
 
 $(f_list_item "list item with plain text.")
 $(f_list_item "another list item with plain text.")
@@ -61,14 +61,13 @@ $(f_list_item "list item title" \
 
 $(f_list_item "list item title" \
 "$(f_code_block \
-"sh" \
-'code block inside a list item')
+'code block inside a list item with no highlighting')
 
 some list item content text, and than:
 
 $(f_code_block \
-"sh" \
-'another code block inside the list item')
+"js" \
+'console.log("code block inside the list item with javascript highlighting")')
 
 $(f_if "terminal" "conditional content (visible only in terminal):
 
