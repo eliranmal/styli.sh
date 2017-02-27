@@ -26,8 +26,45 @@ when the formatter is sourced, it exposes an API composed of two parts; tag vari
 
 ### tags 
 
-include the available `_f_[name]` tags within strings to wrap terms.
-tags must be closed with the appropriate `_f_[name]_off` tag.
+tags are predefined variables that can be used to format text terms.
+wrap the terms with a start tag in the form `_f_[name]`, and a close tag in the form `_f_[name]_off`.
+
+the definitions below describe only the start tag, for brevity.
+
+<dl>
+	<dt><code>_f_bold</code></dt>
+	<dd>formats the text as bold.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_italic</code></dt>
+	<dd>formats the text as italics.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_strike</code></dt>
+	<dd>formats the text as strike-through.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_code</code></dt>
+	<dd>formats the text as inline code.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_code</code></dt>
+	<dd>formats the text as inline code.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_fg_[color]</code></dt>
+	<dd>applies foreground color to the text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_bg_[color]</code></dt>
+	<dd>applies background color to the text.<br/></dd>
+</dl>
 
 ### functions 
 
@@ -58,6 +95,13 @@ formats passed arguments as strike-through text.<br/></dd>
 </dl>
 
 <dl>
+	<dt><code>f_under(string...)</code></dt>
+	<dd><strong>composeable</strong><br/>
+available in: <strong>terminal</strong><br/>
+formats passed arguments as underlined text.<br/></dd>
+</dl>
+
+<dl>
 	<dt><code>f_code(string...)</code></dt>
 	<dd><strong>composeable</strong><br/>
 formats passed arguments as inline code.<br/>
@@ -65,10 +109,8 @@ note to always pass arguments with <code>'strong quoting'</code>, or properly es
 </dl>
 
 <dl>
-	<dt><code>f_under(string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
-available in: <strong>terminal</strong><br/>
-formats passed arguments as underlined text.<br/></dd>
+	<dt><code>f_link([name], target)</code></dt>
+	<dd>formats passed arguments as an inline link. if <code>name</code> is passed, it will be used in the markdown format to name the link. the target will be used as the link ref.<br/></dd>
 </dl>
 
 <dl>
@@ -105,7 +147,7 @@ formats the passed <code>string</code> as subheading.<br/></dd>
 <dl>
 	<dt><code>f_definition(term, description)</code></dt>
 	<dd>formats passed arguments as a definition list item. <code>term</code> is used as the item's term, and <code>description</code> is used as the item's description (its body content).<br/>
-note that only inline code and bold styles are allowed to be nested inside definition list items.<br/></dd>
+note that only <code>inline code</code> and <strong>bold</strong> styles are allowed to be nested inside definition list items.<br/></dd>
 </dl>
 
 <dl>
@@ -120,11 +162,6 @@ note to always enclose the passed <code>body</code> in <code>'strong quotes'</co
 </dl>
 
 <dl>
-	<dt><code>f_link([name], target)</code></dt>
-	<dd>formats passed arguments as an inline link. if <code>name</code> is passed, it will be used in the markdown format to name the link. the target will be used as the link ref.<br/></dd>
-</dl>
-
-<dl>
 	<dt><code>f_output(body)</code></dt>
 	<dd>formats passed arguments as an output block. in markdown this is the same as <code>f_code_block</code>, and in terminal every line of the body will be prefixed with an arrow, to mark code output.<br/></dd>
 </dl>
@@ -133,6 +170,25 @@ note to always enclose the passed <code>body</code> in <code>'strong quotes'</co
 	<dt><code>f_if(format, content)</code></dt>
 	<dd>only renders the <code>content</code> if the current format matches the passed <code>format</code>.<br/></dd>
 </dl>
+
+### colors
+
+here are the available color names to be used with the color formatting tags and functions:
+
+```
+red
+green
+yellow
+blue
+magenta
+cyan
+lightred
+lightgreen
+lightyellow
+lightblue
+lightmagenta
+lightcyan
+```
 
 ### examples
 
@@ -150,7 +206,7 @@ note to always enclose the passed <code>body</code> in <code>'strong quotes'</co
   echo "$(echo "foo" | f_heading | f_fg_yellow)"
   ```
   
-  you can also skip the echo, and compose most of the formatter functions in any which way:
+  you can also skip the inner echo, if you're using composeable functions:
   
   ```sh
   echo "$(f_heading "foo" | f_fg_yellow)"
