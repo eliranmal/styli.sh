@@ -30,7 +30,7 @@ if no available formats are mentioned, the rendering will apply on all formats.
 ### tags 
 
 tags are predefined variables that can be used to format text terms.
-wrap the terms with a start tag in the form `_f_[name]`, and a close tag in the form `_f_[name]_off`.
+wrap the terms with a start tag in the form `_f_<name>`, and a close tag in the form `_f_<name>_off`.
 
 the definitions below describe only the start tag, for brevity.
 
@@ -65,18 +65,18 @@ the definitions below describe only the start tag, for brevity.
 </dl>
 
 <dl>
-	<dt><code>_f_fg_[color]</code></dt>
+	<dt><code>_f_fg_&lt;color&gt;</code></dt>
 	<dd>applies foreground color to the text.<br/></dd>
 </dl>
 
 <dl>
-	<dt><code>_f_bg_[color]</code></dt>
+	<dt><code>_f_bg_&lt;color&gt;</code></dt>
 	<dd>applies background color to the text.<br/></dd>
 </dl>
 
 ### functions 
 
-most of the tag variables has equivalent functions. they all follow the `f_[name]()` convention.
+most of the tag variables has equivalent functions. they all follow the `f_<name>()` convention.
 
 formatter functions can be piped, or accept arguments. those that can do both, 
 with no side effects, will be marked with **composeable**.
@@ -119,14 +119,14 @@ note to always pass arguments with <code>'strong quoting'</code>, or properly es
 </dl>
 
 <dl>
-	<dt><code>f_fg_[color](string...)</code></dt>
+	<dt><code>f_fg_&lt;color&gt;(string...)</code></dt>
 	<dd><strong><sup>composeable</sup></strong><br/>
 <sup>available in: <strong>terminal</strong></sup><br/>
 applies foreground color to passed arguments. e.g. <code>f_fg_red("my text")</code>.<br/></dd>
 </dl>
 
 <dl>
-	<dt><code>f_bg_[color](string...)</code></dt>
+	<dt><code>f_bg_&lt;color&gt;(string...)</code></dt>
 	<dd><strong><sup>composeable</sup></strong><br/>
 <sup>available in: <strong>terminal</strong></sup><br/>
 applies background color to passed arguments. e.g. <code>f_bg_red("my text")</code><br/></dd>
