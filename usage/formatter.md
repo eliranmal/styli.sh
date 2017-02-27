@@ -61,12 +61,14 @@ the definitions below describe only the start tag, for brevity.
 
 <dl>
 	<dt><code>_f_sub</code></dt>
-	<dd>formats the text as sub-text.<br/></dd>
+	<dd><sup>available in: <strong>markdown</strong></sup><br/>
+formats the text as sub-text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>_f_sup</code></dt>
-	<dd>formats the text as super-text.<br/></dd>
+	<dd><sup>available in: <strong>markdown</strong></sup><br/>
+formats the text as super-text.<br/></dd>
 </dl>
 
 <dl>

@@ -61,10 +61,12 @@ $(f_code_definition '_f_code' \
 "formats the text as inline code.")
 
 $(f_code_definition '_f_sub' \
-"formats the text as sub-text.")
+"$(f_sup "available in: $(f_bold "markdown")")
+formats the text as sub-text.")
 
 $(f_code_definition '_f_sup' \
-"formats the text as super-text.")
+"$(f_sup "available in: $(f_bold "markdown")")
+formats the text as super-text.")
 
 $(f_code_definition '_f_fg_<color>' \
 "applies foreground color to the text.")
