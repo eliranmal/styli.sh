@@ -29,7 +29,12 @@ $(f_code_definition \
 $(f_subheading "API")
  
 when the formatter is sourced, it exposes an API composed of two parts; \
-tag and functions.
+tags and functions.
+
+some tags or functions will only be applied in a certain format, e.g. \
+$(f_code 'terminal'). in such cases, the available formats will be  marked in \
+the description body, with $(f_bold "available in: <formats...>").
+if no available formats are mentioned, the rendering will apply on all formats.
 
 
 $(f_subheading "tags") 
@@ -55,6 +60,9 @@ $(f_code_definition '_f_code' \
 $(f_code_definition '_f_code' \
 "formats the text as inline code.")
 
+$(f_code_definition '_f_sub' \
+"formats the text as inline code.")
+
 $(f_code_definition '_f_fg_[color]' \
 "applies foreground color to the text.")
 
@@ -68,32 +76,27 @@ most of the tag variables has equivalent functions. they all follow the \
 $(f_code 'f_[name]()') convention.
 
 formatter functions can be piped, or accept arguments. those that can do both, 
-with no side effects, will be marked with $(f_bold "composeable").
-
-some formatters will only be rendered in a certain format, e.g. 'terminal'. \
-in such cases, the available formats are marked in each function description, \
-under $(f_bold "available in: ...").
-if no formats are mentioned, the rendering will apply on all formats.
+with no side effects, will be marked with $(f_sup "composeable").
 
 $(f_code_definition 'f_bold(string...)' \
-"$(f_bold "composeable")
+"$(f_sup "composeable")
 formats passed arguments as bold text.")
 
 $(f_code_definition 'f_italic(string...)' \
-"$(f_bold "composeable")
+"$(f_sup "composeable")
 formats passed arguments as italics text.")
 
 $(f_code_definition 'f_strike(string...)' \
-"$(f_bold "composeable")
+"$(f_sup "composeable")
 formats passed arguments as strike-through text.")
 
 $(f_code_definition 'f_under(string...)' \
-"$(f_bold "composeable")
-available in: $(f_bold "terminal")
+"$(f_sup "composeable")
+$(f_sup "available in: terminal")
 formats passed arguments as underlined text.")
 
 $(f_code_definition 'f_code(string...)' \
-"$(f_bold "composeable")
+"$(f_sup "composeable")
 formats passed arguments as inline code.
 note to always pass arguments with $(f_code "\'strong quoting\'"), \
 or properly escape them, to avoid arbitrary code being interpreted by the shell.")
@@ -104,21 +107,21 @@ it will be used in the markdown format to name the link. the target will be \
 used as the link ref.")
 
 $(f_code_definition 'f_fg_[color](string...)' \
-"$(f_bold "composeable")
-available in: $(f_bold "terminal")
+"$(f_sup "composeable")
+$(f_sup "available in: terminal")
 applies foreground color to passed arguments. e.g. $(f_code 'f_fg_red("my text")').")
 
 $(f_code_definition 'f_bg_[color](string...)' \
-"$(f_bold "composeable")
-available in: $(f_bold "terminal")
+"$(f_sup "composeable")
+$(f_sup "available in: terminal")
 applies background color to passed arguments. e.g. $(f_code 'f_bg_red("my text")')")
 
 $(f_code_definition 'f_heading(string)' \
-"$(f_bold "composeable")
+"$(f_sup "composeable")
 formats the passed $(f_code 'string') as heading.")
 
 $(f_code_definition 'f_subheading(string)' \
-"$(f_bold "composeable")
+"$(f_sup "composeable")
 formats the passed $(f_code 'string') as subheading.")
 
 $(f_code_definition 'f_list_item([title], body)' \
@@ -382,6 +385,8 @@ __f_init_api_stubs() {
 	f_code_block() {        __f_util_noop "$@"; }
 	f_link() {              __f_util_noop "$@"; }
 	f_output() {            __f_util_noop "$@"; }
+	f_sub() {               __f_util_noop "$@"; }
+	f_sup() {               __f_util_noop "$@"; }
 
 	f_if() {                __f_util_noop "$@"; }
 }
@@ -599,9 +604,17 @@ __f_init_api_markdown() {
 '
 	_f_new_line="\n"
 	_f_line_break="  $_f_new_line"
+	_f_sub='<sub>'
+	_f_sub_off='</sub>'
+	_f_sup='<sup>'
+	_f_sup_off='</sup>'
 
 	_f_bold_escaped='\*\*'
 	_f_bold_escaped_off=$_f_bold_escaped
+
+
+	f_sub() {   __f_util_wrap   "$_f_sub"  "$_f_sub_off"    "$@"; }
+	f_sup() {   __f_util_wrap   "$_f_sup"  "$_f_sup_off"    "$@"; }
 
 
 	f_heading() {
@@ -624,7 +637,7 @@ __f_init_api_markdown() {
 	}
 	f_definition() {
 		local term="$(echo "$1" | __f_util_escape_entities)"
-		local desc="$(echo "$2" | __f_util_escape_entities | __f_util_suffix_multiline '<br/>')"
+		local desc="$(echo "$2" | __f_util_suffix_multiline '<br/>')"
 		__f_util_wrap "$_f_def_term" "$_f_def_term_off" "$term" | \
 			__f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
 		__f_util_wrap "$_f_def_desc" "$_f_def_desc_off" "$desc" | \

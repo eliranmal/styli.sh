@@ -22,7 +22,10 @@ utilities for shell output formatting.
 
 ### API
  
-when the formatter is sourced, it exposes an API composed of two parts; tag and functions.
+when the formatter is sourced, it exposes an API composed of two parts; tags and functions.
+
+some tags or functions will only be applied in a certain format, e.g. `terminal`. in such cases, the available formats will be  marked in the description body, with **available in: <formats...>**.
+if no available formats are mentioned, the rendering will apply on all formats.
 
 ### tags 
 
@@ -57,6 +60,11 @@ the definitions below describe only the start tag, for brevity.
 </dl>
 
 <dl>
+	<dt><code>_f_sub</code></dt>
+	<dd>formats the text as inline code.<br/></dd>
+</dl>
+
+<dl>
 	<dt><code>_f_fg_[color]</code></dt>
 	<dd>applies foreground color to the text.<br/></dd>
 </dl>
@@ -71,39 +79,36 @@ the definitions below describe only the start tag, for brevity.
 most of the tag variables has equivalent functions. they all follow the `f_[name]()` convention.
 
 formatter functions can be piped, or accept arguments. those that can do both, 
-with no side effects, will be marked with **composeable**.
-
-some formatters will only be rendered in a certain format, e.g. 'terminal'. in such cases, the available formats are marked in each function description, under **available in: ...**.
-if no formats are mentioned, the rendering will apply on all formats.
+with no side effects, will be marked with <sup>composeable</sup>.
 
 <dl>
 	<dt><code>f_bold(string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
+	<dd><sup>composeable</sup><br/>
 formats passed arguments as bold text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_italic(string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
+	<dd><sup>composeable</sup><br/>
 formats passed arguments as italics text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_strike(string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
+	<dd><sup>composeable</sup><br/>
 formats passed arguments as strike-through text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_under(string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
-available in: <strong>terminal</strong><br/>
+	<dd><sup>composeable</sup><br/>
+<sup>available in: terminal</sup><br/>
 formats passed arguments as underlined text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_code(string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
+	<dd><sup>composeable</sup><br/>
 formats passed arguments as inline code.<br/>
 note to always pass arguments with <code>'strong quoting'</code>, or properly escape them, to avoid arbitrary code being interpreted by the shell.<br/></dd>
 </dl>
@@ -115,27 +120,27 @@ note to always pass arguments with <code>'strong quoting'</code>, or properly es
 
 <dl>
 	<dt><code>f_fg_[color](string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
-available in: <strong>terminal</strong><br/>
+	<dd><sup>composeable</sup><br/>
+<sup>available in: terminal</sup><br/>
 applies foreground color to passed arguments. e.g. <code>f_fg_red("my text")</code>.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_bg_[color](string...)</code></dt>
-	<dd><strong>composeable</strong><br/>
-available in: <strong>terminal</strong><br/>
+	<dd><sup>composeable</sup><br/>
+<sup>available in: terminal</sup><br/>
 applies background color to passed arguments. e.g. <code>f_bg_red("my text")</code><br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_heading(string)</code></dt>
-	<dd><strong>composeable</strong><br/>
+	<dd><sup>composeable</sup><br/>
 formats the passed <code>string</code> as heading.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_subheading(string)</code></dt>
-	<dd><strong>composeable</strong><br/>
+	<dd><sup>composeable</sup><br/>
 formats the passed <code>string</code> as subheading.<br/></dd>
 </dl>
 
