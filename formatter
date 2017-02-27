@@ -23,13 +23,13 @@ $(f_subheading "flags")
 
 $(f_code_definition \
 "-h" \
-"shows this help message.")
+"shows this help message. works only when the script is executed (not sourced).")
 
 
 $(f_subheading "API")
  
 when the formatter is sourced, it exposes an API composed of two parts; \
-tag variables, and functions.
+tag and functions.
 
 
 $(f_subheading "tags") 
