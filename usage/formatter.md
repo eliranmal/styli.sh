@@ -17,12 +17,12 @@ utilities for shell output formatting.
 
 <dl>
 	<dt><code>-h</code></dt>
-	<dd>shows this help message.<br/></dd>
+	<dd>shows this help message. works only when the script is executed (not sourced).<br/></dd>
 </dl>
 
 ### API
  
-when the formatter is sourced, it exposes an API composed of two parts; tag variables, and functions.
+when the formatter is sourced, it exposes an API composed of two parts; tag and functions.
 
 ### tags 
 
