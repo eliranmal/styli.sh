@@ -37,8 +37,8 @@ some more free text.
 	<dd>code definition body content.<br/></dd>
 </dl>
 <dl>
-	<dt><code>another code definition title with some escaped html entities: &lt;foo&gt; &amp; &lt;bar&gt;</code></dt>
-	<dd>another code definition body content with nested <strong>bold</strong> and <code>inline code</code> text.<br/></dd>
+	<dt><code>code definition title with some escaped html entities: &lt;foo&gt; &amp; &lt;bar&gt;</code></dt>
+	<dd>code definition body content with nested <strong>bold</strong> and <code>inline code</code> text.<br/></dd>
 </dl>
 
 some free text yet again.

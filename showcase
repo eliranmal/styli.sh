@@ -39,8 +39,8 @@ $(f_code_definition \
 "code definition title" \
 "code definition body content.")
 $(f_code_definition \
-"another code definition title with some escaped html entities: <foo> & <bar>" \
-"another code definition body content with nested $(f_bold "bold") and $(f_code "inline code") text.")
+"code definition title with some escaped html entities: <foo> & <bar>" \
+"code definition body content with nested $(f_bold "bold") and $(f_code "inline code") text.")
 
 some free text yet again.
 
