@@ -54,8 +54,9 @@ $(f_code_definition '_f_italic' \
 $(f_code_definition '_f_strike' \
 "formats the text as strike-through.")
 
-$(f_code_definition '_f_code' \
-"formats the text as inline code.")
+$(f_code_definition '_f_under' \
+"$(f_sup "available in: $(f_bold "terminal")")
+formats the text as underlined.")
 
 $(f_code_definition '_f_code' \
 "formats the text as inline code.")
@@ -69,10 +70,12 @@ $(f_code_definition '_f_sup' \
 formats the text as super-text.")
 
 $(f_code_definition '_f_fg_<color>' \
-"applies foreground color to the text.")
+"$(f_sup "available in: $(f_bold "terminal")")
+applies foreground color to the text.")
 
 $(f_code_definition '_f_bg_<color>' \
-"applies background color to the text.")
+"$(f_sup "available in: $(f_bold "terminal")")
+applies background color to the text.")
 
 
 $(f_subheading "functions") 
