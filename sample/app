@@ -23,8 +23,11 @@ $(f_subheading "subheading")
 a sprinkle of free text.
 
 $(f_code_block \
+'code block with no highlighting')
+
+$(f_code_block \
 "sh" \
-'code block with shell highlighting')
+'echo "code block with shell highlighting"')
 
 some more free text.
 

@@ -13,8 +13,12 @@ text with inline formatting for `code`, and [a link](https://github.com/eliranma
 
 a sprinkle of free text.
 
+```
+code block with no highlighting
+```
+
 ```sh
-code block with shell highlighting
+echo "code block with shell highlighting"
 ```
 
 some more free text.
