@@ -23,18 +23,176 @@ $(f_subheading "flags")
 
 $(f_code_definition \
 "-h" \
-"shows this help message.")
+"shows this help message. works only when the script is executed (not sourced).")
 
 
-$(f_subheading "how to use")
+$(f_subheading "API")
  
-two possible ways:
+when the formatter is sourced, it exposes an API composed of two parts; \
+tags and functions.
 
-$(f_list_item \
-"include the available $(f_code '_f_*') tags within strings to wrap terms.
-tags must be closed with the appropriate $(f_code '_f_*_off') tag.")
-$(f_list_item \
-"use the formatter functions, they can be piped, or accept arguments.")
+some tags or functions will only be applied in a certain format, e.g. \
+$(f_code 'terminal'). in such cases, the available formats will be  marked in \
+the description body, with $(f_bold "available in: <formats...>").
+if no available formats are mentioned, the rendering will apply on all formats.
+
+
+$(f_subheading "tags") 
+
+tags are predefined variables that can be used to format text terms.
+wrap the terms with a start tag in the form $(f_code '_f_<name>'), and a close \
+tag in the form $(f_code '_f_<name>_off').
+
+the definitions below describe only the start tag, for brevity.
+
+$(f_code_definition '_f_bold' \
+"formats the text as bold.")
+
+$(f_code_definition '_f_italic' \
+"formats the text as italics.")
+
+$(f_code_definition '_f_strike' \
+"formats the text as strike-through.")
+
+$(f_code_definition '_f_under' \
+"$(f_sup "available in: $(f_bold "terminal")")
+formats the text as underlined.")
+
+$(f_code_definition '_f_code' \
+"formats the text as inline code.")
+
+$(f_code_definition '_f_sub' \
+"$(f_sup "available in: $(f_bold "markdown")")
+formats the text as sub-text.")
+
+$(f_code_definition '_f_sup' \
+"$(f_sup "available in: $(f_bold "markdown")")
+formats the text as super-text.")
+
+$(f_code_definition '_f_fg_<color>' \
+"$(f_sup "available in: $(f_bold "terminal")")
+applies foreground color to the text.")
+
+$(f_code_definition '_f_bg_<color>' \
+"$(f_sup "available in: $(f_bold "terminal")")
+applies background color to the text.")
+
+
+$(f_subheading "functions") 
+
+most of the tag variables has equivalent functions. they all follow the \
+$(f_code 'f_<name>()') convention.
+
+formatter functions can be piped, or accept arguments. those that can do both, 
+with no side effects, will be marked with $(f_bold "composeable").
+
+$(f_code_definition 'f_bold(string...)' \
+"$(f_sup "composeable" | f_bold)
+formats passed arguments as bold text.")
+
+$(f_code_definition 'f_italic(string...)' \
+"$(f_sup "composeable" | f_bold)
+formats passed arguments as italics text.")
+
+$(f_code_definition 'f_strike(string...)' \
+"$(f_sup "composeable" | f_bold)
+formats passed arguments as strike-through text.")
+
+$(f_code_definition 'f_under(string...)' \
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "terminal")")
+formats passed arguments as underlined text.")
+
+$(f_code_definition 'f_code(string...)' \
+"$(f_sup "composeable" | f_bold)
+formats passed arguments as inline code.
+note to always pass arguments with $(f_code "\'strong quoting\'"), \
+or properly escape them, to avoid arbitrary code being interpreted by the shell.")
+
+$(f_code_definition 'f_sub(string...)' \
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "markdown")")
+formats passed arguments as sub-text.")
+
+$(f_code_definition 'f_sup(string...)' \
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "markdown")")
+formats passed arguments as super-text.")
+
+$(f_code_definition 'f_link([name], target)' \
+"formats passed arguments as an inline link. if $(f_code "name") is passed, \
+it will be used in the markdown format to name the link. the target will be \
+used as the link ref.")
+
+$(f_code_definition 'f_fg_<color>(string...)' \
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "terminal")")
+applies foreground color to passed arguments. e.g. $(f_code 'f_fg_red("my text")').")
+
+$(f_code_definition 'f_bg_<color>(string...)' \
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "terminal")")
+applies background color to passed arguments. e.g. $(f_code 'f_bg_red("my text")')")
+
+$(f_code_definition 'f_heading(string)' \
+"$(f_sup "composeable" | f_bold)
+formats the passed $(f_code 'string') as heading.")
+
+$(f_code_definition 'f_subheading(string)' \
+"$(f_sup "composeable" | f_bold)
+formats the passed $(f_code 'string') as subheading.")
+
+$(f_code_definition 'f_list_item([title], body)' \
+"formats passed arguments as a list item. if $(f_code "title") is passed, it will \
+appear as the list item's first line, and will be styled as bold.")
+
+$(f_code_definition 'f_definition(term, description)' \
+"formats passed arguments as a definition list item. $(f_code "term") is used as \
+the item's term, and $(f_code "description") is used as the item's description \
+(its body content).
+note that only $(f_code 'inline code') and $(f_bold "bold") styles are allowed \
+to be nested inside definition list items.")
+
+$(f_code_definition 'f_code_definition(term, description)' \
+"same as $(f_code "f_definition()"), except $(f_code "term") is formatted as \
+inline code.")
+
+$(f_code_definition 'f_code_block([lang], body)' \
+"formats passed arguments as a code block. if $(f_code "lang") is passed, \
+it will be used in the markdown format to highlight the code block. \
+allowed $(f_code "lang") values are those allowed in github-flavored markdown \
+code blocks.
+note to always enclose the passed $(f_code 'body') in $(f_code "\'strong quotes\'"), \
+or properly escape it, to avoid arbitrary code being interpreted by the shell.")
+
+$(f_code_definition 'f_output(body)' \
+"formats passed arguments as an output block. in markdown this is the same as \
+$(f_code 'f_code_block'), and in terminal every line of the body will be \
+prefixed with an arrow, to mark code output.")
+
+$(f_code_definition 'f_if(format, content)' \
+"only renders the $(f_code 'content') if the current format matches the passed \
+$(f_code 'format').")
+
+
+$(f_subheading "colors")
+
+here are the available color names to be used with the color formatting tags \
+and functions:
+
+$(f_code_block \
+'red
+green
+yellow
+blue
+magenta
+cyan
+lightred
+lightgreen
+lightyellow
+lightblue
+lightmagenta
+lightcyan')
 
 
 $(f_subheading "examples")
@@ -55,7 +213,7 @@ $(f_list_item \
 echo "$(echo "foo" | f_heading)"
 echo "$(echo "foo" | f_heading | f_fg_yellow)"')
 
-you can also skip the echo, and compose most of the formatter functions in any which way:
+you can also skip the inner echo, if you're using composeable functions:
 
 $(f_code_block \
 "sh" \
@@ -193,7 +351,7 @@ __f_util_char_underline() {
 
 __f_util_replace_tags() {
 	local from_tag="$1"; local from_tag_off="$2"; local to_tag="$3"; local to_tag_off="$4";
-	sed -e 's,'"$from_tag"'\([^'"$from_tag"']*\)'"$from_tag_off"','"$to_tag"'\1'"$to_tag_off"',g'
+	sed -e 's,'"$from_tag"'\([^'"$from_tag_off"']*\)'"$from_tag_off"','"$to_tag"'\1'"$to_tag_off"',g'
 }
 
 __f_util_escape_entities() {
@@ -245,6 +403,8 @@ __f_init_api_stubs() {
 	f_code_block() {        __f_util_noop "$@"; }
 	f_link() {              __f_util_noop "$@"; }
 	f_output() {            __f_util_noop "$@"; }
+	f_sub() {               __f_util_noop "$@"; }
+	f_sup() {               __f_util_noop "$@"; }
 
 	f_if() {                __f_util_noop "$@"; }
 }
@@ -462,6 +622,17 @@ __f_init_api_markdown() {
 '
 	_f_new_line="\n"
 	_f_line_break="  $_f_new_line"
+	_f_sub='<sub>'
+	_f_sub_off='</sub>'
+	_f_sup='<sup>'
+	_f_sup_off='</sup>'
+
+	_f_bold_escaped='\*\*'
+	_f_bold_escaped_off=$_f_bold_escaped
+
+
+	f_sub() {   __f_util_wrap   "$_f_sub"  "$_f_sub_off"    "$@"; }
+	f_sup() {   __f_util_wrap   "$_f_sup"  "$_f_sup_off"    "$@"; }
 
 
 	f_heading() {
@@ -484,9 +655,12 @@ __f_init_api_markdown() {
 	}
 	f_definition() {
 		local term="$(echo "$1" | __f_util_escape_entities)"
-		local desc="$(echo "$2" | __f_util_escape_entities | __f_util_suffix_multiline '<br/>')"
-		__f_util_wrap "$_f_def_term" "$_f_def_term_off" "$term" | __f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
-		__f_util_wrap "$_f_def_desc" "$_f_def_desc_off" "$desc" | __f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
+		local desc="$(echo "$2" | __f_util_suffix_multiline '<br/>')"
+		__f_util_wrap "$_f_def_term" "$_f_def_term_off" "$term" | \
+			__f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
+		__f_util_wrap "$_f_def_desc" "$_f_def_desc_off" "$desc" | \
+			__f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>' | \
+			__f_util_replace_tags "$_f_bold_escaped" "$_f_bold_escaped_off" '<strong>' '</strong>'
 	}
 	f_code_definition() {
 		local title="$(__f_util_wrap "$_f_code" "$_f_code_off" "$1")"

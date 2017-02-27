@@ -17,16 +17,207 @@ utilities for shell output formatting.
 
 <dl>
 	<dt><code>-h</code></dt>
-	<dd>shows this help message.<br/></dd>
+	<dd>shows this help message. works only when the script is executed (not sourced).<br/></dd>
 </dl>
 
-### how to use
+### API
  
-two possible ways:
+when the formatter is sourced, it exposes an API composed of two parts; tags and functions.
 
-- include the available `_f_*` tags within strings to wrap terms.
-  tags must be closed with the appropriate `_f_*_off` tag.
-- use the formatter functions, they can be piped, or accept arguments.
+some tags or functions will only be applied in a certain format, e.g. `terminal`. in such cases, the available formats will be  marked in the description body, with **available in: <formats...>**.
+if no available formats are mentioned, the rendering will apply on all formats.
+
+### tags 
+
+tags are predefined variables that can be used to format text terms.
+wrap the terms with a start tag in the form `_f_<name>`, and a close tag in the form `_f_<name>_off`.
+
+the definitions below describe only the start tag, for brevity.
+
+<dl>
+	<dt><code>_f_bold</code></dt>
+	<dd>formats the text as bold.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_italic</code></dt>
+	<dd>formats the text as italics.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_strike</code></dt>
+	<dd>formats the text as strike-through.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_under</code></dt>
+	<dd><sup>available in: <strong>terminal</strong></sup><br/>
+formats the text as underlined.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_code</code></dt>
+	<dd>formats the text as inline code.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_sub</code></dt>
+	<dd><sup>available in: <strong>markdown</strong></sup><br/>
+formats the text as sub-text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_sup</code></dt>
+	<dd><sup>available in: <strong>markdown</strong></sup><br/>
+formats the text as super-text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_fg_&lt;color&gt;</code></dt>
+	<dd><sup>available in: <strong>terminal</strong></sup><br/>
+applies foreground color to the text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_bg_&lt;color&gt;</code></dt>
+	<dd><sup>available in: <strong>terminal</strong></sup><br/>
+applies background color to the text.<br/></dd>
+</dl>
+
+### functions 
+
+most of the tag variables has equivalent functions. they all follow the `f_<name>()` convention.
+
+formatter functions can be piped, or accept arguments. those that can do both, 
+with no side effects, will be marked with **composeable**.
+
+<dl>
+	<dt><code>f_bold(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+formats passed arguments as bold text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_italic(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+formats passed arguments as italics text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_strike(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+formats passed arguments as strike-through text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_under(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>terminal</strong></sup><br/>
+formats passed arguments as underlined text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_code(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+formats passed arguments as inline code.<br/>
+note to always pass arguments with <code>'strong quoting'</code>, or properly escape them, to avoid arbitrary code being interpreted by the shell.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_sub(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>markdown</strong></sup><br/>
+formats passed arguments as sub-text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_sup(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>markdown</strong></sup><br/>
+formats passed arguments as super-text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_link([name], target)</code></dt>
+	<dd>formats passed arguments as an inline link. if <code>name</code> is passed, it will be used in the markdown format to name the link. the target will be used as the link ref.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_fg_&lt;color&gt;(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>terminal</strong></sup><br/>
+applies foreground color to passed arguments. e.g. <code>f_fg_red("my text")</code>.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_bg_&lt;color&gt;(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>terminal</strong></sup><br/>
+applies background color to passed arguments. e.g. <code>f_bg_red("my text")</code><br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_heading(string)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+formats the passed <code>string</code> as heading.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_subheading(string)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+formats the passed <code>string</code> as subheading.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_list_item([title], body)</code></dt>
+	<dd>formats passed arguments as a list item. if <code>title</code> is passed, it will appear as the list item's first line, and will be styled as bold.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_definition(term, description)</code></dt>
+	<dd>formats passed arguments as a definition list item. <code>term</code> is used as the item's term, and <code>description</code> is used as the item's description (its body content).<br/>
+note that only <code>inline code</code> and <strong>bold</strong> styles are allowed to be nested inside definition list items.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_code_definition(term, description)</code></dt>
+	<dd>same as <code>f_definition()</code>, except <code>term</code> is formatted as inline code.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_code_block([lang], body)</code></dt>
+	<dd>formats passed arguments as a code block. if <code>lang</code> is passed, it will be used in the markdown format to highlight the code block. allowed <code>lang</code> values are those allowed in github-flavored markdown code blocks.<br/>
+note to always enclose the passed <code>body</code> in <code>'strong quotes'</code>, or properly escape it, to avoid arbitrary code being interpreted by the shell.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_output(body)</code></dt>
+	<dd>formats passed arguments as an output block. in markdown this is the same as <code>f_code_block</code>, and in terminal every line of the body will be prefixed with an arrow, to mark code output.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_if(format, content)</code></dt>
+	<dd>only renders the <code>content</code> if the current format matches the passed <code>format</code>.<br/></dd>
+</dl>
+
+### colors
+
+here are the available color names to be used with the color formatting tags and functions:
+
+```
+red
+green
+yellow
+blue
+magenta
+cyan
+lightred
+lightgreen
+lightyellow
+lightblue
+lightmagenta
+lightcyan
+```
 
 ### examples
 
@@ -44,7 +235,7 @@ two possible ways:
   echo "$(echo "foo" | f_heading | f_fg_yellow)"
   ```
   
-  you can also skip the echo, and compose most of the formatter functions in any which way:
+  you can also skip the inner echo, if you're using composeable functions:
   
   ```sh
   echo "$(f_heading "foo" | f_fg_yellow)"
