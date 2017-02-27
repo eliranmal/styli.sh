@@ -38,7 +38,7 @@ some more free text.
 </dl>
 <dl>
 	<dt><code>another code definition title</code></dt>
-	<dd>another code definition body content.<br/></dd>
+	<dd>another code definition body content with nested <strong>bold</strong> and <code>inline code</code> text.<br/></dd>
 </dl>
 
 some free text yet again.

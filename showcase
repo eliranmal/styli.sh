@@ -40,7 +40,7 @@ $(f_code_definition \
 "code definition body content.")
 $(f_code_definition \
 "another code definition title" \
-"another code definition body content.")
+"another code definition body content with nested $(f_bold "bold") and $(f_code "inline code") text.")
 
 some free text yet again.
 
