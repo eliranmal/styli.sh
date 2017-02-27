@@ -76,27 +76,27 @@ most of the tag variables has equivalent functions. they all follow the \
 $(f_code 'f_[name]()') convention.
 
 formatter functions can be piped, or accept arguments. those that can do both, 
-with no side effects, will be marked with $(f_sup "composeable").
+with no side effects, will be marked with $(f_sup "composeable" | f_bold).
 
 $(f_code_definition 'f_bold(string...)' \
-"$(f_sup "composeable")
+"$(f_sup "composeable" | f_bold)
 formats passed arguments as bold text.")
 
 $(f_code_definition 'f_italic(string...)' \
-"$(f_sup "composeable")
+"$(f_sup "composeable" | f_bold)
 formats passed arguments as italics text.")
 
 $(f_code_definition 'f_strike(string...)' \
-"$(f_sup "composeable")
+"$(f_sup "composeable" | f_bold)
 formats passed arguments as strike-through text.")
 
 $(f_code_definition 'f_under(string...)' \
-"$(f_sup "composeable")
-$(f_sup "available in: terminal")
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "terminal")")
 formats passed arguments as underlined text.")
 
 $(f_code_definition 'f_code(string...)' \
-"$(f_sup "composeable")
+"$(f_sup "composeable" | f_bold)
 formats passed arguments as inline code.
 note to always pass arguments with $(f_code "\'strong quoting\'"), \
 or properly escape them, to avoid arbitrary code being interpreted by the shell.")
@@ -107,21 +107,21 @@ it will be used in the markdown format to name the link. the target will be \
 used as the link ref.")
 
 $(f_code_definition 'f_fg_[color](string...)' \
-"$(f_sup "composeable")
-$(f_sup "available in: terminal")
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "terminal")")
 applies foreground color to passed arguments. e.g. $(f_code 'f_fg_red("my text")').")
 
 $(f_code_definition 'f_bg_[color](string...)' \
-"$(f_sup "composeable")
-$(f_sup "available in: terminal")
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "terminal")")
 applies background color to passed arguments. e.g. $(f_code 'f_bg_red("my text")')")
 
 $(f_code_definition 'f_heading(string)' \
-"$(f_sup "composeable")
+"$(f_sup "composeable" | f_bold)
 formats the passed $(f_code 'string') as heading.")
 
 $(f_code_definition 'f_subheading(string)' \
-"$(f_sup "composeable")
+"$(f_sup "composeable" | f_bold)
 formats the passed $(f_code 'string') as subheading.")
 
 $(f_code_definition 'f_list_item([title], body)' \
