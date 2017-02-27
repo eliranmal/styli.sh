@@ -67,7 +67,7 @@ some list item content text, and than:
 
 $(f_code_block \
 "js" \
-'console.log("code block inside the list item with javascript highlighting")')
+'console.log("code block inside a list item with javascript highlighting")')
 
 $(f_if "terminal" "conditional content (visible only in terminal):
 

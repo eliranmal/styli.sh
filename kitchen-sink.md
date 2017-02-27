@@ -64,7 +64,7 @@ just free text.
   some list item content text, and than:
   
   ```js
-  console.log("code block inside the list item with javascript highlighting")
+  console.log("code block inside a list item with javascript highlighting")
   ```
   
   
