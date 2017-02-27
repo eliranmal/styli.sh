@@ -79,36 +79,36 @@ the definitions below describe only the start tag, for brevity.
 most of the tag variables has equivalent functions. they all follow the `f_[name]()` convention.
 
 formatter functions can be piped, or accept arguments. those that can do both, 
-with no side effects, will be marked with watwatwat watwatwat **<sub>composeable</sub>**.
+with no side effects, will be marked with **composeable**.
 
 <dl>
 	<dt><code>f_bold(string...)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
 formats passed arguments as bold text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_italic(string...)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
 formats passed arguments as italics text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_strike(string...)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
 formats passed arguments as strike-through text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_under(string...)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
-<sub>available in: <strong>terminal</strong></sub><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>terminal</strong></sup><br/>
 formats passed arguments as underlined text.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_code(string...)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
 formats passed arguments as inline code.<br/>
 note to always pass arguments with <code>'strong quoting'</code>, or properly escape them, to avoid arbitrary code being interpreted by the shell.<br/></dd>
 </dl>
@@ -120,27 +120,27 @@ note to always pass arguments with <code>'strong quoting'</code>, or properly es
 
 <dl>
 	<dt><code>f_fg_[color](string...)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
-<sub>available in: <strong>terminal</strong></sub><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>terminal</strong></sup><br/>
 applies foreground color to passed arguments. e.g. <code>f_fg_red("my text")</code>.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_bg_[color](string...)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
-<sub>available in: <strong>terminal</strong></sub><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>terminal</strong></sup><br/>
 applies background color to passed arguments. e.g. <code>f_bg_red("my text")</code><br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_heading(string)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
 formats the passed <code>string</code> as heading.<br/></dd>
 </dl>
 
 <dl>
 	<dt><code>f_subheading(string)</code></dt>
-	<dd><strong><sub>composeable</sub></strong><br/>
+	<dd><strong><sup>composeable</sup></strong><br/>
 formats the passed <code>string</code> as subheading.<br/></dd>
 </dl>
 
