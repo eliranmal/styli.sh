@@ -61,7 +61,10 @@ $(f_code_definition '_f_code' \
 "formats the text as inline code.")
 
 $(f_code_definition '_f_sub' \
-"formats the text as inline code.")
+"formats the text as sub-text.")
+
+$(f_code_definition '_f_sup' \
+"formats the text as super-text.")
 
 $(f_code_definition '_f_fg_<color>' \
 "applies foreground color to the text.")
@@ -100,6 +103,16 @@ $(f_code_definition 'f_code(string...)' \
 formats passed arguments as inline code.
 note to always pass arguments with $(f_code "\'strong quoting\'"), \
 or properly escape them, to avoid arbitrary code being interpreted by the shell.")
+
+$(f_code_definition 'f_sub(string...)' \
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "markdown")")
+formats passed arguments as sub-text.")
+
+$(f_code_definition 'f_sup(string...)' \
+"$(f_sup "composeable" | f_bold)
+$(f_sup "available in: $(f_bold "markdown")")
+formats passed arguments as super-text.")
 
 $(f_code_definition 'f_link([name], target)' \
 "formats passed arguments as an inline link. if $(f_code "name") is passed, \

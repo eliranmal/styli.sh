@@ -61,7 +61,12 @@ the definitions below describe only the start tag, for brevity.
 
 <dl>
 	<dt><code>_f_sub</code></dt>
-	<dd>formats the text as inline code.<br/></dd>
+	<dd>formats the text as sub-text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>_f_sup</code></dt>
+	<dd>formats the text as super-text.<br/></dd>
 </dl>
 
 <dl>
@@ -111,6 +116,20 @@ formats passed arguments as underlined text.<br/></dd>
 	<dd><strong><sup>composeable</sup></strong><br/>
 formats passed arguments as inline code.<br/>
 note to always pass arguments with <code>'strong quoting'</code>, or properly escape them, to avoid arbitrary code being interpreted by the shell.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_sub(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>markdown</strong></sup><br/>
+formats passed arguments as sub-text.<br/></dd>
+</dl>
+
+<dl>
+	<dt><code>f_sup(string...)</code></dt>
+	<dd><strong><sup>composeable</sup></strong><br/>
+<sup>available in: <strong>markdown</strong></sup><br/>
+formats passed arguments as super-text.<br/></dd>
 </dl>
 
 <dl>
