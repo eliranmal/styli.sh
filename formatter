@@ -355,7 +355,7 @@ __f_util_replace_tags() {
 }
 
 __f_util_escape_entities() {
-	sed -e 's,\&,\&amp;,g' | sed -e 's,\<,\&lt;,g' | sed -e 's,\>,\&gt;,g'
+	sed -e 's,\&,\&amp;,g' -e 's,\<,\&lt;,g' -e 's,\>,\&gt;,g'
 }
 
 
