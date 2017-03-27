@@ -264,7 +264,7 @@ $(f_list_item \
 # local input=$(__f_util_input "$@")
 __f_util_input() {
 	local input
-	if [ -t 0 ]; then
+	if [ ! -p /dev/stdin ]; then
 		if [ $# -gt 0 ]; then
 			input="$*"
 		fi
