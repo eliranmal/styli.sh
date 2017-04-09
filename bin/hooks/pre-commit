@@ -41,15 +41,15 @@ main() {
 	fi
 	
 	log "look for changes in files that are known to affect the help output (public files)."
-	if [[ $changed_files =~ formatter|renderer ]]; then
+	if [[ ${changed_files[@]} =~ formatter|renderer ]]; then
 		log "changes were found in public files, rendering usage docs."
 		generate_usage_docs "$git_root"
 		status=$(($? + status))
 	fi
 
 	log "look for changes in the showcase."
-	if [[ $changed_files =~ formatter|renderer ]]; then
-		log "changes were found rendering showcase."
+	if [[ ${changed_files[@]} =~ showcase ]]; then
+		log "changes were found, rendering showcase."
 		generate_showcase "$git_root"
 		status=$(($? + status))
 	fi
@@ -135,7 +135,7 @@ log() {
 log_loop() {
 	local message="$1"; shift
 	log "$message"
-	for arg in $@; do
+	for arg in "$@"; do
 		log "   $arg"
 	done
 }
