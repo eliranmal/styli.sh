@@ -252,7 +252,6 @@ lightcyan
   ```sh
   echo "$(f_fg_rainbow "the quick brown fox jumps over the lazy dog")"
   ```
-  
 
 ## gotcha's
 

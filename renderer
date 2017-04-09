@@ -2,7 +2,7 @@
 
 
 show_help() {
-	printf "
+	printf "%s" "
 $(f_heading "renderer" | f_fg_yellow)
 
 reads the formatted output of a program, and writes it to a file.

@@ -2,7 +2,7 @@
 
 
 __f_show_help() {
-	printf "
+	printf "%s" "
 $(f_heading "formatter" | f_fg_yellow)
 
 utilities for shell output formatting.
@@ -621,7 +621,7 @@ __f_init_api_markdown() {
 	_f_def_desc_off='</dd>
 </dl>
 '
-	_f_new_line="\n"
+	_f_new_line=$'\n'
 	_f_line_break="  $_f_new_line"
 	_f_sub='<sub>'
 	_f_sub_off='</sub>'

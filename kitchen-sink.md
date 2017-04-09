@@ -69,7 +69,6 @@ just free text.
   
   
   conditional content (visible only in markdown)
-  
 
 free text at the end. yup.
 
