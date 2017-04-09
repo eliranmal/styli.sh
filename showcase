@@ -72,7 +72,8 @@ $(f_code_block \
 $(f_if "terminal" "conditional content (visible only in terminal):
 
 $(f_output \
-"output block:
+"this is an output block
+$(f_bg_blue "here is some background")
 $(f_fg_rainbow "the quick brown fox jumps over the lazy dog")")")
 $(f_if "markdown" "conditional content (visible only in markdown)")
 ")
@@ -85,9 +86,13 @@ free text at the end. yup.
 }
 
 main() {
+	local source_dir
 	# test if this script is executed (i.e. not sourced)
-	if [[ $BASH_SOURCE = $0 ]]; then
-		local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+	# shellcheck disable=SC2128
+	if [[ $BASH_SOURCE = "$0" ]]; then
+		# shellcheck disable=SC2164,SC2128
+		source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+		# shellcheck source=/dev/null
 		source "$source_dir"/formatter
 		output_showcase
 		exit 0
