@@ -70,6 +70,8 @@ writes the markdown-formatted output of $(f_code './foo -h') to $(f_code './usag
 
 
 init_renderer() {
+	local output_dir
+
 	require_var "FORMAT"
 	require_var "OUTPUT_PATH"
 	
@@ -80,16 +82,17 @@ init_renderer() {
 	echo "> output path: '$OUTPUT_PATH'"
 	
 	echo "> ensuring output directory..."
-	local output_dir="$( dirname "$OUTPUT_PATH" )"
+	output_dir="$( dirname "$OUTPUT_PATH" )"
 	ensure_dir "$output_dir"
 	echo "> directory ensured: '$output_dir'"
 	
 	echo "> redirecting all input to the output path"
-	# test if this script is executed (i.e. not sourced)
-	if [[ $BASH_SOURCE = $0 ]]; then
-		echo "$(cat -)" | strip_down | dress_up > ${OUTPUT_PATH}
-	else
-		exec 1> ${OUTPUT_PATH} > >( strip_down | dress_up )
+	cat - | strip_down | dress_up > "$OUTPUT_PATH"
+	
+	# a little trick if this script will ever be sourced
+	# shellcheck disable=SC2128
+	if [[ $BASH_SOURCE != "$0" ]]; then
+		exec 1> "$OUTPUT_PATH" > >( strip_down | dress_up )
 	fi
 }
 
@@ -116,7 +119,7 @@ strip_down() {
 			squeeze_blanks
 			;;
 		*)
-			printf "$(cat -)"
+			cat -
 			;;
 	esac
 }
@@ -132,7 +135,7 @@ add_message() {
 			printf "%s\n\n\n\n\n%s\n%s" "$(cat -)" '---' 'created with styli.sh ('"$repo_url"')'
 			;;
 		*)
-			printf "$(cat -)"
+			cat -
 			;;
 	esac
 }
@@ -140,10 +143,11 @@ add_message() {
 eof() {
 	case $FORMAT in
 		markdown)
+			# shellcheck disable=SC2005
 			echo "$(cat -)" # add newline at end of file
 			;;
 		*)
-			printf "$(cat -)"
+			cat -
 			;;
 	esac
 }
@@ -154,11 +158,15 @@ squeeze_blanks() {
 
 
 main() {
+	local source_dir
 
 	# test if this script is executed (i.e. not sourced)
-	if [[ $BASH_SOURCE = $0 ]]; then
+	# shellcheck disable=SC2128
+	if [[ $BASH_SOURCE = "$0" ]]; then
 		if [[ $1 = "-h" ]]; then
-			local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+			# shellcheck disable=SC2164
+			source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
+			# shellcheck source=/dev/null
 			source "$source_dir"/formatter
 			show_help
 		fi
