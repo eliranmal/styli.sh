@@ -305,6 +305,7 @@ __f_util_trim_start() {
 
 __f_util_repeat() {
 	local str=""
+	local n
 	for (( n=$2; n > 0; n-- )); do
 		str="$str$1"
 	done
