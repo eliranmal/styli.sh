@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016,SC2119
 
 
 __f_show_help() {
@@ -106,7 +107,7 @@ formats passed arguments as underlined text.")
 $(f_code_definition 'f_code(string...)' \
 "$(f_sup "composeable" | f_bold)
 formats passed arguments as inline code.
-note to always pass arguments with $(f_code "\'strong quoting\'"), \
+note to always pass arguments with $(f_code "'strong quoting'"), \
 or properly escape them, to avoid arbitrary code being interpreted by the shell.")
 
 $(f_code_definition 'f_sub(string...)' \
@@ -162,7 +163,7 @@ $(f_code_definition 'f_code_block([lang], body)' \
 it will be used in the markdown format to highlight the code block. \
 allowed $(f_code "lang") values are those allowed in github-flavored markdown \
 code blocks.
-note to always enclose the passed $(f_code 'body') in $(f_code "\'strong quotes\'"), \
+note to always enclose the passed $(f_code 'body') in $(f_code "'strong quotes'"), \
 or properly escape it, to avoid arbitrary code being interpreted by the shell.")
 
 $(f_code_definition 'f_output(body)' \
@@ -280,7 +281,8 @@ __f_util_noop() {
 
 __f_util_resolve_format() {
 	local format
-	if type "__f_init_api_${FORMAT}" >/dev/null 2>&1; then
+	# shellcheck disable=SC2153
+	if type "__f_init_api_$FORMAT" >/dev/null 2>&1; then
 		format="$FORMAT"
 	else
 		format="terminal"
@@ -290,22 +292,24 @@ __f_util_resolve_format() {
 
 __f_util_switch() {
 	local match_format="$1"; shift
-	local format=$(__f_util_resolve_format)
+	local format
 	local output
-	if [[ $format = $match_format ]]; then
+	format=$(__f_util_resolve_format)
+	if [[ $format = "$match_format" ]]; then
 		output=$(__f_util_input "$@")
 	fi
 	printf "%s" "$output"
 }
 
 __f_util_trim_start() {
-	local input=$(__f_util_input "$@")
+	local input
+	input=$(__f_util_input "$@")
 	printf "%s" "$input" | sed -e '1s,[[:space:]][[:space:]]*\(.*\),\1,'
 }
 
 __f_util_repeat() {
-	local str=""
 	local n
+	local str=""
 	for (( n=$2; n > 0; n-- )); do
 		str="$str$1"
 	done
@@ -313,45 +317,56 @@ __f_util_repeat() {
 }
 
 __f_util_wrap() {
-	local tag="$1"; shift; local tagoff="$1"; shift
-	local input=$(__f_util_input "$@")
+	local tag="$1"; shift
+	local tagoff="$1"; shift
+	local input
+	input=$(__f_util_input "$@")
 	printf "%s%s%s" "$tag" "$input" "$tagoff"
 }
 
 __f_util_prefix() {
 	local prefix="$1"; shift
-	local input=$(__f_util_input "$@")
+	local input
+	input=$(__f_util_input "$@")
 	printf "%s%s" "$prefix" "$input"
 }
 
 __f_util_suffix() {
 	local suffix="$1"; shift
-	local input=$(__f_util_input "$@")
+	local input
+	input=$(__f_util_input "$@")
 	printf "%s%s" "$input" "$suffix"
 }
 
 __f_util_prefix_multiline() {
 	local prefix=$1; shift
-	local input=$(__f_util_input "$@")
-	printf "$input" | sed -e 's,^\(.*\)$,'"$prefix"'\1,'
+	local input
+	input=$(__f_util_input "$@")
+	sed -e 's,^\(.*\)$,'"$prefix"'\1,' <<< "$input"
 }
 
 __f_util_suffix_multiline() {
 	local suffix=$1; shift
-	local input=$(__f_util_input "$@")
-	printf "$input" | sed -e 's,^\(.*\)$,\1'"$suffix"','
+	local input
+	input=$(__f_util_input "$@")
+	sed -e 's,^\(.*\)$,\1'"$suffix"',' <<< "$input"
 }
 
 __f_util_char_underline() {
 	local char="$1"; shift
 	local suffix="$1"; shift
-	local input=$(__f_util_input "$@")
-	local underline="$(__f_util_repeat ${char} ${#input})"
+	local input
+	local underline
+	input=$(__f_util_input "$@")
+	underline="$(__f_util_repeat "$char" ${#input})"
 	printf "%s%s\n%s" "$input" "$suffix" "$underline"
 }
 
 __f_util_replace_tags() {
-	local from_tag="$1"; local from_tag_off="$2"; local to_tag="$3"; local to_tag_off="$4";
+	local from_tag="$1"
+	local from_tag_off="$2"
+	local to_tag="$3"
+	local to_tag_off="$4"
 	sed -e 's,'"$from_tag"'\([^'"$from_tag_off"']*\)'"$from_tag_off"','"$to_tag"'\1'"$to_tag_off"',g'
 }
 
@@ -421,13 +436,16 @@ __f_init_api_common() {
 	f_italics() {           __f_util_wrap     "$_f_italics"         "$_f_italics_off"   "$@"; }
 	f_strike() {            __f_util_wrap     "$_f_strike"          "$_f_strike_off"    "$@"; }
 	f_code() {              __f_util_wrap     "$_f_code"            "$_f_code_off"      "$@"; }
+	# shellcheck disable=SC2120
 	f_under() {             __f_util_wrap     "$_f_under"           "$_f_under_off"     "$@"; }
 
 }
 
 # declare/override implementations for terminal api functions and tags
 __f_init_api_terminal() {
+	local tput_colors
 
+	# shellcheck disable=SC2015
 	[[ -t 1 && -t 2 ]] && {
 	
 		_f_off=$(           tput sgr0                   )
@@ -439,13 +457,14 @@ __f_init_api_terminal() {
 		_f_under=$(         tput smul   || tput us      )
 		_f_under_off=$(     tput rmul   || tput ue      )
 		
-		local tput_colors=$(tput colors)
+		tput_colors=$(tput colors)
 		if [[ $tput_colors ]]; then
 			# `tput setaf 0 || tput AF 0` cannot be used to reset the foreground, as some 
 			# terminal emulators (e.g. iterm2) will set it to explicit black. 
 			# too bad, nesting tags in terminal mode may misbehave as a consequence.
 			_f_fg_off=$_f_off
-			if (( $tput_colors >= 256 )); then
+			_f_bg_off=$_f_off
+			if (( tput_colors >= 256 )); then
 				_f_fg_red=$(             tput setaf 167     || tput AF 167  )
 				_f_fg_green=$(           tput setaf 107     || tput AF 107  )
 				_f_fg_yellow=$(          tput setaf 179     || tput AF 179  )
@@ -470,7 +489,7 @@ __f_init_api_terminal() {
 				_f_bg_lightblue=$(       tput setab 153     || tput AB 153  )
 				_f_bg_lightmagenta=$(    tput setab 219     || tput AB 219  )
 				_f_bg_lightcyan=$(       tput setab 116     || tput AB 116  )
-			elif (( $tput_colors >= 8 )); then
+			elif (( tput_colors >= 8 )); then
 				_f_fg_red=$(             tput setaf 1       || tput AF 1    )
 				_f_fg_green=$(           tput setaf 2       || tput AF 2    )
 				_f_fg_yellow=$(          tput setaf 3       || tput AF 3    )
@@ -535,16 +554,18 @@ __f_init_api_terminal() {
 	f_bg_lightcyan() {      __f_util_wrap     "$_f_bg_lightcyan"      "$_f_bg_off"      "$@"; }
 
 	f_fg_rainbow() {
-		local colors=('red' 'yellow' 'green' 'cyan' 'blue' 'magenta')
-		local input=$(__f_util_input "$@")
-		local chars="$(printf "%s" "$input" | grep -o . --color=never)"
+		local input
+		local chars
 		local i=0
+		local colors=('red' 'yellow' 'green' 'cyan' 'blue' 'magenta')
+		input=$(__f_util_input "$@")
+		chars="$(grep -o . --color=never <<< "$input")"
 		while read -r; do
 			let "pos = $i % ${#colors[@]}"
 			let "i++"
 			local color="${colors[$pos]}"
 			local var_name="_f_fg_$color"
-			printf "${!var_name}$REPLY${_f_fg_off}"
+			printf "%s%s%s" "${!var_name}" "$REPLY" "${_f_fg_off}"
 		done <<< "$chars"
 	}
 
@@ -655,8 +676,10 @@ __f_init_api_markdown() {
 		fi
 	}
 	f_definition() {
-		local term="$(echo "$1" | __f_util_escape_entities)"
-		local desc="$(echo "$2" | __f_util_suffix_multiline '<br/>')"
+		local term
+		local desc
+		term="$(echo "$1" | __f_util_escape_entities)"
+		desc="$(echo "$2" | __f_util_suffix_multiline '<br/>')"
 		__f_util_wrap "$_f_def_term" "$_f_def_term_off" "$term" | \
 			__f_util_replace_tags "$_f_code" "$_f_code_off" '<code>' '</code>'
 		__f_util_wrap "$_f_def_desc" "$_f_def_desc_off" "$desc" | \
@@ -664,15 +687,17 @@ __f_init_api_markdown() {
 			__f_util_replace_tags "$_f_bold_escaped" "$_f_bold_escaped_off" '<strong>' '</strong>'
 	}
 	f_code_definition() {
-		local title="$(__f_util_wrap "$_f_code" "$_f_code_off" "$1")"
+		local title
+		title="$(__f_util_wrap "$_f_code" "$_f_code_off" "$1")"
 		f_definition "$title" "$2"
 	}
 	f_code_block() {
 		local lang
+		local body
 		if (( $# > 1 )); then
 			lang="$1"; shift
 		fi
-		local body="$1"
+		body="$1"
 		__f_util_wrap "$_f_code_block$lang$_f_new_line" "$_f_new_line$_f_code_block_off" "$body"
 	}
 	f_link() {
@@ -733,10 +758,11 @@ $desc"
 }
 
 __f_init_formatter() {
-	local format=$(__f_util_resolve_format)
+	local format
+	format=$(__f_util_resolve_format)
 	__f_init_api_stubs
 	__f_init_api_common
-	__f_init_api_${format}
+	__f_init_api_"$format"
 }
 
 
@@ -745,7 +771,8 @@ __f_main() {
 	__f_init_formatter
 
 	# test if this script is executed (i.e. not sourced)
-	if [[ $BASH_SOURCE = $0 && $1 = "-h" ]]; then
+	# shellcheck disable=SC2128
+	if [[ $BASH_SOURCE = "$0" && $1 = "-h" ]]; then
 		__f_show_help
 	fi
 }
