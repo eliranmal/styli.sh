@@ -187,7 +187,7 @@ note that only <code>inline code</code> and <strong>bold</strong> styles are all
 <dl>
 	<dt><code>f_code_block([lang], body)</code></dt>
 	<dd>formats passed arguments as a code block. if <code>lang</code> is passed, it will be used in the markdown format to highlight the code block. allowed <code>lang</code> values are those allowed in github-flavored markdown code blocks.<br/>
-note to always enclose the passed <code>body</code> in <code>\'strong quotes\'</code>, or properly escape it, to avoid arbitrary code being interpreted by the shell.<br/></dd>
+note to always enclose the passed <code>body</code> in <code>'strong quotes'</code>, or properly escape it, to avoid arbitrary code being interpreted by the shell.<br/></dd>
 </dl>
 
 <dl>
