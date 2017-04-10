@@ -107,7 +107,7 @@ formats passed arguments as underlined text.")
 $(f_code_definition 'f_code(string...)' \
 "$(f_sup "composeable" | f_bold)
 formats passed arguments as inline code.
-note to always pass arguments with $(f_code "\'strong quoting\'"), \
+note to always pass arguments with $(f_code "'strong quoting'"), \
 or properly escape them, to avoid arbitrary code being interpreted by the shell.")
 
 $(f_code_definition 'f_sub(string...)' \

@@ -120,7 +120,7 @@ formats passed arguments as underlined text.<br/></dd>
 	<dt><code>f_code(string...)</code></dt>
 	<dd><strong><sup>composeable</sup></strong><br/>
 formats passed arguments as inline code.<br/>
-note to always pass arguments with <code>\'strong quoting\'</code>, or properly escape them, to avoid arbitrary code being interpreted by the shell.<br/></dd>
+note to always pass arguments with <code>'strong quoting'</code>, or properly escape them, to avoid arbitrary code being interpreted by the shell.<br/></dd>
 </dl>
 
 <dl>
